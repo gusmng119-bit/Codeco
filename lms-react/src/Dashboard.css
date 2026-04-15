@@ -24,7 +24,6 @@ body {
   overflow: hidden;
 }
 
-/* SIDEBAR */
 .sidebar {
   width: 260px;
   height: 100vh;
@@ -34,17 +33,18 @@ body {
 
 .logo-section {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 50px;
+  padding: 20px 10px;
+  margin-bottom: 15px;
 }
 
-.logo-box {
-  background: #f8f9fa;
-  padding: 5px 10px;
-  border-radius: 8px;
-  border: 1px solid #000000;
-  text-align: center;
+.brand-logo-img-standalone {
+  width: 40%;
+  max-width: 90px;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .code-tag {
@@ -88,7 +88,6 @@ body {
   color: white;
 }
 
-/* MAIN AREA */
 .main-area {
   flex: 1;
   display: flex;
@@ -136,7 +135,6 @@ body {
   justify-content: center;
 }
 
-/* CONTENT */
 .content-container {
   padding: 30px 40px;
 }
@@ -188,7 +186,7 @@ body {
 
 .progress-section,
 .certificate-sidebar {
-  border: 2px solid #000000;
+  border: 1px solid #000000;
   border-radius: 20px;
   padding: 20px;
 }
@@ -198,7 +196,7 @@ body {
   background: #f1f3f4;
   padding: 25px;
   border-radius: 20px;
-  border: 2px solid #000000;
+  border: 1px solid #000000;
 }
 
 .hero-img-wrapper img {
@@ -244,7 +242,6 @@ body {
   background: #52a4b0;
 }
 
-/* GRID */
 .dashboard-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -345,8 +342,6 @@ body {
   opacity: 0.8;
 }
 
-
-/* --- CLASSROOM PAGE STYLES --- */
 .classroom-header {
   display: flex;
   justify-content: space-between;
@@ -375,7 +370,6 @@ body {
   border-color: #000;
 }
 
-/* Card List */
 .class-list {
   display: flex;
   flex-direction: column;
@@ -399,7 +393,6 @@ body {
   font-weight: 700;
 }
 
-/* Warna Header Sesuai Gambar */
 .bg-blue { background-color: #A3E4F1; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
 .bg-pink { background-color: #F8A5B2; color: #fff; }
 .bg-purple { background-color: #C1A3F1; color: #fff; }
@@ -464,4 +457,118 @@ body {
 .search-bar,
 .top-nav-actions {
   display: none;
+}
+
+/* ================= TEACHER PAGE STYLES ================= */
+.teacher-page {
+  padding: 30px 40px;
+}
+
+.teacher-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.teacher-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.search-box-teacher {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  padding: 5px 15px;
+  background: #fff;
+}
+
+.search-box-teacher input {
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+/* Efek Gradasi pada Kartu Guru */
+.teacher-card {
+  background: linear-gradient(to bottom, #ffffff 60%, #e0f7fa 100%);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.teacher-card:hover {
+  transform: translateY(-5px);
+}
+
+.teacher-img-container {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.teacher-img-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.teacher-info-card h4 {
+  margin: 5px 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #333;
+}
+
+.teacher-info-card p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.view-teacher-btn {
+  margin-top: 15px;
+  background-color: #b2ebf2; /* Biru muda pucat */
+  border: 1px solid #81d4fa;
+  padding: 6px 25px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.view-teacher-btn:hover {
+  background-color: #81d4fa;
+  color: white;
+}
+
+/* ================= UTILS (Classroom & Home) ================= */
+.user-greeting-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 40px;
+}
+
+.avatar-main {
+  font-size: 40px;
+  background: #eee;
+  border-radius: 50%;
+  padding: 10px;
 }
