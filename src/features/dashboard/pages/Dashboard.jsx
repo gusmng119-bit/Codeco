@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./Dashboard.css";
-import logo1 from "./assets/logo1.png";
-import logo2 from "./assets/logo2.jpg";
-import imagesari from './assets/Mrs. Sari.jpeg';
-import imagecoki from './assets/coki.jpg';
-import profileImg from './assets/Profile.png';
-import BannerImg from './assets/Baner.jpg';
+import logo1 from "../../../assets/logo1.png";
+import logo2 from "../../../assets/logo2.jpg";
+import imagesari from '../../../assets/Mrs. Sari.jpeg';
+import imagecoki from '../../../assets/coki.jpg';
+import profileImg from '../../../assets/Profile.png';
+import BannerImg from '../../../assets/Baner.jpg';
 
 const Home = ({ setPage }) => {
   return (

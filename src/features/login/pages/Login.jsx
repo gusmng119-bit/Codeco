@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import gambar1 from "./assets/gambar1.png";
-import logo1 from "./assets/logo1.png";
+import gambar1 from "../../../assets/gambar1.png";
+import logo1 from "../../../assets/logo1.png";
 
 function Login() {
   const navigate = useNavigate();
