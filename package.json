@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "lms-react",
   "private": true,
   "version": "0.0.0",
@@ -7,15 +6,25 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix --max-warnings=0"
+    ]
   },
   "dependencies": {
+    "antd": "^6.3.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^6.30.3"
+    "react-router-dom": "^6.30.3",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^9.39.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -24,12 +33,8 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "vite": "^8.0.0"
-=======
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.3"
->>>>>>> 569f523623f85a8b822bd374b27d21a4a702a976
   }
 }
