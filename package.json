@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "lms-react",
   "private": true,
   "version": "0.0.0",
@@ -25,11 +24,5 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
     "vite": "^8.0.0"
-=======
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.3"
->>>>>>> 569f523623f85a8b822bd374b27d21a4a702a976
   }
 }
