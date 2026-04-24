@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import gambar1 from "../../assets/gambar1.png";
 import logo1 from "../../assets/logo1.png";
-import LoginForm from "./LoginForm";
+import LoginForm from "./components/LoginForm";
 
 const Login = () => {
   return (

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Form, Input, Button, Alert, Typography } from "antd";
 import Title from "antd/es/typography/Title";
+import { UserOutlined } from "@ant-design/icons";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -76,6 +77,7 @@ const LoginForm = () => {
                       padding: "18px 25px",
                       fontSize: 16,
                     }}
+                    suffix={<UserOutlined />}
                   />
                 </Form.Item>
 
