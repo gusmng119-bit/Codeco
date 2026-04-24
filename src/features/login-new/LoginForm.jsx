@@ -24,7 +24,6 @@ const LoginForm = () => {
           width: "100vw",
           overflow: "hidden",
           justifyContent: "center",
-          alignItems: "center",
           backgroundColor: "white",
         }}
       >
@@ -35,7 +34,7 @@ const LoginForm = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              //   justifyContent: "center",
+              justifyContent: "center",
             }}
           >
             {/* Form */}
