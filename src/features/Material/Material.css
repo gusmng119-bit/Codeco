@@ -1,0 +1,87 @@
+/* Container Page */
+.material-page {
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Banner */
+.material-header-banner {
+  background: linear-gradient(90deg, #e87c86 0%, #be3563 100%);
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.header-content h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.header-robot-img img {
+  height: 120px;
+}
+
+/* Material List */
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.material-item-card {
+  background: white;
+  border-radius: 15px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+  border: 1.5px solid #e0e0e0;
+  
+ 
+  width: 100%;          
+  max-width: 1200px;     
+  
+}
+
+.material-item-card:hover {
+  transform: translateY(-2px);
+}
+
+.icon-wrapper {
+  background-color: #6fbabf;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  border: 1.5px solid #e0e0e0;
+}
+
+.material-info h3 {
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
+}
+
+.material-info p {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 5px 0 0 0;
+}
+/* BACK BUTTON */
+
+
+.material-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

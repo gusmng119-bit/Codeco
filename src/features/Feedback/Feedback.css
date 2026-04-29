@@ -1,0 +1,357 @@
+
+.feedback-page {
+  padding: 20px 40px 40px;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* Header Banner */
+.feedback-header-banner {
+  background: linear-gradient(90deg, #D95B6E 0%, #EA7E69 50%, #F19B68 100%);
+  border-radius: 30px;
+  padding: 40px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 40px;
+  box-shadow: 0 15px 35px rgba(217, 91, 110, 0.3);
+}
+
+.feedback-header-content h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin: 0 0 5px 0;
+  line-height: 1.1;
+}
+
+.feedback-header-content p {
+  font-size: 1.4rem;
+  margin: 0;
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+.feedback-robot-img img {
+  height: 140px;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.15));
+}
+
+/* Section Title */
+.feedback-section-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 35px;
+  color: #1a1a1a;
+}
+
+/* Feedback List */
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  
+  /* UBAH BAGIAN INI */
+  max-width: none; /* Menghapus batasan lebar agar mengikuti banner */
+  width: 100%;     /* Memastikan lebar penuh */
+}
+.feedback-item-card {
+  width: 100%; 
+  box-sizing: border-box;
+  background: white;
+  border-radius: 28px;
+  padding: 35px;
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f1f5f9;
+  transition: all 0.3s ease;
+}
+
+.feedback-item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+}
+
+.feedback-icon-wrapper {
+  background: linear-gradient(135deg, #5CB3BB, #4DA9A9);
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.feedback-icon {
+  font-size: 1.9rem;
+}
+
+/* Card Content */
+.feedback-info {
+  flex: 1;
+}
+
+.feedback-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.feedback-card-header h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.3;
+  max-width: 75%;
+}
+
+.feedback-date {
+  font-size: 0.92rem;
+  color: #64748b;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.feedback-preview {
+  font-size: 1.08rem;
+  color: #475569;
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+
+.feedback-view-more {
+  text-align: right;
+}
+
+.feedback-view-btn {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.feedback-view-btn:hover {
+  color: #5CB3BB;
+  background: rgba(92, 179, 187, 0.1);
+}
+
+/* Modal Overlay */
+.feedback-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+}
+
+.feedback-detail-card {
+  background: white;
+  width: min(90vw, 780px);
+  max-height: 90vh;
+  border-radius: 32px;
+  padding: 45px;
+  position: relative;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from { opacity: 0; transform: scale(0.95) translateY(-20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.feedback-close-btn {
+  position: absolute;
+  right: 28px;
+  top: 28px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.feedback-close-btn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+  transform: scale(1.05);
+}
+
+.feedback-detail-header {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.feedback-icon-teal {
+  background: linear-gradient(135deg, #5CB3BB, #4DA9A9);
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.85rem;
+  color: white;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.feedback-title-group h2 {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+}
+
+.feedback-title-group p {
+  color: #64748b;
+  font-weight: 600;
+  margin: 0;
+}
+
+.feedback-divider {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+  margin: 30px 0;
+}
+
+.feedback-detail-body {
+  color: #334155;
+}
+
+.feedback-instruction {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #1e293b;
+}
+
+.feedback-drive-container {
+  display: flex;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.feedback-drive-left {
+  flex: 1;
+}
+
+.feedback-drive-label {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #1e293b;
+  display: block;
+  margin-bottom: 6px;
+  text-decoration: none;
+}
+
+.feedback-drive-url {
+  font-size: 1rem;
+  color: #64748b;
+  word-break: break-all;
+}
+
+.feedback-drive-right {
+  background: #4285f4;
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.feedback-text-section {
+  background: #f1f5f9;
+  padding: 25px;
+  border-radius: 20px;
+  border-left: 5px solid #5CB3BB;
+}
+
+.feedback-text-section h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 15px 0;
+}
+
+.feedback-text-section p {
+  margin: 0;
+  line-height: 1.7;
+  color: #475569;
+  font-size: 1.05rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .feedback-page { padding: 15px 20px; }
+  
+  .feedback-header-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 25px;
+    gap: 20px;
+  }
+  
+  .feedback-header-content h1 { font-size: 2.4rem; }
+  
+  .feedback-item-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 25px 20px;
+  }
+  
+  .feedback-card-header {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  
+  .feedback-card-header h3 { max-width: none; font-size: 1.25rem; }
+  
+  .feedback-detail-card { 
+    width: 95vw; 
+    padding: 30px 25px; 
+    margin: 20px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .feedback-header-content h1 { font-size: 2rem; }
+  .feedback-section-title { font-size: 1.9rem; }
+}

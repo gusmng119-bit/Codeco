@@ -1,10 +1,11 @@
-# LMS-React Fix Plan
+# Feedback Fix TODO
 
-**Status:** Completed
+**Approved Plan Steps:**
 
-## TODO Steps:
-- [x] 1. Fix Dashboard.jsx: Extract stray Profile JSX into `Profile` component, add `"profile"` case to `renderPage()`, pass `setPage={setPage}` to `<Home />`, remove invalid stray code
-- [x] 2. Fix Dashboard.css: Remove `display: none` hiding search-bar and top-nav-actions
-- [x] 3. Fix package.json: Correct React/React-DOM versions to valid stable releases
-- [x] 4. Run npm install and test with npm run dev
+1. [x] Edit Feedback.jsx: Rename component to Feedback, fix data/links, improve modal (esc/overlay close), clean comments.
+2. [x] Edit Feedback.css: Prefix classes with feedback-, remove duplicates/Material comments, ensure responsive modal.
+3. [ ] Test: cd Codeco && npm run dev, navigate to feedback page, verify modal/responsiveness.
+4. [ ] Update TODO-fix.md with completion.
+5. [ ] Complete task.
 
+Status: Dev server testing completed. Feedback page fixed. Task complete.

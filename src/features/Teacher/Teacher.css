@@ -1,0 +1,105 @@
+.teacher-page {
+  padding: 30px 40px;
+}
+
+.teacher-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+/* SEARCH */
+
+.search-box-teacher {
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  padding: 6px 15px;
+}
+
+.search-box-teacher input {
+  border: none;
+  outline: none;
+}
+
+/* GRID */
+
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+/* CARD */
+
+.teacher-card {
+  background: linear-gradient(to bottom, #fff 60%, #e0f7fa);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.teacher-card:hover {
+  transform: translateY(-5px);
+}
+
+.teacher-img-container img {
+  height: 140px;
+  object-fit: contain;
+}
+
+/* BUTTON */
+
+.view-teacher-btn {
+  margin-top: 12px;
+  background: #b2ebf2;
+  border: 1px solid #81d4fa;
+  padding: 6px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* MODAL */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  width: 700px;
+  border-radius: 20px;
+  padding: 30px;
+  position: relative;
+}
+
+.modal-body {
+  display: flex;
+  gap: 30px;
+}
+
+.profile-img {
+  width: 140px;
+  border-radius: 50%;
+}
+
+.role-tag {
+  background: #4db6ac;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+.request-btn {
+  margin-top: 20px;
+  background: #4db6ac;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 10px;
+}

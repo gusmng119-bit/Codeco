@@ -1,0 +1,160 @@
+/* ================= PAGE ================= */
+
+.classroom-page {
+  width: 100%;
+}
+
+/* ================= HEADER ================= */
+
+.classroom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* ================= FILTER TABS ================= */
+
+.filter-tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.tab {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.tab:hover {
+  background: #f3f3f3;
+}
+
+.tab.active {
+  background: black;
+  color: white;
+  border-color: black;
+}
+
+/* ================= SEARCH ================= */
+
+.classroom-search {
+  position: relative;
+}
+
+.classroom-search input {
+  padding: 10px 35px 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ================= CLASS LIST ================= */
+
+.class-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ================= CARD ================= */
+
+.class-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  transition: 0.3s;
+}
+
+.class-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ================= CARD HEADER ================= */
+
+.card-header {
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  color: white;
+}
+
+/* HEADER COLORS */
+
+.bg-blue {
+  background-color: #a3e4f1;
+}
+
+.bg-pink {
+  background-color: #f8a5b2;
+}
+
+.bg-purple {
+  background-color: #c1a3f1;
+}
+
+/* ================= CARD BODY ================= */
+
+.card-body {
+  padding: 20px;
+}
+
+.class-title-row h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* ================= INSTRUCTOR ================= */
+
+.instructor-info {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.material-text {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ================= FOOTER ================= */
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.time-info {
+  font-weight: 600;
+}
+
+.view-btn {
+  background: #64b5c1;
+  color: white;
+  border: none;
+  padding: 8px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.view-btn:hover {
+  background: #4da2ae;
+}
