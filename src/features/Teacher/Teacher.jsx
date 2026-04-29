@@ -23,6 +23,34 @@ const Teachers = () => {
       subject: "Web Dev",
       img: "https://img.freepik.com/free-photo/waist-up-portrait-smiling-indonesian-woman-celebrating-success_273609-44632.jpg",
     },
+    { id: 1, name: "Mr. Coki", subject: "Robotic", img: imagecoki, ig: "coki_robotic", yt: "CokiRobotics" },
+    { id: 2, name: "Mrs. Sari", subject: "Coding", img: imagesari, ig: "sari_coding", yt: "SariCodes" },
+    {
+      id: 3,
+      name: "Mr. Budi",
+      subject: "AI Basics",
+      img: "https://img.freepik.com/free-photo/handsome-cheerful-young-indonesian-man-standing-blue-background_273609-28565.jpg",
+    },
+    {
+      id: 4,
+      name: "Ms. Lina",
+      subject: "Web Dev",
+      img: "https://img.freepik.com/free-photo/waist-up-portrait-smiling-indonesian-woman-celebrating-success_273609-44632.jpg",
+    },
+    { id: 1, name: "Mr. Coki", subject: "Robotic", img: imagecoki, ig: "coki_robotic", yt: "CokiRobotics" },
+    { id: 2, name: "Mrs. Sari", subject: "Coding", img: imagesari, ig: "sari_coding", yt: "SariCodes" },
+    {
+      id: 3,
+      name: "Mr. Budi",
+      subject: "AI Basics",
+      img: "https://img.freepik.com/free-photo/handsome-cheerful-young-indonesian-man-standing-blue-background_273609-28565.jpg",
+    },
+    {
+      id: 4,
+      name: "Ms. Lina",
+      subject: "Web Dev",
+      img: "https://img.freepik.com/free-photo/waist-up-portrait-smiling-indonesian-woman-celebrating-success_273609-44632.jpg",
+    },
   ];
 
   /* ================= HELPER FUNCTIONS ================= */

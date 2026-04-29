@@ -68,14 +68,13 @@ const Classroom = ({ filter, searchClass, onFilterChange, onSearchChange }) => {
         </div>
 
         {/* SEARCH */}
-        <div className="search-box-class">
-          <input
-            type="text"
-            placeholder="Search class..."
-            value={searchClass}
-            onChange={(e) => onSearchChange(e.target.value)}
-          />
+        <div className="search-box-cert">
+          <input type="text" placeholder="search" />
+          <span className="search-icon">🔍</span>
         </div>
+        
+        
+        
 
       </div>
 
@@ -106,11 +105,6 @@ const Classroom = ({ filter, searchClass, onFilterChange, onSearchChange }) => {
               <div className="class-title-row">
                 <h3>{c.title}</h3>
               </div>
-
-              <div className="instructor-info">
-                👤 {c.instructor}
-              </div>
-
               <p className="material-text">{c.material}</p>
 
               <div className="card-footer">

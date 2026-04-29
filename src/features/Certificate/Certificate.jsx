@@ -1,9 +1,19 @@
 import "./Certificate.css";
+import certificateImg from "../../assets/certificate.png";
+
 
 const Certificates = () => {
   const certificates = [
-    { className: "Robotic Beginner", instructor: "Mr. Ilham", date: "2024-10-01", image: "https://via.placeholder.com/300x200/64b5c1/ffffff?text=Robotic+Cert" },
-    { className: "Coding Basics", instructor: "Mrs. Sari", date: "2024-09-25", image: "https://via.placeholder.com/300x200/a29bfe/ffffff?text=Coding+Cert" },
+    { className: "Robotic Beginner", instructor: "Mr. Ilham", date: "2024-10-01", image:  certificateImg},
+    { className: "Coding Basics", instructor: "Mrs. Sari", date: "2024-09-25", image:  certificateImg },
+    { className: "Coding Basics", instructor: "Mrs. Sari", date: "2024-09-25", image:  certificateImg },
+    { className: "Coding Basics", instructor: "Mrs. Sari", date: "2024-09-25", image:  certificateImg },
+    { className: "Coding Basics", instructor: "Mrs. Sari", date: "2024-09-25", image:  certificateImg },
+    { className: "Coding Basics", instructor: "Mrs. Sari", date: "2024-09-25", image:  certificateImg },
+    { className: "Coding Basics", instructor: "Mrs. Sari", date: "2024-09-25", image:  certificateImg },
+    { className: "Coding Basics", instructor: "Mrs. Sari", date: "2024-09-25", image:  certificateImg },
+    { className: "Robotic Beginner", instructor: "Mr. Ilham", date: "2024-10-01", image:  certificateImg},
+    { className: "Robotic Beginner", instructor: "Mr. Ilham", date: "2024-10-01", image:  certificateImg},
   ];
 
   return (
@@ -12,7 +22,7 @@ const Certificates = () => {
         <div className="cert-title-area">
           <h2>My Certificates</h2>
           <p>All achievements you've earned</p>
-          <div className="cert-count-badge">2</div>
+          <div className="cert-count-badge">10</div>
         </div>
         <div className="search-box-cert">
           <input type="text" placeholder="search" />
@@ -29,7 +39,7 @@ const Certificates = () => {
               <h3>{cert.className}</h3>
               <p className="instructor">{cert.instructor}</p>
               <div className="cert-date">
-                <span className="calendar-icon">📅</span>
+               
                 {cert.date}
               </div>
               <button className="view-cert-btn">

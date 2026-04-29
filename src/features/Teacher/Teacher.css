@@ -87,7 +87,23 @@
   width: 140px;
   border-radius: 50%;
 }
+.teacher-img-container {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
+.teacher-img-container img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px; /* 🔥 kotak rounded */
+  border: 2px solid #b2ebf2;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
 .role-tag {
   background: #4db6ac;
   color: white;

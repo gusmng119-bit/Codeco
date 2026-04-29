@@ -43,11 +43,11 @@
 
 /* ================= SEARCH ================= */
 
-.classroom-search {
+.search-box-cert {
   position: relative;
 }
 
-.classroom-search input {
+.search-box-cert input {
   padding: 10px 35px 10px 12px;
   border-radius: 8px;
   border: 1px solid #ddd;

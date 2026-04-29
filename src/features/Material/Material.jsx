@@ -10,6 +10,7 @@ const ClassMaterial = ({ setPage }) => {
     { id: 4, title: "Design and Building Simple Robots", date: "April 30, 2026", progress: "4/5" },
     { id: 5, title: "Artificial Intelligence in Robotics", date: "May 4, 2026", progress: "5/5" },
   ];
+  
 
   return (
     <div className="material-page">

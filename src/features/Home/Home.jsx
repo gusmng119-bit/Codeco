@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./Home.css";
 import profileImg from "../../assets/Profile.png";
 import logo2 from "../../assets/logo2.jpg";
+import certificateImg from "../../assets/certificate.png";
 
 const Home = ({ setPage }) => {
   const [joined, setJoined] = useState(false);
@@ -35,7 +36,7 @@ const Home = ({ setPage }) => {
             <p className="instructor">Mr. Ilham</p>
 
             <div className="hero-meta">
-              <span>📅 Today</span>
+              <span> Today</span>
               <span>🕒 09:00-11:00</span>
             </div>
           </div>
@@ -133,19 +134,34 @@ const Home = ({ setPage }) => {
         </div>
 
         {/* ================= CERTIFICATE ================= */}
-        <div className={`certificate-sidebar ${!joined ? "locked" : ""}`}>
-          {!joined ? (
-            <>
-              <span className="big-lock">🔒</span>
-              <p>No Certificate yet</p>
-            </>
-          ) : (
-            <>
-              <span className="big-lock">🏆</span>
-              <p>Certificate Ready Soon!</p>
-            </>
-          )}
-        </div>
+<div className={`certificate-sidebar ${!joined ? "locked" : ""}`}>
+  {!joined ? (
+    <>
+      <span className="big-lock">🔒</span>
+      <p>No Certificate yet</p>
+    </>
+  ) : (
+    <>
+      
+
+      {/* TAMBAH GAMBAR CERTIFICATE */}
+      <img
+        src={certificateImg}
+        alt="Certificate"
+        className="certificate-img"
+      />
+
+       {/* DOWNLOAD BUTTON */}
+      <a
+        href={certificateImg}
+        download="certificate.png"
+        className="download-btn"
+      >
+        Download Certificate
+      </a>
+    </>
+  )}
+</div>
 
       </div>
     </>
