@@ -7,8 +7,7 @@ import Teacher from "../Teacher/Teacher";
 import Certificate from "../Certificate/Certificate";
 import Profile from "../Profile/Profile";
 import ClassMaterial from "../Material/Material";
-// Import komponen feedback yang baru dibuat
-import FeedbackClass from "../Feedback/Feedback"; 
+import FeedbackClass from "../Feedback/Feedback";
 
 import logo1 from "../../assets/logo1.png";
 
@@ -17,10 +16,24 @@ const Dashboard = () => {
   const [filter, setFilter] = useState("today");
   const [searchClass, setSearchClass] = useState("");
 
+  // ✅ CLASS YANG DIPILIH
+  const [selectedClass, setSelectedClass] = useState(null);
+
+  // ✅ STATUS JOIN CLASS (GLOBAL)
+  const [joined, setJoined] = useState(false);
+
   const renderPage = () => {
     switch (page) {
+
       case "home":
-        return <Home setPage={setPage} />;
+        return (
+          <Home
+            setPage={setPage}
+            selectedClass={selectedClass}
+            joined={joined}
+            setJoined={setJoined}
+          />
+        );
 
       case "classroom":
         return (
@@ -29,6 +42,8 @@ const Dashboard = () => {
             searchClass={searchClass}
             onFilterChange={setFilter}
             onSearchChange={setSearchClass}
+            setPage={setPage}
+            setSelectedClass={setSelectedClass}
           />
         );
 
@@ -42,30 +57,46 @@ const Dashboard = () => {
         return <Profile setPage={setPage} />;
 
       case "material":
-        return <ClassMaterial setPage={setPage} />;
+        return (
+          <ClassMaterial
+            setPage={setPage}
+          />
+        );
 
-      // ✅ TAMBAHKAN CASE FEEDBACK DI SINI
       case "feedback":
-        return <FeedbackClass setPage={setPage} />;
+        return (
+          <FeedbackClass
+            setPage={setPage}
+          />
+        );
 
       default:
-        return <Home setPage={setPage} />;
+        return (
+          <Home
+            setPage={setPage}
+            selectedClass={selectedClass}
+            joined={joined}
+            setJoined={setJoined}
+          />
+        );
     }
   };
 
   return (
     <div className="dashboard-wrapper">
+
       {/* ================= SIDEBAR ================= */}
       <aside className="sidebar">
         <div className="logo-section">
           <img
             src={logo1}
-            alt="Codeco Logo"
+            alt="logo"
             className="brand-logo-img-standalone"
           />
         </div>
 
         <nav className="nav-menu">
+
           <div
             className={`nav-item ${page === "home" ? "active" : ""}`}
             onClick={() => setPage("home")}
@@ -74,7 +105,7 @@ const Dashboard = () => {
           </div>
 
           <div
-            className={`nav-item ${page === "classroom" || page === "feedback" ? "active" : ""}`}
+            className={`nav-item ${page === "classroom" ? "active" : ""}`}
             onClick={() => setPage("classroom")}
           >
             📖 Classroom
@@ -93,6 +124,7 @@ const Dashboard = () => {
           >
             🏆 Certificate
           </div>
+
         </nav>
       </aside>
 
@@ -102,6 +134,7 @@ const Dashboard = () => {
           {renderPage()}
         </main>
       </div>
+
     </div>
   );
 };

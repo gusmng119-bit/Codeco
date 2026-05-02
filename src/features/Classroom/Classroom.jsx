@@ -1,6 +1,13 @@
 import "./Classroom.css";
 
-const Classroom = ({ filter, searchClass, onFilterChange, onSearchChange }) => {
+const Classroom = ({
+  filter,
+  searchClass,
+  onFilterChange,
+  onSearchChange,
+  setPage,
+  setSelectedClass,
+}) => {
 
   const classes = [
     {
@@ -39,6 +46,16 @@ const Classroom = ({ filter, searchClass, onFilterChange, onSearchChange }) => {
       time: "14:00 - 16:00",
       type: "upcoming",
     },
+    {
+      id: 5,
+      title: "Robotic Class",
+      instructor: "Mr. Ilham",
+      material: "Robotic logic intro",
+      date: "2024-10-22",
+      time: "10:00 - 12:00",
+      type: "today",
+    },
+
   ];
 
   const filteredClasses = classes.filter(
@@ -112,9 +129,17 @@ const Classroom = ({ filter, searchClass, onFilterChange, onSearchChange }) => {
                   🕒 {c.time}
                 </div>
 
-                <button className="view-btn">
-                  {c.type === "today" ? "Join class" : "View"}
-                </button>
+                <button
+  className="view-btn"
+  onClick={() => {
+    if (c.type === "today") {
+      setSelectedClass(c); // simpan class
+      setPage("home");     // pindah ke home
+    }
+  }}
+>
+  {c.type === "today" ? "Join class" : "View"}
+</button>
               </div>
 
             </div>

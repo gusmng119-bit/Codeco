@@ -1,11 +1,16 @@
-import { useState } from "react";
 import "./Home.css";
 import profileImg from "../../assets/Profile.png";
 import logo2 from "../../assets/logo2.jpg";
 import certificateImg from "../../assets/certificate.png";
 
-const Home = ({ setPage }) => {
-  const [joined, setJoined] = useState(false);
+const Home = ({ setPage, joined, setJoined, selectedClass }) => {
+
+  
+  const classData = selectedClass || {
+    title: "Robotic Class",
+    instructor: "Mr. Ilham",
+    time: "09:00-11:00",
+  };
 
   return (
     <>
@@ -28,24 +33,26 @@ const Home = ({ setPage }) => {
 
         <div className="hero-card">
           <div className="hero-img-wrapper">
-            <img src={logo2} alt="Robotic Class" />
+            <img src={logo2} alt="Class" />
           </div>
 
           <div className="hero-info">
-            <h3>Robotic Class</h3>
-            <p className="instructor">Mr. Ilham</p>
+            <h3>{classData.title}</h3>
+            <p className="instructor">{classData.instructor}</p>
 
             <div className="hero-meta">
-              <span> Today</span>
-              <span>🕒 09:00-11:00</span>
+              <span>Today</span>
+              <span>🕒 {classData.time}</span>
             </div>
           </div>
 
+          {/* ✅ JOIN BUTTON FIX */}
           <button
-            className="join-now-btn"
-            onClick={() => setJoined(true)}
+            className={`join-now-btn ${joined ? "joined" : ""}`}
+            onClick={() => !joined && setJoined(true)}
+            disabled={joined}
           >
-            {joined ? "Joined" : "Join class"}
+            {joined ? "Joined" : "Join Class"}
           </button>
         </div>
       </section>
@@ -56,33 +63,34 @@ const Home = ({ setPage }) => {
 
           <div className="status-row">
 
-            <div 
-  className={`status-card ${!joined ? "locked" : ""} cursor-pointer`} 
-  onClick={() => joined && setPage("feedback")} // Hanya pindah jika sudah 'joined'
-  style={{ cursor: joined ? 'pointer' : 'not-allowed' }}
->
-  {!joined && <span className="icon-lock">🔒</span>}
-
-  <h4>Teacher Feedback</h4>
-
-  {!joined ? (
-    <p>Will be shown here after you complete the class</p>
-  ) : (
-    <>
-      <p>⭐ Excellent participation!</p>
-      <p>Keep practicing robotics logic.</p>
-      <div className="view-feedback-hint"></div>
-    </>
-  )}
-</div>
-
-            {/* ===== MATERIAL ===== */}
+            {/* FEEDBACK */}
             <div
-              className={`status-card ${!joined ? "locked" : "clickable"}`}
-              onClick={() => {
-                if (joined) setPage("material");
-                else alert("Silahkan join class terlebih dahulu!");
-              }}
+              className={`status-card ${!joined ? "locked" : ""}`}
+              onClick={() => joined && setPage("feedback")}
+              style={{ cursor: joined ? "pointer" : "not-allowed" }}
+            >
+              {!joined && <span className="icon-lock">🔒</span>}
+
+              <h4>Teacher Feedback</h4>
+
+              {!joined ? (
+                <p>Will be shown here after you complete the class</p>
+              ) : (
+                <>
+                  <p>⭐ Excellent participation!</p>
+                  <p>Keep practicing robotics logic.</p>
+                </>
+              )}
+            </div>
+
+            {/* MATERIAL */}
+            <div
+              className={`status-card ${!joined ? "locked" : ""}`}
+              onClick={() =>
+                joined
+                  ? setPage("material")
+                  : alert("Silahkan join class terlebih dahulu!")
+              }
               style={{ cursor: joined ? "pointer" : "not-allowed" }}
             >
               {!joined && <span className="icon-lock">📖</span>}
@@ -93,7 +101,7 @@ const Home = ({ setPage }) => {
                 <p>Class material will be accessible after you join</p>
               ) : (
                 <ul>
-                  <li>Robot Assembly</li>
+                  <li>{classData.title}</li>
                   <li>Sensor Introduction</li>
                   <li>Movement Logic</li>
                 </ul>
@@ -102,7 +110,7 @@ const Home = ({ setPage }) => {
 
           </div>
 
-          {/* ================= PROGRESS ================= */}
+          {/* PROGRESS */}
           <div className="progress-section">
             <h4>Learning progress</h4>
 
@@ -111,11 +119,11 @@ const Home = ({ setPage }) => {
 
               <div className="progress-details">
                 <div className="progress-header">
-                  <strong>Robotic Class</strong>
+                  <strong>{classData.title}</strong>
                   <span>{joined ? "50%" : "0%"}</span>
                 </div>
 
-                <p className="teacher-sub">Mr. Ilham</p>
+                <p className="teacher-sub">{classData.instructor}</p>
 
                 <div className="progress-bar-bg">
                   <div
@@ -125,7 +133,9 @@ const Home = ({ setPage }) => {
                 </div>
 
                 <p className="no-progress-msg">
-                  {joined ? "🚀 Progress Started!" : "🔒 No progress yet"}
+                  {joined
+                    ? " Progress Started!"
+                    : "🔒 No progress yet"}
                 </p>
               </div>
             </div>
@@ -133,35 +143,31 @@ const Home = ({ setPage }) => {
 
         </div>
 
-        {/* ================= CERTIFICATE ================= */}
-<div className={`certificate-sidebar ${!joined ? "locked" : ""}`}>
-  {!joined ? (
-    <>
-      <span className="big-lock">🔒</span>
-      <p>No Certificate yet</p>
-    </>
-  ) : (
-    <>
-      
+        {/* CERTIFICATE */}
+        <div className={`certificate-sidebar ${!joined ? "locked" : ""}`}>
+          {!joined ? (
+            <>
+              <span className="big-lock">🔒</span>
+              <p>No Certificate yet</p>
+            </>
+          ) : (
+            <>
+              <img
+                src={certificateImg}
+                alt="Certificate"
+                className="certificate-img"
+              />
 
-      {/* TAMBAH GAMBAR CERTIFICATE */}
-      <img
-        src={certificateImg}
-        alt="Certificate"
-        className="certificate-img"
-      />
-
-       {/* DOWNLOAD BUTTON */}
-      <a
-        href={certificateImg}
-        download="certificate.png"
-        className="download-btn"
-      >
-        Download Certificate
-      </a>
-    </>
-  )}
-</div>
+              <a
+                href={certificateImg}
+                download="certificate.png"
+                className="download-btn"
+              >
+                View Certificate
+              </a>
+            </>
+          )}
+        </div>
 
       </div>
     </>
