@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, message } from "antd";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -13,7 +11,8 @@ const LoginForm = () => {
     setTimeout(() => {
       setLoading(false);
       message.success("Login successful!");
-      navigate("/dashboard");
+      // Store a dummy token in localStorage to simulate authentication
+      localStorage.setItem("jwtToken", "dummy-jwt-token");
     }, 1500);
   };
 
