@@ -13,6 +13,7 @@ const LoginForm = () => {
       message.success("Login successful!");
       // Store a dummy token in localStorage to simulate authentication
       localStorage.setItem("jwtToken", "dummy-jwt-token");
+      window.dispatchEvent(new Event("jwt-token-change"));
     }, 1500);
   };
 

@@ -2,21 +2,13 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Dashboard from "./features/Dashboard/Dashboard";
 import Login from "./features/Login/Login";
-
-function ProtectedRoute({ children }) {
-  const token = typeof window !== "undefined" ? localStorage.getItem("jwtToken") : null;
-  return token ? children : <Navigate to="/" replace />;
-}
-
-function DefaultRoute() {
-  const token = typeof window !== "undefined" ? localStorage.getItem("jwtToken") : null;
-  return token ? <Navigate to="/dashboard" replace /> : <Login />;
-}
+import { LoginRoute } from "./shared/security/login.route";
+import { ProtectedRoute } from "./shared/security/protected.route";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<DefaultRoute />} />
+      <Route path="/" element={<LoginRoute />} />
       <Route
         path="/dashboard"
         element={
