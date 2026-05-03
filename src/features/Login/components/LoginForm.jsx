@@ -6,7 +6,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async () => {
     setLoading(true);
 
     // Simulate API call / fake auth delay
