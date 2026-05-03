@@ -23,7 +23,7 @@ function App() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<Home />} />
+        <Route index element={<Navigate to="home" replace />} />
         <Route path="home" element={<Home />} />
         <Route path="classroom" element={<Classroom />} />
         <Route path="teacher" element={<Teacher />} />
