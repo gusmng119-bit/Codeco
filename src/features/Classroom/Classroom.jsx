@@ -1,13 +1,14 @@
+import { useOutletContext } from "react-router-dom";
 import "./Classroom.css";
 
-const Classroom = ({
-  filter,
-  searchClass,
-  onFilterChange,
-  onSearchChange,
-  setPage,
-  setSelectedClass,
-}) => {
+const Classroom = () => {
+  const {
+    filter,
+    searchClass,
+    onFilterChange,
+    setPage,
+    setSelectedClass,
+  } = useOutletContext();
 
   const classes = [
     {

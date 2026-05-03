@@ -1,9 +1,11 @@
+import { useOutletContext } from "react-router-dom";
 import "./Home.css";
 import profileImg from "../../assets/Profile.png";
 import logo2 from "../../assets/logo2.jpg";
 import certificateImg from "../../assets/certificate.png";
 
-const Home = ({ setPage, joined, setJoined, selectedClass }) => {
+const Home = () => {
+  const { setPage, joined, setJoined, selectedClass } = useOutletContext();
 
   
   const classData = selectedClass || {

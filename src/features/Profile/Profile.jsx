@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import "./Profile.css";
 
 // ✅ pastikan path sesuai struktur folder kamu
 import profileImg from "../../assets/Profile.png";
 import BannerImg from "../../assets/Baner.jpg";
 
-const Profile = ({ setPage }) => {
+const Profile = () => {
+  const { setPage } = useOutletContext();
   const [editMode, setEditMode] = useState(false);
 
   return (
