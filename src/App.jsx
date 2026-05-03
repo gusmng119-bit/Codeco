@@ -24,13 +24,13 @@ function App() {
         }
       >
         <Route index element={<Navigate to="home" replace />} />
-        <Route path="home" element={<Home />} />
-        <Route path="classroom" element={<Classroom />} />
-        <Route path="teacher" element={<Teacher />} />
-        <Route path="certificate" element={<Certificate />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="material" element={<ClassMaterial />} />
-        <Route path="feedback" element={<FeedbackClass />} />
+        <Route path="home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="classroom" element={<ProtectedRoute><Classroom /></ProtectedRoute>} />
+        <Route path="teacher" element={<ProtectedRoute><Teacher /></ProtectedRoute>} />
+        <Route path="certificate" element={<ProtectedRoute><Certificate /></ProtectedRoute>} />
+        <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="material" element={<ProtectedRoute><ClassMaterial /></ProtectedRoute>} />
+        <Route path="feedback" element={<ProtectedRoute><FeedbackClass /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>
       <Route path="*" element={<div>404 Not Found</div>} />
