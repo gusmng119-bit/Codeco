@@ -1,63 +1,34 @@
-import { useMemo, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./Dashboard.css";
 
 import logo1 from "../../assets/logo1.png";
 
+import Home from "../Home/Home";
+import Classroom from "../Classroom/Classroom";
+import Teacher from "../Teacher/Teacher";
+import Certificate from "../Certificate/Certificate";
+import Profile from "../Profile/Profile";
+import ClassMaterial from "../Material/Material";
+import FeedbackClass from "../Feedback/Feedback";
+
 const Dashboard = () => {
-<<<<<<< HEAD
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [filter, setFilter] = useState("today");
-  const [searchClass, setSearchClass] = useState("");
-
-  // ✅ CLASS YANG DIPILIH
-  const [selectedClass] = useState(null);
-=======
-
-  /* PAGE CONTROL */
+  /* ================= PAGE ================= */
   const [page, setPage] = useState("home");
 
-  /* CLASS FILTER */
+  /* ================= CLASS FILTER ================= */
   const [filter, setFilter] = useState("today");
   const [searchClass, setSearchClass] = useState("");
 
-  /* GLOBAL SELECTED CLASS */
+  /* ================= GLOBAL STATE ================= */
   const [selectedClass, setSelectedClass] = useState(null);
->>>>>>> 94c6236 (fix: resolve husky eslint issues)
-
-  /* GLOBAL JOIN STATUS */
   const [joined, setJoined] = useState(false);
 
-<<<<<<< HEAD
-  const currentPage = useMemo(() => {
-    const route = location.pathname.replace(/^\/dashboard\/?/, "");
-    return route === "" ? "home" : route;
-  }, [location.pathname]);
-
-  const setPage = (page) => {
-    const path = page === "home" ? "/dashboard" : `/dashboard/${page}`;
-    navigate(path);
-  };
-
-  const outletContext = {
-    setPage,
-    selectedClass,
-    joined,
-    setJoined,
-    filter,
-    searchClass,
-    setFilter,
-    setSearchClass,
-=======
-  /* GLOBAL CERTIFICATE (LOAD FROM LOCAL STORAGE) */
+  /* ================= CERTIFICATE ================= */
   const [certificates, setCertificates] = useState(() => {
     return JSON.parse(localStorage.getItem("certificates")) || [];
   });
 
-  /* SAVE CERTIFICATE GLOBAL */
   const saveCertificate = (course) => {
-
     const oldCertificates =
       JSON.parse(localStorage.getItem("certificates")) || [];
 
@@ -78,120 +49,88 @@ const Dashboard = () => {
       image: course.certificateImg,
     };
 
-    const updatedCertificates = [
-      ...oldCertificates,
-      newCertificate,
-    ];
+    const updatedCertificates = [...oldCertificates, newCertificate];
 
-    localStorage.setItem(
-      "certificates",
-      JSON.stringify(updatedCertificates)
-    );
-
+    localStorage.setItem("certificates", JSON.stringify(updatedCertificates));
     setCertificates(updatedCertificates);
-  };
-
-  /* PAGE ROUTER */
-  const renderPage = () => {
-    switch (page) {
-
-      case "home":
-        return (
-          <Home
-            setPage={setPage}
-            selectedClass={selectedClass}
-            joined={joined}
-            setJoined={setJoined}
-            saveCertificate={saveCertificate}
-          />
-        );
-
-      case "classroom":
-        return (
-          <Classroom
-            filter={filter}
-            searchClass={searchClass}
-            onFilterChange={setFilter}
-            onSearchChange={setSearchClass}
-            setPage={setPage}
-            setSelectedClass={setSelectedClass}
-          />
-        );
-
-      case "teacher":
-        return <Teacher />;
-
-      case "certificate":
-        return <Certificate certificates={certificates} />;
-
-      case "profile":
-        return <Profile setPage={setPage} />;
-
-      case "material":
-        return <ClassMaterial setPage={setPage} />;
-
-      case "feedback":
-        return <FeedbackClass setPage={setPage} />;
-
-      default:
-        return <Home setPage={setPage} />;
-    }
->>>>>>> 94c6236 (fix: resolve husky eslint issues)
   };
 
   return (
     <div className="dashboard-wrapper">
-
+      {/* ================= SIDEBAR ================= */}
       <aside className="sidebar">
-
         <div className="logo-section">
-          <img
-            src={logo1}
-            alt="logo"
-            className="brand-logo-img-standalone"
-          />
+          <img src={logo1} alt="logo" className="brand-logo-img-standalone" />
         </div>
 
         <nav className="nav-menu">
-
           <div
-            className={`nav-item ${currentPage === "home" ? "active" : ""}`}
+            className={`nav-item ${page === "home" ? "active" : ""}`}
             onClick={() => setPage("home")}
           >
             🏠 Home
           </div>
 
           <div
-            className={`nav-item ${currentPage === "classroom" ? "active" : ""}`}
+            className={`nav-item ${page === "classroom" ? "active" : ""}`}
             onClick={() => setPage("classroom")}
           >
             📖 Classroom
           </div>
 
           <div
-            className={`nav-item ${currentPage === "teacher" ? "active" : ""}`}
+            className={`nav-item ${page === "teacher" ? "active" : ""}`}
             onClick={() => setPage("teacher")}
           >
             🎓 Teacher
           </div>
 
           <div
-            className={`nav-item ${currentPage === "certificate" ? "active" : ""}`}
+            className={`nav-item ${page === "certificate" ? "active" : ""}`}
             onClick={() => setPage("certificate")}
           >
             🏆 Certificate
           </div>
-
         </nav>
-
       </aside>
 
+      {/* ================= MAIN ================= */}
       <div className="main-area">
         <main className="content-container">
-          <Outlet context={outletContext} />
+          {page === "home" && (
+            <Home
+              setPage={setPage}
+              selectedClass={selectedClass}
+              joined={joined}
+              setJoined={setJoined}
+              saveCertificate={saveCertificate}
+            />
+          )}
+
+          {page === "classroom" && (
+            <Classroom
+              filter={filter}
+              searchClass={searchClass}
+              onFilterChange={setFilter}
+              onSearchChange={setSearchClass}
+              setPage={setPage}
+              setSelectedClass={setSelectedClass}
+            />
+          )}
+
+          {page === "teacher" && <Teacher />}
+
+          {page === "certificate" && (
+            <Certificate certificates={certificates} />
+          )}
+
+          {page === "profile" && <Profile setPage={setPage} />}
+
+          {page === "material" && <ClassMaterial setPage={setPage} />}
+
+          {page === "feedback" && <FeedbackClass setPage={setPage} />}
         </main>
       </div>
-
     </div>
   );
 };

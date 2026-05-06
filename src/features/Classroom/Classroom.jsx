@@ -1,14 +1,13 @@
-import { useOutletContext } from "react-router-dom";
 import "./Classroom.css";
 
-const Classroom = () => {
-  const {
-    filter,
-    searchClass,
-    onFilterChange,
-    setPage,
-    setSelectedClass,
-  } = useOutletContext();
+const Classroom = ({
+  filter,
+  searchClass,
+  onFilterChange,
+  onSearchChange,
+  setPage,
+  setSelectedClass,
+}) => {
 
   /* ================= CLASS DATA ================= */
   const classes = [
@@ -80,16 +79,16 @@ const Classroom = () => {
     return matchFilter && matchSearch;
   });
 
-  /* ================= GO TO HOME ================= */
+  /* ================= OPEN CLASS ================= */
   const handleOpenClass = (c) => {
-    setSelectedClass(c); // simpan class global
-    setPage("home");     // pindah ke home
+    setSelectedClass(c);
+    setPage("home");
   };
 
   return (
     <div className="classroom-page">
 
-      {/* ================= HEADER ================= */}
+      {/* HEADER */}
       <div className="classroom-header">
 
         {/* FILTER */}
@@ -118,7 +117,7 @@ const Classroom = () => {
 
       </div>
 
-      {/* ================= CLASS LIST ================= */}
+      {/* CLASS LIST */}
       <div className="class-list">
 
         {filteredClasses.length === 0 && (
@@ -156,7 +155,6 @@ const Classroom = () => {
                   🕒 {c.time}
                 </div>
 
-                {/* ✅ VIEW + JOIN SAMA */}
                 <button
                   className="view-btn"
                   onClick={() => handleOpenClass(c)}

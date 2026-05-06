@@ -1,75 +1,83 @@
-<<<<<<< HEAD
-import { useOutletContext } from "react-router-dom";
-=======
-import { useState } from "react";
->>>>>>> 94c6236 (fix: resolve husky eslint issues)
+import React, { useState } from "react";
 import "./Home.css";
+
 import profileImg from "../../assets/Profile.png";
 import logo2 from "../../assets/logo2.jpg";
 import certificateImg from "../../assets/certificate.png";
 
-<<<<<<< HEAD
+import { useOutletContext } from "react-router-dom";
+
 const Home = () => {
-  const { setPage, joined, setJoined, selectedClass } = useOutletContext();
-=======
-const Home = ({
-  setPage,
-  joined,
-  setJoined,
-  selectedClass,
-}) => {
+  /* ================= OUTLET CONTEXT ================= */
+  const outlet = useOutletContext?.() || {};
+
+  const { setPage, joined, setJoined, selectedClass } = outlet;
+
+  /* ================= LOCAL FALLBACK STATE ================= */
+  const [localJoined, setLocalJoined] = useState(false);
+
+  // gunakan context jika ada, jika tidak pakai local state
+  const isJoined =
+    typeof joined === "boolean" ? joined : localJoined;
+
+  const handleJoin =
+    typeof setJoined === "function"
+      ? () => setJoined(true)
+      : () => setLocalJoined(true);
+
+  const goPage =
+    typeof setPage === "function"
+      ? setPage
+      : () => {};
+
+  /* ================= CLASS DATA ================= */
+  const classData =
+    selectedClass || {
+      title: "Robotic Class",
+      instructor: "Mr. Ilham",
+      time: "09:00-11:00",
+    };
 
   /* ================= CERTIFICATE MODAL ================= */
   const [showCertificate, setShowCertificate] = useState(false);
->>>>>>> 94c6236 (fix: resolve husky eslint issues)
-
-  const classData = selectedClass || {
-    title: "Robotic Class",
-    instructor: "Mr. Ilham",
-    time: "09:00-11:00",
-  };
 
   const downloadCertificate = () => {
+    const oldCertificates =
+      JSON.parse(localStorage.getItem("certificates")) || [];
 
-  const oldCertificates =
-    JSON.parse(localStorage.getItem("certificates")) || [];
+    const alreadyExist = oldCertificates.find(
+      (c) => c.className === classData.title
+    );
 
-  // ❌ prevent duplicate
-  const alreadyExist = oldCertificates.find(
-    (c) => c.className === classData.title
-  );
+    if (alreadyExist) {
+      alert("Certificate already saved!");
+      setShowCertificate(false);
+      return;
+    }
 
-  if (alreadyExist) {
-    alert("Certificate already saved!");
-    return;
-  }
+    const newCertificate = {
+      id: Date.now(),
+      className: classData.title,
+      instructor: classData.instructor,
+      date: new Date().toLocaleDateString(),
+      image: certificateImg,
+    };
 
-  const newCertificate = {
-    id: Date.now(),
-    className: classData.title,
-    instructor: classData.instructor,
-    date: new Date().toLocaleDateString(),
-    image: certificateImg,
+    localStorage.setItem(
+      "certificates",
+      JSON.stringify([...oldCertificates, newCertificate])
+    );
+
+    alert("Certificate saved!");
+    setShowCertificate(false);
   };
-
-  /* ✅ SAVE ONLY (NO DOWNLOAD FILE) */
-  localStorage.setItem(
-    "certificates",
-    JSON.stringify([...oldCertificates, newCertificate])
-  );
-
-  alert("Certificate saved to Certificate Page!");
-
-  setShowCertificate(false); // auto close modal
-};
-
 
   return (
     <>
       {/* ================= USER GREETING ================= */}
       <header
         className="user-greeting-card"
-        onClick={() => setPage("profile")}
+        onClick={() => goPage("profile")}
         style={{ cursor: "pointer" }}
       >
         <div className="avatar-main">
@@ -98,12 +106,13 @@ const Home = ({
             </div>
           </div>
 
+          {/* ✅ FIX JOIN BUTTON */}
           <button
-            className={`join-now-btn ${joined ? "joined" : ""}`}
-            onClick={() => !joined && setJoined(true)}
-            disabled={joined}
+            className={`join-now-btn ${isJoined ? "joined" : ""}`}
+            onClick={handleJoin}
+            disabled={isJoined}
           >
-            {joined ? "Joined" : "Join Class"}
+            {isJoined ? "Joined" : "Join Class"}
           </button>
         </div>
       </section>
@@ -114,17 +123,15 @@ const Home = ({
 
           {/* FEEDBACK */}
           <div className="status-row">
-
             <div
-              className={`status-card ${!joined ? "locked" : ""}`}
-              onClick={() => joined && setPage("feedback")}
+              className={`status-card ${!isJoined ? "locked" : ""}`}
+              onClick={() => isJoined && goPage("feedback")}
             >
-              {!joined && <span className="icon-lock">🔒</span>}
-
+              {!isJoined && <span className="icon-lock">🔒</span>}
               <h4>Teacher Feedback</h4>
 
-              {!joined ? (
-                <p>Will be shown here after you complete the class</p>
+              {!isJoined ? (
+                <p>Will appear after joining class</p>
               ) : (
                 <>
                   <p>⭐ Excellent participation!</p>
@@ -134,19 +141,18 @@ const Home = ({
             </div>
 
             <div
-              className={`status-card ${!joined ? "locked" : ""}`}
+              className={`status-card ${!isJoined ? "locked" : ""}`}
               onClick={() =>
-                joined
-                  ? setPage("material")
-                  : alert("Silahkan join class terlebih dahulu!")
+                isJoined
+                  ? goPage("material")
+                  : alert("Join class first!")
               }
             >
-              {!joined && <span className="icon-lock">📖</span>}
-
+              {!isJoined && <span className="icon-lock">📖</span>}
               <h4>Today's Material</h4>
 
-              {!joined ? (
-                <p>Class material will be accessible after you join</p>
+              {!isJoined ? (
+                <p>Material locked</p>
               ) : (
                 <ul>
                   <li>{classData.title}</li>
@@ -155,12 +161,11 @@ const Home = ({
                 </ul>
               )}
             </div>
-
           </div>
 
           {/* PROGRESS */}
           <div className="progress-section">
-            <h4>Learning progress</h4>
+            <h4>Learning Progress</h4>
 
             <div className="progress-card-inner">
               <img src={logo2} alt="Robot" className="mini-robot" />
@@ -168,30 +173,39 @@ const Home = ({
               <div className="progress-details">
                 <div className="progress-header">
                   <strong>{classData.title}</strong>
-                  <span>{joined ? "50%" : "0%"}</span>
+                  <span>{isJoined ? "50%" : "0%"}</span>
                 </div>
 
-                <p className="teacher-sub">{classData.instructor}</p>
+                <p className="teacher-sub">
+                  {classData.instructor}
+                </p>
 
                 <div className="progress-bar-bg">
                   <div
                     className="progress-bar-fill"
-                    style={{ width: joined ? "50%" : "0%" }}
+                    style={{
+                      width: isJoined ? "50%" : "0%",
+                    }}
                   />
                 </div>
 
                 <p className="no-progress-msg">
-                  {joined ? "Progress Started!" : "🔒 No progress yet"}
+                  {isJoined
+                    ? "Progress Started!"
+                    : "🔒 No progress yet"}
                 </p>
               </div>
             </div>
           </div>
-
         </div>
 
-        {/* ================= CERTIFICATE SIDEBAR ================= */}
-        <div className={`certificate-sidebar ${!joined ? "locked" : ""}`}>
-          {!joined ? (
+        {/* ================= CERTIFICATE ================= */}
+        <div
+          className={`certificate-sidebar ${
+            !isJoined ? "locked" : ""
+          }`}
+        >
+          {!isJoined ? (
             <>
               <span className="big-lock">🔒</span>
               <p>No Certificate yet</p>
@@ -205,56 +219,50 @@ const Home = ({
               />
 
               <button
-  className="view-certificate-btn"
-  onClick={() => setShowCertificate(true)}
->
-  View Certificate
-</button>
+                className="view-certificate-btn"
+                onClick={() => setShowCertificate(true)}
+              >
+                View Certificate
+              </button>
             </>
           )}
         </div>
-
       </div>
 
-{/* ================= CERTIFICATE MODAL ================= */}
-{showCertificate && (
-  <div
-    className="certificate-overlay"
-    onClick={() => setShowCertificate(false)}
-  >
-    <div
-      className="certificate-modal"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* CLOSE */}
-      <button
-        className="close-btn"
-        onClick={() => setShowCertificate(false)}
-      >
-        ✕
-      </button>
+      {/* ================= CERTIFICATE MODAL ================= */}
+      {showCertificate && (
+        <div
+          className="certificate-overlay"
+          onClick={() => setShowCertificate(false)}
+        >
+          <div
+            className="certificate-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="close-btn"
+              onClick={() => setShowCertificate(false)}
+            >
+              ✕
+            </button>
 
-      {/* CERTIFICATE IMAGE */}
-      <img
-        src={certificateImg}
-        alt="Certificate"
-        className="certificate-preview"
-      />
+            <img
+              src={certificateImg}
+              alt="Certificate"
+              className="certificate-preview"
+            />
 
-      {/* INFO */}
-      <h3>{classData.title}</h3>
-      
+            <h3>{classData.title}</h3>
 
-      {/* DOWNLOAD */}
-      <button
-        className="download-btn"
-        onClick={downloadCertificate}
-      >
-        Download Certificate
-      </button>
-    </div>
-  </div>
-)}
+            <button
+              className="download-btn"
+              onClick={downloadCertificate}
+            >
+              Download Certificate
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
