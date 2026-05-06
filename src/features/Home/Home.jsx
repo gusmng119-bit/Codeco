@@ -1,18 +1,68 @@
+<<<<<<< HEAD
 import { useOutletContext } from "react-router-dom";
+=======
+import { useState } from "react";
+>>>>>>> 94c6236 (fix: resolve husky eslint issues)
 import "./Home.css";
 import profileImg from "../../assets/Profile.png";
 import logo2 from "../../assets/logo2.jpg";
 import certificateImg from "../../assets/certificate.png";
 
+<<<<<<< HEAD
 const Home = () => {
   const { setPage, joined, setJoined, selectedClass } = useOutletContext();
+=======
+const Home = ({
+  setPage,
+  joined,
+  setJoined,
+  selectedClass,
+}) => {
 
-  
+  /* ================= CERTIFICATE MODAL ================= */
+  const [showCertificate, setShowCertificate] = useState(false);
+>>>>>>> 94c6236 (fix: resolve husky eslint issues)
+
   const classData = selectedClass || {
     title: "Robotic Class",
     instructor: "Mr. Ilham",
     time: "09:00-11:00",
   };
+
+  const downloadCertificate = () => {
+
+  const oldCertificates =
+    JSON.parse(localStorage.getItem("certificates")) || [];
+
+  // ❌ prevent duplicate
+  const alreadyExist = oldCertificates.find(
+    (c) => c.className === classData.title
+  );
+
+  if (alreadyExist) {
+    alert("Certificate already saved!");
+    return;
+  }
+
+  const newCertificate = {
+    id: Date.now(),
+    className: classData.title,
+    instructor: classData.instructor,
+    date: new Date().toLocaleDateString(),
+    image: certificateImg,
+  };
+
+  /* ✅ SAVE ONLY (NO DOWNLOAD FILE) */
+  localStorage.setItem(
+    "certificates",
+    JSON.stringify([...oldCertificates, newCertificate])
+  );
+
+  alert("Certificate saved to Certificate Page!");
+
+  setShowCertificate(false); // auto close modal
+};
+
 
   return (
     <>
@@ -48,7 +98,6 @@ const Home = () => {
             </div>
           </div>
 
-          {/* ✅ JOIN BUTTON FIX */}
           <button
             className={`join-now-btn ${joined ? "joined" : ""}`}
             onClick={() => !joined && setJoined(true)}
@@ -59,17 +108,16 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ================= DASHBOARD GRID ================= */}
+      {/* ================= DASHBOARD ================= */}
       <div className="dashboard-grid">
         <div className="grid-left-col">
 
+          {/* FEEDBACK */}
           <div className="status-row">
 
-            {/* FEEDBACK */}
             <div
               className={`status-card ${!joined ? "locked" : ""}`}
               onClick={() => joined && setPage("feedback")}
-              style={{ cursor: joined ? "pointer" : "not-allowed" }}
             >
               {!joined && <span className="icon-lock">🔒</span>}
 
@@ -85,7 +133,6 @@ const Home = () => {
               )}
             </div>
 
-            {/* MATERIAL */}
             <div
               className={`status-card ${!joined ? "locked" : ""}`}
               onClick={() =>
@@ -93,7 +140,6 @@ const Home = () => {
                   ? setPage("material")
                   : alert("Silahkan join class terlebih dahulu!")
               }
-              style={{ cursor: joined ? "pointer" : "not-allowed" }}
             >
               {!joined && <span className="icon-lock">📖</span>}
 
@@ -135,9 +181,7 @@ const Home = () => {
                 </div>
 
                 <p className="no-progress-msg">
-                  {joined
-                    ? " Progress Started!"
-                    : "🔒 No progress yet"}
+                  {joined ? "Progress Started!" : "🔒 No progress yet"}
                 </p>
               </div>
             </div>
@@ -145,7 +189,7 @@ const Home = () => {
 
         </div>
 
-        {/* CERTIFICATE */}
+        {/* ================= CERTIFICATE SIDEBAR ================= */}
         <div className={`certificate-sidebar ${!joined ? "locked" : ""}`}>
           {!joined ? (
             <>
@@ -160,18 +204,57 @@ const Home = () => {
                 className="certificate-img"
               />
 
-              <a
-                href={certificateImg}
-                download="certificate.png"
-                className="download-btn"
-              >
-                View Certificate
-              </a>
+              <button
+  className="view-certificate-btn"
+  onClick={() => setShowCertificate(true)}
+>
+  View Certificate
+</button>
             </>
           )}
         </div>
 
       </div>
+
+{/* ================= CERTIFICATE MODAL ================= */}
+{showCertificate && (
+  <div
+    className="certificate-overlay"
+    onClick={() => setShowCertificate(false)}
+  >
+    <div
+      className="certificate-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* CLOSE */}
+      <button
+        className="close-btn"
+        onClick={() => setShowCertificate(false)}
+      >
+        ✕
+      </button>
+
+      {/* CERTIFICATE IMAGE */}
+      <img
+        src={certificateImg}
+        alt="Certificate"
+        className="certificate-preview"
+      />
+
+      {/* INFO */}
+      <h3>{classData.title}</h3>
+      
+
+      {/* DOWNLOAD */}
+      <button
+        className="download-btn"
+        onClick={downloadCertificate}
+      >
+        Download Certificate
+      </button>
+    </div>
+  </div>
+)}
     </>
   );
 };

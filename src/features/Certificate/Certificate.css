@@ -1,20 +1,24 @@
+/* ================= PAGE ================= */
 .cert-page {
   width: 100%;
-  padding: 30px;
-  background: #f5f6fa;
+  padding: 35px;
+  background: #f6f7fb;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
+/* ================= HEADER ================= */
 .cert-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .cert-title-area h2 {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 600;
+  margin-bottom: 5px;
 }
 
 .cert-title-area p {
@@ -22,75 +26,87 @@
   font-size: 14px;
 }
 
+/* Badge count */
 .cert-count-badge {
-  margin-top: 8px;
+  margin-top: 10px;
   background: #6c5ce7;
   color: white;
   display: inline-block;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 20px;
   font-size: 13px;
+  font-weight: 500;
 }
 
+/* ================= SEARCH ================= */
 .search-box-cert {
   position: relative;
 }
 
 .search-box-cert input {
-  padding: 10px 35px 10px 12px;
-  border-radius: 8px;
+  padding: 10px 40px 10px 15px;
+  border-radius: 10px;
   border: 1px solid #ddd;
   outline: none;
+  width: 230px;
+  transition: 0.3s;
+}
+
+.search-box-cert input:focus {
+  border-color: #56bbc4;
 }
 
 .search-icon {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
 }
 
+/* ================= GRID ================= */
 .cert-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
+  gap: 28px;
 }
 
+/* ================= CARD ================= */
 .cert-card {
   background: white;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.05);
   transition: 0.3s;
 }
 
 .cert-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
 }
 
+/* IMAGE AREA */
 .cert-img-wrapper {
   width: 100%;
-  height: 180px;
-  overflow: hidden;
-  /* Tambahkan ini */
+  height: 190px;
+  background: #f3f5f9;
   display: flex;
-  justify-content: center; /* Tengah horizontal */
-  align-items: center;     /* Tengah vertikal */
-}
-.cert-img-wrapper img {
-  /* Hapus width/height 100% jika ingin gambar ukuran aslinya namun tetap di tengah */
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* Agar gambar utuh terlihat tanpa terpotong */
+  justify-content: center;
+  align-items: center;
 }
 
+.cert-img-wrapper img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+/* ================= INFO ================= */
 .cert-info {
-  padding: 18px;
+  padding: 20px;
 }
 
 .cert-info h3 {
   font-size: 18px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .cert-info .instructor {
@@ -99,31 +115,134 @@
 }
 
 .cert-date {
-  margin: 10px 0;
+  margin: 12px 0;
   font-size: 14px;
   color: #555;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
+/* ================= BUTTON ================= */
 .view-cert-btn {
   width: 100%;
   border: none;
   background: #56bbc4;
   color: white;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 10px;
   cursor: pointer;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  transition: 0.25s;
 }
 
 .view-cert-btn:hover {
-  background: #56bbc4;
+  background: #43aab3;
 }
 
 .arrow-icon {
   font-size: 18px;
+}
+
+/* ===================================================== */
+/* ================= MODAL STYLE ======================= */
+/* ===================================================== */
+
+.cert-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+/* MODAL BOX */
+.cert-modal {
+  background: white;
+  border-radius: 24px;
+  padding: 35px;
+  width: 950px;
+  max-width: 95%;
+  text-align: center;
+  position: relative;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+
+  animation: popup 0.3s ease;
+}
+
+/* POPUP ANIMATION */
+@keyframes popup {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* CLOSE BUTTON */
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  border: none;
+  background: #eee;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+.modal-close:hover {
+  background: #ddd;
+}
+
+/* CERTIFICATE IMAGE PREVIEW */
+.modal-cert-img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+/* TEXT INFO */
+.modal-cert-info h3 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.modal-cert-info p {
+  color: #777;
+  margin-bottom: 25px;
+}
+
+/* DOWNLOAD BUTTON */
+.download-btn {
+  background: #3ca321;
+  color: white;
+  border: none;
+  padding: 13px 32px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.download-btn:hover {
+  background: #2e8719;
 }

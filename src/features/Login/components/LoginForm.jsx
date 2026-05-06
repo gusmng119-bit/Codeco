@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Input, message } from "antd";
+import "./LoginForm.css";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
@@ -7,26 +8,44 @@ const LoginForm = () => {
   const handleSubmit = async () => {
     setLoading(true);
 
-    // Simulate API call / fake auth delay
+    // Simulasi Auth sesuai kredensial demo kamu
     setTimeout(() => {
+<<<<<<< HEAD:src/features/Login/components/LoginForm.jsx
       setLoading(false);
       message.success("Login successful!");
       // Store a dummy token in localStorage to simulate authentication
       localStorage.setItem("jwtToken", "dummy-jwt-token");
       window.dispatchEvent(new Event("jwt-token-change"));
+=======
+      const demoEmail = "gusmng119@gmail.com";
+      const demoPassword = "admin123";
+      
+      if (values.email === demoEmail && values.password === demoPassword) {
+        setLoading(false);
+        message.success("Login successful! Welcome back.");
+        localStorage.setItem("token", "fake-jwt-token");
+        navigate("/dashboard");
+      } else {
+        setLoading(false);
+        message.error("Invalid email or password.");
+      }
+>>>>>>> 94c6236 (fix: resolve husky eslint issues):src/features/login-new/components/LoginForm.jsx
     }, 1500);
   };
 
   return (
-    <div style={{ width: "100%", maxWidth: 400, padding: "0 32px" }}>
-      <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8 }}>
-        Welcome!
-      </h1>
-      <p style={{ color: "#888", marginBottom: 32 }}>
-        Please enter your details to sign in.
-      </p>
+    <div className="login-form-container">
+      {/* Title sesuai desain gambar */}
+      <h1 className="login-title">Welcome!</h1>
 
-      <Form layout="vertical" onFinish={handleSubmit} autoComplete="off">
+      <Form 
+        className="login-form" 
+        layout="vertical" 
+        onFinish={handleSubmit} 
+        autoComplete="off"
+        requiredMark={false} // Menghilangkan tanda bintang merah agar lebih clean
+      >
+        {/* Input Email */}
         <Form.Item
           label="Email"
           name="email"
@@ -35,36 +54,34 @@ const LoginForm = () => {
             { type: "email", message: "Please enter a valid email address." },
           ]}
         >
-          <Input size="large" placeholder="you@example.com" />
+          <Input 
+            size="large" 
+            placeholder="example@mail.com" 
+            className="custom-input"
+          />
         </Form.Item>
 
+        {/* Input Password */}
         <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            { required: true, message: "Please enter your password." },
-            {
-              min: 6,
-              message: "Password must be at least 6 characters long.",
-            },
-          ]}
-        >
-          <Input.Password size="large" placeholder="Enter your password" />
-        </Form.Item>
+  label="Password"
+  name="password"
+  rules={[{ required: true, message: "Please enter your password." }]}
+>
+  <Input.Password 
+    placeholder="Enter your password"
+    /* Hapus size="large" jika tingginya sudah diatur di CSS */
+    variant="borderless" /* Menghilangkan border default AntD */
+  />
+</Form.Item>
 
-        <Form.Item style={{ marginTop: 24 }}>
+        {/* Button Login */}
+        <Form.Item style={{ marginTop: '20px' }}>
           <Button
-            type="primary"
+            className="login-button"
             htmlType="submit"
             size="large"
             block
             loading={loading}
-            style={{
-              backgroundColor: "#1a73e8",
-              borderRadius: 8,
-              height: 48,
-              fontWeight: 600,
-            }}
           >
             {loading ? "Logging in..." : "Login"}
           </Button>
@@ -75,4 +92,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-

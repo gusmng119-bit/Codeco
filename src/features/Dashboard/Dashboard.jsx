@@ -5,6 +5,7 @@ import "./Dashboard.css";
 import logo1 from "../../assets/logo1.png";
 
 const Dashboard = () => {
+<<<<<<< HEAD
   const navigate = useNavigate();
   const location = useLocation();
   const [filter, setFilter] = useState("today");
@@ -12,10 +13,23 @@ const Dashboard = () => {
 
   // ✅ CLASS YANG DIPILIH
   const [selectedClass] = useState(null);
+=======
 
-  // ✅ STATUS JOIN CLASS (GLOBAL)
+  /* PAGE CONTROL */
+  const [page, setPage] = useState("home");
+
+  /* CLASS FILTER */
+  const [filter, setFilter] = useState("today");
+  const [searchClass, setSearchClass] = useState("");
+
+  /* GLOBAL SELECTED CLASS */
+  const [selectedClass, setSelectedClass] = useState(null);
+>>>>>>> 94c6236 (fix: resolve husky eslint issues)
+
+  /* GLOBAL JOIN STATUS */
   const [joined, setJoined] = useState(false);
 
+<<<<<<< HEAD
   const currentPage = useMemo(() => {
     const route = location.pathname.replace(/^\/dashboard\/?/, "");
     return route === "" ? "home" : route;
@@ -35,13 +49,101 @@ const Dashboard = () => {
     searchClass,
     setFilter,
     setSearchClass,
+=======
+  /* GLOBAL CERTIFICATE (LOAD FROM LOCAL STORAGE) */
+  const [certificates, setCertificates] = useState(() => {
+    return JSON.parse(localStorage.getItem("certificates")) || [];
+  });
+
+  /* SAVE CERTIFICATE GLOBAL */
+  const saveCertificate = (course) => {
+
+    const oldCertificates =
+      JSON.parse(localStorage.getItem("certificates")) || [];
+
+    const exist = oldCertificates.find(
+      (c) => c.className === course.title
+    );
+
+    if (exist) {
+      alert("Certificate already saved!");
+      return;
+    }
+
+    const newCertificate = {
+      id: Date.now(),
+      className: course.title,
+      instructor: course.instructor,
+      date: new Date().toLocaleDateString(),
+      image: course.certificateImg,
+    };
+
+    const updatedCertificates = [
+      ...oldCertificates,
+      newCertificate,
+    ];
+
+    localStorage.setItem(
+      "certificates",
+      JSON.stringify(updatedCertificates)
+    );
+
+    setCertificates(updatedCertificates);
+  };
+
+  /* PAGE ROUTER */
+  const renderPage = () => {
+    switch (page) {
+
+      case "home":
+        return (
+          <Home
+            setPage={setPage}
+            selectedClass={selectedClass}
+            joined={joined}
+            setJoined={setJoined}
+            saveCertificate={saveCertificate}
+          />
+        );
+
+      case "classroom":
+        return (
+          <Classroom
+            filter={filter}
+            searchClass={searchClass}
+            onFilterChange={setFilter}
+            onSearchChange={setSearchClass}
+            setPage={setPage}
+            setSelectedClass={setSelectedClass}
+          />
+        );
+
+      case "teacher":
+        return <Teacher />;
+
+      case "certificate":
+        return <Certificate certificates={certificates} />;
+
+      case "profile":
+        return <Profile setPage={setPage} />;
+
+      case "material":
+        return <ClassMaterial setPage={setPage} />;
+
+      case "feedback":
+        return <FeedbackClass setPage={setPage} />;
+
+      default:
+        return <Home setPage={setPage} />;
+    }
+>>>>>>> 94c6236 (fix: resolve husky eslint issues)
   };
 
   return (
     <div className="dashboard-wrapper">
 
-      {/* ================= SIDEBAR ================= */}
       <aside className="sidebar">
+
         <div className="logo-section">
           <img
             src={logo1}
@@ -81,9 +183,9 @@ const Dashboard = () => {
           </div>
 
         </nav>
+
       </aside>
 
-      {/* ================= MAIN CONTENT ================= */}
       <div className="main-area">
         <main className="content-container">
           <Outlet context={outletContext} />

@@ -8,16 +8,55 @@
 /* ================= HEADER ================= */
 
 .feedback-header-banner {
-  background: linear-gradient(90deg,#D95B6E,#EA7E69,#F19B68);
-  border-radius: 30px;
-  padding: 40px 50px;
+  /* Layout Dasar */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 40px 50px;
+  border-radius: 30px;
   color: white;
   margin-bottom: 40px;
+  
+  /* Container Setup */
+  position: relative;
+  overflow: hidden;
+
+  /* Background Mesh Gradient (Inspirasi image_b648b5.jpg) */
+  background-color: #EA7E69; /* Fallback warna tengah */
+  background-image: 
+    /* Sudut Kiri Atas - Deep Magenta */
+    radial-gradient(at 0% 0%, #9E007E 0%, transparent 60%),
+    /* Sudut Kanan Atas - Peach Soft */
+    radial-gradient(at 100% 0%, #FFBFC4 0%, transparent 60%),
+    /* Sudut Kiri Bawah - Pink Cerah */
+    radial-gradient(at 0% 100%, #F04D9D 0%, transparent 60%),
+    /* Sudut Kanan Bawah - Ochre/Brownish Orange */
+    radial-gradient(at 100% 100%, #B35900 0%, transparent 60%),
+    /* Layer Transisi Tengah */
+    radial-gradient(at 50% 50%, #F19B68 0%, transparent 100%);
 }
 
+/* Efek Film Grain / Noise */
+.feedback-header-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15; /* Tekstur bintik halus */
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.60' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+/* Menjaga konten tetap terbaca di atas background */
+.feedback-header-banner > * {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Tipis saja agar teks lebih 'pop' */
+}
 .feedback-header-content h1 {
   font-size: 3rem;
   margin: 0;

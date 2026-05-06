@@ -6,14 +6,53 @@
 
 /* Banner */
 .material-header-banner {
-  background: linear-gradient(90deg, #e87c86 0%, #be3563 100%);
-  border-radius: 20px;
-  padding: 30px;
+  /* Layout tetap sesuai keinginan Anda */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 30px;
+  border-radius: 30px;
   color: white;
   margin-bottom: 30px;
+  
+  /* Agar noise dan gradasi tidak keluar dari border-radius */
+  position: relative;
+  overflow: hidden;
+
+  /* Perbaikan Background: Mengikuti palet image_b648b5.jpg */
+  background-color: #EA7E69; /* Warna fallback */
+  background-image: 
+    /* Sudut Kiri Atas - Ungu/Magenta */
+    radial-gradient(at 0% 0%, #9E007E 0%, transparent 50%),
+    /* Sudut Kanan Atas - Peach Terang */
+    radial-gradient(at 100% 0%, #FFBFC4 0%, transparent 50%),
+    /* Sudut Kiri Bawah - Pink Cerah */
+    radial-gradient(at 0% 100%, #F04D9D 0%, transparent 50%),
+    /* Sudut Kanan Bawah - Ochre/Oranye Gelap */
+    radial-gradient(at 100% 100%, #B35900 0%, transparent 50%),
+    /* Tengah - Oranye Hangat (Warna dominan banner Anda) */
+    radial-gradient(at 50% 50%, #F19B68 0%, transparent 100%);
+}
+
+/* Efek Tekstur Grainy (Bintik-bintik halus) */
+.material-header-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.12; /* Sesuaikan kehalusan noise di sini */
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Pastikan konten banner tetap di atas efek noise */
+.material-header-banner > * {
+  position: relative;
+  z-index: 2;
 }
 
 .header-content h1 {

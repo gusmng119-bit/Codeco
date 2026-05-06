@@ -10,6 +10,7 @@ const Classroom = () => {
     setSelectedClass,
   } = useOutletContext();
 
+  /* ================= CLASS DATA ================= */
   const classes = [
     {
       id: 1,
@@ -49,27 +50,46 @@ const Classroom = () => {
     },
     {
       id: 5,
-      title: "Robotic Class",
+      title: "Robotic Class Advance",
       instructor: "Mr. Ilham",
-      material: "Robotic logic intro",
-      date: "2024-10-22",
+      material: "Advanced robotic logic",
+      date: "2024-10-24",
       time: "10:00 - 12:00",
       type: "today",
     },
-
+    {
+      id: 6,
+      title: "AI Practice",
+      instructor: "Mr. Budi",
+      material: "Machine learning intro",
+      date: "2024-10-25",
+      time: "14:00 - 16:00",
+      type: "today",
+    },
   ];
 
-  const filteredClasses = classes.filter(
-    (c) =>
-      (filter === "all" || c.type === filter) &&
-      (searchClass === "" ||
-        c.title.toLowerCase().includes(searchClass.toLowerCase()))
-  );
+  /* ================= FILTER + SEARCH ================= */
+  const filteredClasses = classes.filter((c) => {
+    const matchFilter = filter === "all" || c.type === filter;
+
+    const matchSearch =
+      searchClass === "" ||
+      c.title.toLowerCase().includes(searchClass.toLowerCase()) ||
+      c.instructor.toLowerCase().includes(searchClass.toLowerCase());
+
+    return matchFilter && matchSearch;
+  });
+
+  /* ================= GO TO HOME ================= */
+  const handleOpenClass = (c) => {
+    setSelectedClass(c); // simpan class global
+    setPage("home");     // pindah ke home
+  };
 
   return (
     <div className="classroom-page">
 
-      {/* HEADER */}
+      {/* ================= HEADER ================= */}
       <div className="classroom-header">
 
         {/* FILTER */}
@@ -87,21 +107,28 @@ const Classroom = () => {
 
         {/* SEARCH */}
         <div className="search-box-cert">
-          <input type="text" placeholder="search" />
+          <input
+            type="text"
+            placeholder="Search class..."
+            value={searchClass}
+            onChange={(e) => onSearchChange(e.target.value)}
+          />
           <span className="search-icon">🔍</span>
         </div>
-        
-        
-        
 
       </div>
 
-      {/* CLASS LIST */}
+      {/* ================= CLASS LIST ================= */}
       <div className="class-list">
+
+        {filteredClasses.length === 0 && (
+          <p className="no-class">No class found</p>
+        )}
+
         {filteredClasses.map((c) => (
           <div className="class-card" key={c.id}>
 
-            {/* HEADER CARD */}
+            {/* HEADER */}
             <div
               className={`card-header ${
                 c.type === "today"
@@ -120,33 +147,30 @@ const Classroom = () => {
             {/* BODY */}
             <div className="card-body">
 
-              <div className="class-title-row">
-                <h3>{c.title}</h3>
-              </div>
+              <h3>{c.title}</h3>
               <p className="material-text">{c.material}</p>
 
               <div className="card-footer">
+
                 <div className="time-info">
                   🕒 {c.time}
                 </div>
 
+                {/* ✅ VIEW + JOIN SAMA */}
                 <button
-  className="view-btn"
-  onClick={() => {
-    if (c.type === "today") {
-      setSelectedClass(c); // simpan class
-      setPage("home");     // pindah ke home
-    }
-  }}
->
-  {c.type === "today" ? "Join class" : "View"}
-</button>
+                  className="view-btn"
+                  onClick={() => handleOpenClass(c)}
+                >
+                  {c.type === "today" ? "Join Class" : "View"}
+                </button>
+
               </div>
 
             </div>
 
           </div>
         ))}
+
       </div>
 
     </div>

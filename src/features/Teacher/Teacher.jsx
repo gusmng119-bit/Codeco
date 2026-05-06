@@ -5,68 +5,68 @@ import imagesari from "../../assets/Mrs. Sari.jpeg";
 import imagecoki from "../../assets/coki.jpg";
 
 const Teachers = () => {
+
+  /* ================= STATE ================= */
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [notification, setNotification] = useState("");
 
+  /* ================= DATA ================= */
   const teachers = [
-    { id: 1, name: "Mr. Coki", subject: "Robotic", img: imagecoki, ig: "coki_robotic", yt: "CokiRobotics" },
-    { id: 2, name: "Mrs. Sari", subject: "Coding", img: imagesari, ig: "sari_coding", yt: "SariCodes" },
+    {
+      id: 1,
+      name: "Mr. Ilham",
+      subject: "Robotic",
+      img: imagecoki,
+      education: "S1 Teknik Informatika",
+      teaching: "Robotic",
+      about:
+        "Pak Ilham adalah pengajar Robotic dengan pengalaman pembelajaran berbasis praktik.",
+      ig: "IlhamGanteng11",
+      yt: "IlhamRobotic",
+      linkedin: "linkedin.com/in/ilham",
+      tiktok: "@ilhamsirobot",
+    },
+    {
+      id: 2,
+      name: "Mrs. Sari",
+      subject: "Coding",
+      img: imagesari,
+      education: "S1 Sistem Informasi",
+      teaching: "Programming",
+      about:
+        "Ibu Sari fokus pada pembelajaran coding interaktif.",
+      ig: "sari_coding",
+      yt: "SariCodes",
+      linkedin: "linkedin.com/in/sari",
+      tiktok: "@saricode",
+    },
+
     {
       id: 3,
-      name: "Mr. Budi",
-      subject: "AI Basics",
-      img: "https://img.freepik.com/free-photo/handsome-cheerful-young-indonesian-man-standing-blue-background_273609-28565.jpg",
-    },
-    {
-      id: 4,
-      name: "Ms. Lina",
-      subject: "Web Dev",
-      img: "https://img.freepik.com/free-photo/waist-up-portrait-smiling-indonesian-woman-celebrating-success_273609-44632.jpg",
-    },
-    { id: 1, name: "Mr. Coki", subject: "Robotic", img: imagecoki, ig: "coki_robotic", yt: "CokiRobotics" },
-    { id: 2, name: "Mrs. Sari", subject: "Coding", img: imagesari, ig: "sari_coding", yt: "SariCodes" },
-    {
-      id: 3,
-      name: "Mr. Budi",
-      subject: "AI Basics",
-      img: "https://img.freepik.com/free-photo/handsome-cheerful-young-indonesian-man-standing-blue-background_273609-28565.jpg",
-    },
-    {
-      id: 4,
-      name: "Ms. Lina",
-      subject: "Web Dev",
-      img: "https://img.freepik.com/free-photo/waist-up-portrait-smiling-indonesian-woman-celebrating-success_273609-44632.jpg",
-    },
-    { id: 1, name: "Mr. Coki", subject: "Robotic", img: imagecoki, ig: "coki_robotic", yt: "CokiRobotics" },
-    { id: 2, name: "Mrs. Sari", subject: "Coding", img: imagesari, ig: "sari_coding", yt: "SariCodes" },
-    {
-      id: 3,
-      name: "Mr. Budi",
-      subject: "AI Basics",
-      img: "https://img.freepik.com/free-photo/handsome-cheerful-young-indonesian-man-standing-blue-background_273609-28565.jpg",
-    },
-    {
-      id: 4,
-      name: "Ms. Lina",
-      subject: "Web Dev",
-      img: "https://img.freepik.com/free-photo/waist-up-portrait-smiling-indonesian-woman-celebrating-success_273609-44632.jpg",
+      name: "Mrs. Sari",
+      subject: "Coding",
+      img: imagesari,
+      education: "S1 Sistem Informasi",
+      teaching: "Programming",
+      about:
+        "Ibu Sari fokus pada pembelajaran coding interaktif.",
+      ig: "sari_coding",
+      yt: "SariCodes",
+      linkedin: "linkedin.com/in/sari",
+      tiktok: "@saricode",
     },
   ];
 
-  /* ================= HELPER FUNCTIONS ================= */
+  /* ================= SEARCH ================= */
+  const filteredTeachers = teachers.filter(
+    (teacher) =>
+      teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      teacher.subject.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const getHonorific = (name) => {
-    if (name.startsWith("Mr.")) return "Bapak";
-    if (name.startsWith("Mrs.") || name.startsWith("Ms.")) return "Ibu";
-    return "Pengajar";
-  };
-
-  const getLastName = (name) => {
-    return name.split(" ").slice(1).join(" ");
-  };
-
-  /* ================= HANDLER ================= */
-
+  /* ================= MODAL ================= */
   const handleViewClick = (teacher) => {
     setSelectedTeacher(teacher);
     setShowModal(true);
@@ -77,33 +77,53 @@ const Teachers = () => {
     setSelectedTeacher(null);
   };
 
+  /* ================= REQUEST ================= */
+  const handleRequestTeacher = () => {
+    setNotification(
+      `✅ Request sent successfully to ${selectedTeacher.name}`
+    );
+
+    setTimeout(() => {
+      setNotification("");
+    }, 3000);
+  };
+
   return (
     <div className="teacher-page">
+
+      {/* ===== NOTIFICATION ===== */}
+      {notification && (
+        <div className="request-notification">
+          {notification}
+        </div>
+      )}
+
+      {/* ===== HEADER ===== */}
       <header className="teacher-header">
         <h2>Our Teachers</h2>
 
-        <div className="search-box-teacher">
-          <input type="text" placeholder="search" />
-          <span>🔍</span>
+        <div className="search-box-cert">
+          <input
+            type="text"
+            placeholder="Search teacher..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <span className="search-icon">🔍</span>
         </div>
       </header>
 
-      {/* ================= GRID ================= */}
+      {/* ===== GRID ===== */}
       <div className="teacher-grid">
-        {teachers.map((t) => (
+        {filteredTeachers.map((t) => (
           <div className="teacher-card" key={t.id}>
-            <div className="teacher-img-container">
-              <img src={t.img} alt={t.name} />
-            </div>
+            <img src={t.img} alt={t.name} />
 
-            <div className="teacher-info-card">
+            <div className="teacher-info">
               <h4>{t.name}</h4>
               <p>{t.subject}</p>
 
-              <button
-                className="view-teacher-btn"
-                onClick={() => handleViewClick(t)}
-              >
+              <button onClick={() => handleViewClick(t)}>
                 View
               </button>
             </div>
@@ -111,79 +131,91 @@ const Teachers = () => {
         ))}
       </div>
 
-      {/* ================= MODAL ================= */}
+      {/* ===== MODAL ===== */}
       {showModal && selectedTeacher && (
-        <div className="modal-overlay" onClick={closeModal}>
+        <div className="teacher-modal-overlay" onClick={closeModal}>
           <div
-            className="modal-content"
+            className="teacher-modal"
             onClick={(e) => e.stopPropagation()}
           >
-            <button className="close-btn" onClick={closeModal}>
-              ×
+            <button className="modal-close" onClick={closeModal}>
+              ✕
             </button>
 
-            <div className="modal-body">
+            <div className="teacher-modal-body">
+
+              {/* ===== LEFT ===== */}
               <div className="modal-left">
-                <img
-                  src={selectedTeacher.img}
-                  alt={selectedTeacher.name}
-                  className="profile-img"
-                />
 
-                <div className="status-badge">Available</div>
-
-                <div className="social-media">
-                  <p><strong>Social Media</strong></p>
-                  <ul>
-                    <li>📸 @{selectedTeacher.ig || "teacher_ig"}</li>
-                    <li>▶️ {selectedTeacher.yt || "TeacherYT"}</li>
-                    <li>
-                      🔗 linkedin.com/in/
-                      {selectedTeacher.name
-                        .toLowerCase()
-                        .replace(/\s/g, "")}
-                    </li>
-                  </ul>
+                <div className="teacher-photo-frame">
+                  <img src={selectedTeacher.img} alt="teacher" />
                 </div>
+
+                <div className="status-available">
+                  Available
+                </div>
+
+                <div className="social-section">
+                  <h4>Sosial Media</h4>
+                  <p>📸 @{selectedTeacher.ig}</p>
+                  <p>▶ {selectedTeacher.yt}</p>
+                  <p>🔗 {selectedTeacher.linkedin}</p>
+                  <p>🎵 {selectedTeacher.tiktok}</p>
+                </div>
+
               </div>
 
+              {/* ===== RIGHT ===== */}
               <div className="modal-right">
+
                 <h1>{selectedTeacher.name}</h1>
 
-                <span className="role-tag">
+                <span className="teacher-role">
                   {selectedTeacher.subject} Teacher
                 </span>
 
-                <div className="info-section">
-                  <div className="info-item">
-                    🎓 S1 Teknik Informatika
+                <div className="info-list">
+
+                  <div className="info-box">
+                    <span>🎓</span>
+                    <div>
+                      <p>Pendidikan Terakhir</p>
+                      <strong>{selectedTeacher.education}</strong>
+                    </div>
                   </div>
 
-                  <div className="info-item">
-                    📚 Mengajar {selectedTeacher.subject}
+                  <div className="info-box">
+                    <span>📚</span>
+                    <div>
+                      <p>Mengajar</p>
+                      <strong>{selectedTeacher.teaching}</strong>
+                    </div>
                   </div>
+
                 </div>
 
                 <hr />
 
-                <div className="about-section">
+                <div className="about-teacher">
                   <h3>Tentang {selectedTeacher.name}</h3>
-                  <p>
-                    {getHonorific(selectedTeacher.name)}{" "}
-                    {getLastName(selectedTeacher.name)} adalah
-                    pengajar {selectedTeacher.subject} dengan latar
-                    belakang Teknik Informatika.
-                  </p>
+                  <p>{selectedTeacher.about}</p>
                 </div>
 
-                <button className="request-btn">
+                {/* ✅ REQUEST BUTTON (POSITION TIDAK DIUBAH) */}
+                <button
+                  className="request-button"
+                  onClick={handleRequestTeacher}
+                >
                   Request
                 </button>
+
               </div>
+
             </div>
           </div>
         </div>
       )}
+
     </div>
   );
 };

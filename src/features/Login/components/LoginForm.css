@@ -1,0 +1,137 @@
+/* LoginForm.css */
+
+.login-form-container {
+  width: 100%;
+  max-width: 500px; /* Diperlebar sedikit agar proporsional dengan gambar */
+  padding: 0;
+}
+
+.login-title {
+  /* Menghapus gradien, kembali ke warna hitam solid sesuai gambar */
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #000000;
+  -webkit-text-fill-color: initial; /* Menghapus efek sebelumnya */
+  background: none;
+  animation: none; /* Opsional: hapus jika ingin static seperti gambar */
+}
+
+/* Sembunyikan subtitle jika tidak ada di gambar referensi */
+.login-subtitle {
+  display: none;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Styling Label (Email & Password) */
+.login-form label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  color: #000;
+}
+
+/* Input Field: Dibuat sangat bulat dan abu-abu muda */
+.login-form input {
+  width: 100%;
+  padding: 1.2rem 1.5rem;
+  background-color: #e5e7eb; /* Abu-abu terang sesuai gambar */
+  border: none;
+  border-radius: 50px; /* Fully rounded */
+  font-size: 1rem;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.login-form input:focus {
+  background-color: #d1d5db;
+}
+
+/* Button: Warna Tosca/Teal dan Fully Rounded */
+.login-button {
+  background: #5ebdc2; /* Warna teal/tosca sesuai gambar */
+  color: white;
+  border: none;
+  border-radius: 50px; /* Fully rounded */
+  height: 60px;
+  font-family: 'Fredoka One', cursive; /* Menggunakan font sesuai preferensi desainmu */
+  font-weight: 400;
+  font-size: 1.25rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  box-shadow: none; /* Menghapus shadow agar flat sesuai gambar */
+  transition: background-color 0.3s ease, transform 0.1s active;
+}
+
+.login-button:hover {
+  background-color: #4da8ad;
+  transform: none;
+  box-shadow: none;
+}
+
+.login-button:active {
+  transform: scale(0.98);
+}
+
+.forgot-password {
+  display: none; /* Sembunyikan jika ingin benar-benar mirip screenshot */
+}
+
+@media (max-width: 768px) {
+  .login-title {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+}
+/* Menghilangkan wrapper bawaan AntD agar tidak terlihat double */
+.login-form .ant-input-affix-wrapper {
+  background-color: #e5e7eb !important; /* Latar belakang abu-abu */
+  border: none !important; /* Hapus kotak luar */
+  border-radius: 50px !important; /* Bulat sempurna */
+  padding: 0 1.5rem !important;
+  box-shadow: none !important;
+}
+
+/* Menghilangkan garis biru saat fokus pada wrapper */
+.login-form .ant-input-affix-wrapper-focused {
+  box-shadow: none !important;
+  outline: none !important;
+  background-color: #d1d5db !important; /* Gelap sedikit saat diklik */
+}
+
+/* Mengatur input di dalamnya agar transparan dan menyatu */
+.login-form .ant-input-affix-wrapper input {
+  background-color: transparent !important;
+  border: none !important;
+  height: 60px; /* Sesuaikan tinggi agar proporsional */
+  font-family: 'Montserrat', sans-serif;
+  outline: none !important;
+}
+
+/* Khusus untuk input email (yang bukan password) */
+.login-form .ant-input {
+  background-color: #e5e7eb !important;
+  border: none !important;
+  border-radius: 50px !important;
+  height: 60px;
+  padding: 0 1.5rem !important;
+  outline: none !important;
+}
+
+.login-form .ant-input:focus {
+  background-color: #d1d5db !important;
+  box-shadow: none !important;
+}
+
+/* Mengatur warna icon mata (eye icon) agar rapi */
+.login-form .ant-input-suffix {
+  margin-right: 10px;
+}
