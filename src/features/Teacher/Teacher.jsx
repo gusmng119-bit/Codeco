@@ -71,6 +71,7 @@ const Teachers = () => {
     setSelectedTeacher(teacher);
     setShowModal(true);
   };
+  const [requestedTeachers, setRequestedTeachers] = useState([]);
 
   const closeModal = () => {
     setShowModal(false);
@@ -78,15 +79,25 @@ const Teachers = () => {
   };
 
   /* ================= REQUEST ================= */
-  const handleRequestTeacher = () => {
-    setNotification(
-      `✅ Request sent successfully to ${selectedTeacher.name}`
-    );
+ const handleRequestTeacher = () => {
+  if (!selectedTeacher) return;
 
-    setTimeout(() => {
-      setNotification("");
-    }, 3000);
-  };
+  // kalau sudah request
+  if (requestedTeachers.includes(selectedTeacher.id)) return;
+
+  setRequestedTeachers((prev) => [
+    ...prev,
+    selectedTeacher.id,
+  ]);
+
+  setNotification(
+    `✅ Request sent successfully to ${selectedTeacher.name}`
+  );
+
+  setTimeout(() => {
+    setNotification("");
+  }, 3000);
+};
 
   return (
     <div className="teacher-page">
@@ -203,11 +214,14 @@ const Teachers = () => {
 
                 {/* ✅ REQUEST BUTTON (POSITION TIDAK DIUBAH) */}
                 <button
-                  className="request-button"
-                  onClick={handleRequestTeacher}
-                >
-                  Request
-                </button>
+  className="request-button"
+  onClick={handleRequestTeacher}
+  disabled={requestedTeachers.includes(selectedTeacher.id)}
+>
+  {requestedTeachers.includes(selectedTeacher.id)
+    ? "Requested"
+    : "Request"}
+</button>
 
               </div>
 

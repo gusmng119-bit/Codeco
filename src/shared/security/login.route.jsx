@@ -2,22 +2,33 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Login from "../../features/Login/Login";
 
+const readLoggedIn = () => {
+  return typeof window !== "undefined" &&
+    localStorage.getItem("isLoggedIn") === "true";
+};
+
 export function LoginRoute() {
-  const [token, setToken] = useState(() =>
-    typeof window !== "undefined" ? localStorage.getItem("jwtToken") : null
-  );
+  const [token, setToken] = useState(readLoggedIn);
 
   useEffect(() => {
-    const syncToken = () => setToken(localStorage.getItem("jwtToken"));
+    const syncToken = () => {
+      setToken(readLoggedIn());
+    };
 
+    // Works for multi-tab (storage event)
     window.addEventListener("storage", syncToken);
-    window.addEventListener("jwt-token-change", syncToken);
+
+    // Guarantee redirect even if same-tab localStorage is updated
+    // (without relying on a custom event that is never dispatched).
+    const intervalId = window.setInterval(syncToken, 250);
+    syncToken();
 
     return () => {
       window.removeEventListener("storage", syncToken);
-      window.removeEventListener("jwt-token-change", syncToken);
+      window.clearInterval(intervalId);
     };
   }, []);
 
   return token ? <Navigate to="/dashboard" replace /> : <Login />;
 }
+

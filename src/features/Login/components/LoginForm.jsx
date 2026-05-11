@@ -1,84 +1,99 @@
 import React, { useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import "./LoginForm.css";
-import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
-  const navigate = useNavigate();
+const LoginForm = ({ setIsLoggedIn }) => {
+
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = (values) => {
+
+    const demoEmail = "gusmng119@gmail.com";
+    const demoPassword = "admin123";
+
     setLoading(true);
 
-    // Simulasi Auth (demo credentials)
     setTimeout(() => {
-      const demoEmail = "gusmng119@gmail.com";
-      const demoPassword = "admin123";
 
-      if (values.email === demoEmail && values.password === demoPassword) {
-        setLoading(false);
-        message.success("Login successful! Welcome back.");
+      const isValid =
+        values.email === demoEmail &&
+        values.password === demoPassword;
 
-        // Keep consistent with ProtectedRoute/LoginRoute
-        localStorage.setItem("jwtToken", "dummy-jwt-token");
-        window.dispatchEvent(new Event("jwt-token-change"));
-        navigate("/dashboard");
+      if (isValid) {
+
+        message.success("Login successful!");
+
+        // ✅ SAVE LOGIN (string konsisten)
+        localStorage.setItem("isLoggedIn", "true");
+
+        // ✅ SAFE CALL (hindari error undefined)
+        if (typeof setIsLoggedIn === "function") {
+          setIsLoggedIn(true);
+        }
+
       } else {
-        setLoading(false);
         message.error("Invalid email or password.");
       }
-    }, 1500);
+
+      setLoading(false);
+
+    }, 600);
   };
 
   return (
     <div className="login-form-container">
+
       <h1 className="login-title">Welcome!</h1>
 
       <Form
-        className="login-form"
         layout="vertical"
         onFinish={handleSubmit}
         autoComplete="off"
-        requiredMark={false}
       >
+
+        {/* EMAIL */}
         <Form.Item
           label="Email"
           name="email"
           rules={[
-            { required: true, message: "Please enter your email." },
-            { type: "email", message: "Please enter a valid email address." },
+            { required: true, message: "Email wajib diisi" },
+            { type: "email", message: "Format email tidak valid" },
           ]}
         >
           <Input
             size="large"
             placeholder="example@mail.com"
-            className="custom-input"
           />
         </Form.Item>
 
+        {/* PASSWORD */}
         <Form.Item
           label="Password"
           name="password"
-          rules={[{ required: true, message: "Please enter your password." }]}
+          rules={[
+            { required: true, message: "Password wajib diisi" },
+          ]}
         >
-          <Input.Password placeholder="Enter your password" />
+          <Input.Password
+            size="large"
+            placeholder="Enter password"
+          />
         </Form.Item>
 
-        <Form.Item style={{ marginTop: "20px" }}>
-          <Button
-            className="login-button"
-            htmlType="submit"
-            size="large"
-            block
-            loading={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </Button>
-        </Form.Item>
+        {/* BUTTON */}
+        <Button
+          htmlType="submit"
+          type="primary"
+          size="large"
+          block
+          loading={loading}
+        >
+          {loading ? "Logging in..." : "Login"}
+        </Button>
+
       </Form>
     </div>
   );
 };
 
 export default LoginForm;
-

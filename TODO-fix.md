@@ -1,16 +1,15 @@
-# Fix Plan
+# TODO - Fix login -> dashboard flow
 
-## Issues Found:
-1. **Dashboard.jsx**: `Profile` component referenced but not imported/defined; `setPage` not passed to `<Home />`; missing `"material"` case.
-2. **Certificate.jsx**: Missing `export default` statement.
-3. **package.json**: Invalid React (`^19.0.0`) and Ant Design (`^6.x`) versions causing dependency failures.
-4. **Feedback.jsx**: Component name mismatch, fake links, CSS inconsistencies.
+## Step 1 (Auth key consistency)
+- Update `src/shared/security/login.route.jsx`
+  - Change auth check from `localStorage.getItem("jwtToken")` to `localStorage.getItem("isLoggedIn") === "true"`.
 
-## Steps:
-- [x] Create `src/features/Profile/Profile.jsx`
-- [x] Fix `Dashboard.jsx` imports, pass `setPage` to `<Home />`, add `"material"` case
-- [x] Fix `Certificate.jsx` export
-- [x] Fix `package.json` dependency versions
-- [x] Feedback.jsx & CSS: Rename component, fix data/CSS naming, improve modal
-- [x] Run `npm install` and verify with `npm run dev`
+- Update `src/shared/security/protected.route.jsx`
+  - Change auth check from `localStorage.getItem("jwtToken")` to `localStorage.getItem("isLoggedIn") === "true"`.
+
+## Step 2 (Verification)
+- Run the app and verify:
+  - Fresh state: `/` shows Login
+  - After login: redirect to `/dashboard`
+  - After logout: `/dashboard` is blocked and redirects to `/`
 
