@@ -1,7 +1,9 @@
+import axios from "axios";
 import { useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../../store/authStore";
 
 type LoginFormValues = {
   email: string;
@@ -10,29 +12,25 @@ type LoginFormValues = {
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (values: LoginFormValues) => {
     setLoading(true);
 
-    // Simulasi Auth (demo credentials)
-    setTimeout(() => {
-      const demoEmail = "gusmng119@gmail.com";
-      const demoPassword = "admin123";
+    try {
+      await login(values);
+      message.success("Login successful! Welcome back.");
+      navigate("/dashboard");
+    } catch (error) {
+      const errorMessage = axios.isAxiosError(error)
+        ? error.response?.data?.message ?? "Invalid email or password."
+        : "Invalid email or password.";
 
-      if (values.email === demoEmail && values.password === demoPassword) {
-        setLoading(false);
-        message.success("Login successful! Welcome back.");
-
-        // Keep consistent with ProtectedRoute/LoginRoute
-        localStorage.setItem("jwtToken", "dummy-jwt-token");
-        window.dispatchEvent(new Event("jwt-token-change"));
-        navigate("/dashboard");
-      } else {
-        setLoading(false);
-        message.error("Invalid email or password.");
-      }
-    }, 1500);
+      message.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
