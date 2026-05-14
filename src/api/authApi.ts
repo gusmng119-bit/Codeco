@@ -1,20 +1,6 @@
-import axiosClient from "./axiosClient";
+import { createApiClient } from "./apiClient";
+import { authEndpoints } from "./endpoints";
 
-export type LoginPayload = {
-  email: string;
-  password: string;
-};
+export type { LoginPayload, AuthResponse } from "./types";
 
-export type AuthResponse = {
-  token: string;
-  user: {
-    email: string;
-  };
-};
-
-export const authApi = {
-  login: async (payload: LoginPayload): Promise<AuthResponse> => {
-    const response = await axiosClient.post<AuthResponse>("/auth/login", payload);
-    return response.data;
-  },
-};
+export const authApi = createApiClient(authEndpoints);
