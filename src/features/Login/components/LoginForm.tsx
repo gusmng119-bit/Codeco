@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
 
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
+
 const LoginForm = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: LoginFormValues) => {
     setLoading(true);
 
     // Simulasi Auth (demo credentials)

@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import Login from "../../features/Login/Login";
 
 export function LoginRoute() {
-  const [token, setToken] = useState(() =>
+  const [token, setToken] = useState<string | null>(() =>
     typeof window !== "undefined" ? localStorage.getItem("jwtToken") : null
   );
 

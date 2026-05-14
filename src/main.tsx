@@ -5,7 +5,7 @@ import App from "./App";
 import { StyleProvider } from "@ant-design/cssinjs";
 import { ConfigProvider } from "antd";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <StyleProvider layer>
       <ConfigProvider>
