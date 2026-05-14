@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { authApi, LoginPayload } from "../api/authApi";
+import { authApi, type LoginPayload } from "../api/endpoints/authApi";
 
 /* eslint-disable no-unused-vars */
 type LoginFn = (payload: LoginPayload) => Promise<void>;

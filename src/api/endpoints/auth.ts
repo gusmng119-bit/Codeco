@@ -1,5 +1,5 @@
-import { defineEndpoint } from "./apiClient";
-import type { AuthResponse, LoginPayload } from "./types";
+import { defineEndpoint } from "../core/apiClient";
+import type { AuthResponse, LoginPayload } from "../types/auth";
 
 export const authEndpoints = {
   login: defineEndpoint<LoginPayload, AuthResponse>({

@@ -17,13 +17,12 @@ export type ApiDefinitions = Record<string, ApiEndpoint<unknown, unknown>>;
 
 export const defineEndpoint = <Req = unknown, Res = unknown>(endpoint: ApiEndpoint<Req, Res>) => endpoint;
 
- 
+/* eslint-disable no-unused-vars */
 type ApiFunction<E extends ApiEndpoint<unknown, unknown>> = (
-  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // _payload?: E extends ApiEndpoint<infer Req, unknown> ? Req : unknown,
-  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // _config?: AxiosRequestConfig,
+  payload?: E extends ApiEndpoint<infer Req, unknown> ? Req : unknown,
+  config?: AxiosRequestConfig,
 ) => Promise<E extends ApiEndpoint<unknown, infer Res> ? Res : unknown>;
+/* eslint-enable no-unused-vars */
 
 export type ApiClient<T extends ApiDefinitions> = {
   [K in keyof T]: ApiFunction<T[K]>;
@@ -87,8 +86,8 @@ export const createApiClient = <T extends ApiDefinitions>(endpoints: T): ApiClie
 
   Object.keys(endpoints).forEach((key) => {
     const endpoint = endpoints[key];
-    client[key as keyof T] = ((_payload?: unknown, _config?: AxiosRequestConfig) =>
-      createRequest(endpoint as ApiEndpoint<unknown, unknown>, _payload as unknown, _config)) as ApiFunction<T[keyof T]>;
+    client[key as keyof T] = ((payload?: unknown, config?: AxiosRequestConfig) =>
+      createRequest(endpoint as ApiEndpoint<unknown, unknown>, payload as unknown, config)) as ApiFunction<T[keyof T]>;
   });
 
   return client;
