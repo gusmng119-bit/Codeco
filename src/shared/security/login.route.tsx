@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import Login from "../../features/Login/Login";
+import useAuthStore from "../../store/authStore";
 
 export function LoginRoute() {
-  const [token, setToken] = useState(() =>
-    typeof window !== "undefined" ? localStorage.getItem("jwtToken") : null
-  );
+  const token = useAuthStore((state) => state.token);
+  const setToken = useAuthStore((state) => state.setToken);
 
   useEffect(() => {
     const syncToken = () => setToken(localStorage.getItem("jwtToken"));
@@ -17,7 +17,7 @@ export function LoginRoute() {
       window.removeEventListener("storage", syncToken);
       window.removeEventListener("jwt-token-change", syncToken);
     };
-  }, []);
+  }, [setToken]);
 
   return token ? <Navigate to="/dashboard" replace /> : <Login />;
 }

@@ -1,12 +1,12 @@
 import "./Classroom.css";
 
 const Classroom = ({
-  filter,
-  searchClass,
-  onFilterChange,
-  onSearchChange,
-  setPage,
-  setSelectedClass,
+  filter = "all",
+  searchClass = "",
+  onFilterChange = () => {},
+  onSearchChange = () => {},
+  setPage = () => {},
+  setSelectedClass = () => {},
 }) => {
 
   /* ================= CLASS DATA ================= */
