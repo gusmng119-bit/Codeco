@@ -1,0 +1,365 @@
+/* =========================
+   PAGE
+========================= */
+
+.class-page{
+  width: 100%;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.class-topbar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #fff;
+
+  padding: 14px 20px;
+
+  border-radius: 18px;
+
+  border: 1px solid #dcdcdc;
+
+  margin-bottom: 18px;
+}
+
+.teacher-info{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.teacher-info img{
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.teacher-info h1{
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #000;
+}
+
+.create-btn{
+  border: none;
+
+  background: #56bbc4;
+
+  color: white;
+
+  padding: 12px 20px;
+
+  border-radius: 14px;
+
+  font-size: 1rem;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.page-title{
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 18px;
+  color: black;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.class-stats{
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+
+  margin-bottom: 18px;
+}
+
+.stat-box{
+  background: white;
+
+  border: 1px solid #d7d7d7;
+
+  border-radius: 22px;
+
+  padding: 18px 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  min-height: 120px;
+}
+
+.stat-icon{
+  width: 76px;
+  height: 76px;
+
+  border-radius: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 34px;
+}
+
+.blue{
+  background: #d9f7fb;
+}
+
+.green{
+  background: #dcf7e5;
+}
+
+.yellow{
+  background: #ffe57f;
+}
+
+.stat-box h2{
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+.stat-box p{
+  margin-top: 6px;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box{
+  margin-bottom: 18px;
+}
+
+.search-box input{
+  width: 420px;
+
+  height: 52px;
+
+  padding: 0 18px;
+
+  border-radius: 16px;
+
+  border: 1px solid #cfcfcf;
+
+  font-size: 1rem;
+
+  outline: none;
+}
+
+/* =========================
+   CLASS LIST
+========================= */
+
+.class-list{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.class-card{
+  background: white;
+
+  border: 1px solid #d7d7d7;
+
+  border-radius: 22px;
+
+  padding: 14px 16px;
+
+  display: grid;
+
+  grid-template-columns:
+    90px
+    1.1fr
+    120px
+    1fr
+    220px;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+/* =========================
+   ICON
+========================= */
+
+.class-icon{
+  width: 72px;
+  height: 72px;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 32px;
+}
+
+.pink{
+  background: #ffb3cc;
+}
+
+.orange{
+  background: #ffd76d;
+}
+
+.cyan{
+  background: #58c1cb;
+}
+
+.purple{
+  background: #af97ff;
+}
+
+/* =========================
+   CLASS NAME
+========================= */
+
+.class-name h2{
+  margin: 0;
+
+  font-size: 2rem;
+
+  font-weight: 900;
+
+  color: black;
+}
+
+.status{
+  display: inline-block;
+
+  margin-top: 8px;
+
+  padding: 5px 16px;
+
+  border-radius: 999px;
+
+  font-size: 0.95rem;
+
+  font-weight: 600;
+}
+
+.active-status{
+  background: #c9f3f8;
+}
+
+.done-status{
+  background: #777;
+  color: white;
+}
+
+/* =========================
+   STUDENT
+========================= */
+
+.student-count h3{
+  margin: 0;
+
+  font-size: 2rem;
+
+  font-weight: 900;
+}
+
+.student-count p{
+  margin-top: 4px;
+
+  font-size: 1rem;
+}
+
+/* =========================
+   SCHEDULE
+========================= */
+
+.schedule h3{
+  margin: 0;
+
+  font-size: 1.6rem;
+
+  font-weight: 900;
+}
+
+.schedule p{
+  margin-top: 6px;
+
+  font-size: 1rem;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-section p{
+  margin-bottom: 10px;
+
+  font-size: 1rem;
+}
+
+.progress-bar{
+  width: 100%;
+
+  height: 16px;
+
+  background: #dddddd;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.progress-fill{
+  height: 100%;
+  border-radius: 999px;
+}
+
+.progress-pink{
+  background: #ff79a8;
+}
+
+.progress-yellow{
+  background: #f8cf63;
+}
+
+.progress-cyan{
+  background: #49b7c3;
+}
+
+.progress-purple{
+  background: #a58cf0;
+}
+
+.progress-value{
+  margin-top: 4px;
+
+  text-align: right;
+
+  font-size: 0.95rem;
+
+  font-weight: 900;
+}

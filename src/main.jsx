@@ -6,11 +6,16 @@ import { StyleProvider } from "@ant-design/cssinjs";
 import { ConfigProvider } from "antd";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+  <BrowserRouter 
+    future={{ 
+      v7_startTransition: true, 
+      v7_relativeSplatPath: true 
+    }}
+  >
     <StyleProvider layer>
       <ConfigProvider>
         <App />
       </ConfigProvider>
     </StyleProvider>
-  </BrowserRouter>,
+  </BrowserRouter>
 );

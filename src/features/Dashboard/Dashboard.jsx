@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import "./Dashboard.css";
 
+import { AiOutlineHome } from "react-icons/ai"; // home
+import { BiBook } from "react-icons/bi";       // classroom
+import { GiGraduateCap } from "react-icons/gi"; // teacher
+import { FaTrophy } from "react-icons/fa";     // certificate
+
 import logo1 from "../../assets/logo1.png";
 
 import Home from "../Home/Home";
-import Classroom from "../Classroom/Classroom";
+import Classroom from "@/features/Classroom/Classroom";
 import Teacher from "../Teacher/Teacher";
 import Certificate from "../Certificate/Certificate";
 import Profile from "../Profile/Profile";
@@ -347,51 +352,39 @@ const Dashboard = ({ setIsLoggedIn }) => {
 
         <nav className="nav-menu">
 
-          <div
-            className={`nav-item ${
-              page === "home"
-                ? "active"
-                : ""
-            }`}
-            onClick={() => setPage("home")}
-          >
-            🏠 Home
-          </div>
+  <div
+    className={`nav-item ${page === "home" ? "active" : ""}`}
+    onClick={() => setPage("home")}
+  >
+    <AiOutlineHome size={28} className="nav-icon" />
+    <span>Home</span>
+  </div>
 
-          <div
-            className={`nav-item ${
-              page === "classroom"
-                ? "active"
-                : ""
-            }`}
-            onClick={() => setPage("classroom")}
-          >
-            📖 Classroom
-          </div>
+  <div
+    className={`nav-item ${page === "classroom" ? "active" : ""}`}
+    onClick={() => setPage("classroom")}
+  >
+    <BiBook size={28} className="nav-icon" />
+    <span>Classroom</span>
+  </div>
 
-          <div
-            className={`nav-item ${
-              page === "teacher"
-                ? "active"
-                : ""
-            }`}
-            onClick={() => setPage("teacher")}
-          >
-            🎓 Teacher
-          </div>
+  <div
+    className={`nav-item ${page === "teacher" ? "active" : ""}`}
+    onClick={() => setPage("teacher")}
+  >
+    <GiGraduateCap size={28} className="nav-icon" />
+    <span>Teacher</span>
+  </div>
 
-          <div
-            className={`nav-item ${
-              page === "certificate"
-                ? "active"
-                : ""
-            }`}
-            onClick={() => setPage("certificate")}
-          >
-            🏆 Certificate
-          </div>
+  <div
+    className={`nav-item ${page === "certificate" ? "active" : ""}`}
+    onClick={() => setPage("certificate")}
+  >
+    <FaTrophy size={28} className="nav-icon" />
+    <span>Certificate</span>
+  </div>
 
-        </nav>
+</nav>
 
       </aside>
 

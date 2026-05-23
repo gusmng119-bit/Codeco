@@ -1,43 +1,86 @@
 import React, { useState } from "react";
 import { Button, Form, Input, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/authContext";
+
+
 import "./LoginForm.css";
 
-const LoginForm = ({ setIsLoggedIn }) => {
+const LoginForm = () => {
+
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (values) => {
+  /* ================= DUMMY DATABASE ================= */
+  const users = [
+    {
+      email: "admin@mail.com",
+      password: "admin123",
+      role: "admin",
+      name: "Admin",
+    },
+    {
+      email: "guru@mail.com",
+      password: "guru123",
+      role: "guru",
+      name: "Pak Guru",
+    },
+    {
+      email: "siswa@mail.com",
+      password: "siswa123",
+      role: "siswa",
+      name: "Budi",
+    },
+  ];
 
-    const demoEmail = "gusmng119@gmail.com";
-    const demoPassword = "admin123";
+  /* ================= LOGIN ================= */
+  const handleSubmit = (values) => {
 
     setLoading(true);
 
     setTimeout(() => {
 
-      const isValid =
-        values.email === demoEmail &&
-        values.password === demoPassword;
+      const user = users.find(
+        (u) =>
+          u.email === values.email &&
+          u.password === values.password
+      );
 
-      if (isValid) {
+      if (!user) {
+        message.error("Invalid email or password");
+        setLoading(false);
+        return;
+      }
 
-        message.success("Login successful!");
+      // ✅ GLOBAL LOGIN (AuthContext)
+      login(user);
 
-        // ✅ SAVE LOGIN (string konsisten)
-        localStorage.setItem("isLoggedIn", "true");
+      message.success(`Welcome ${user.name}!`);
 
-        // ✅ SAFE CALL (hindari error undefined)
-        if (typeof setIsLoggedIn === "function") {
-          setIsLoggedIn(true);
-        }
+      /* ================= ROLE REDIRECT ================= */
+      switch (user.role) {
+        case "admin":
+          navigate("/admin");
+          break;
 
-      } else {
-        message.error("Invalid email or password.");
+        case "guru":
+          navigate("/teacher");
+          break;
+
+        case "siswa":
+          navigate("/student");
+          break;
+
+
+        default:
+          navigate("/");
       }
 
       setLoading(false);
 
-    }, 600);
+    }, 700);
   };
 
   return (
@@ -50,8 +93,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
         onFinish={handleSubmit}
         autoComplete="off"
       >
-
-        {/* EMAIL */}
         <Form.Item
           label="Email"
           name="email"
@@ -60,13 +101,9 @@ const LoginForm = ({ setIsLoggedIn }) => {
             { type: "email", message: "Format email tidak valid" },
           ]}
         >
-          <Input
-            size="large"
-            placeholder="example@mail.com"
-          />
+          <Input size="large" placeholder="example@mail.com" />
         </Form.Item>
 
-        {/* PASSWORD */}
         <Form.Item
           label="Password"
           name="password"
@@ -74,13 +111,9 @@ const LoginForm = ({ setIsLoggedIn }) => {
             { required: true, message: "Password wajib diisi" },
           ]}
         >
-          <Input.Password
-            size="large"
-            placeholder="Enter password"
-          />
+          <Input.Password size="large" placeholder="Enter password" />
         </Form.Item>
 
-        {/* BUTTON */}
         <Button
           htmlType="submit"
           type="primary"
@@ -90,7 +123,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
         >
           {loading ? "Logging in..." : "Login"}
         </Button>
-
       </Form>
     </div>
   );

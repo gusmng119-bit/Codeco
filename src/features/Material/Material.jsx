@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from "react";
 import "./Material.css";
 
-import logo2 from "../../assets/logo2.jpg";
-import driveLogo from "../../assets/drive.png";
+import logo2 from "@/assets/logo2.jpg";
+import driveLogo from "@/assets/drive.png";
 
 const ClassMaterial = ({ selectedClass }) => {
 

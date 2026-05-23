@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Feedback.css";
 
-import logo2 from "../../assets/logo2.jpg";
-import feedbackImg from "../../assets/feedback.png";
+import logo2 from "@/assets/logo2.jpg";
+import feedbackImg from "@/assets/feedback.png";
 
 const Feedback = ({ selectedClass }) => {
 

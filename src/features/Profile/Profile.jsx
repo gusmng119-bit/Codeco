@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Profile.css";
 
-import profileImg from "../../assets/Profile.png";
-import BannerImg from "../../assets/Baner.jpg";
+import profileImg from "@/assets/Profile.png";
+import BannerImg from "@/assets/Baner.jpg";
 
 const Profile = ({ setPage }) => {
 

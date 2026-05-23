@@ -1,0 +1,288 @@
+/* Layout Utama (Jika membungkus dari ujung kiri ke kanan) */
+.myclasses-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: 'Inter', sans-serif; /* Sesuaikan dengan font project Anda */
+  color: #1e293b;
+  width: 100%;
+}
+
+/* --- HEADER SECTION --- */
+.myclasses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 12px 24px;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.myclasses-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.myclasses-profile img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.myclasses-profile h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.create-btn {
+  border: none;
+  background: #56bbc4;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.create-btn:hover {
+  background: #45a4ad;
+}
+
+/* --- TITLE --- */
+.page-title {
+  margin: 8px 0 0 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+/* --- STATS GRID --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.stats-card {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.stats-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Warna khusus untuk Icon Stats */
+.stats-card.blue .stats-icon { background: #e0f7fa; color: #56bbc4; }
+.stats-card.green .stats-icon { background: #e8f5e9; color: #53c58a; }
+.stats-card.yellow .stats-icon { background: #fef9c3; color: #e1b500; }
+
+.stats-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-info h2 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stats-info p {
+  margin: 4px 0 0 0;
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.search-box {
+  background: white;
+  border: 1px solid #e5e7eb; /* Menyesuaikan warna border abu-abu tipis */
+  border-radius: 12px;       /* Sudut kotak sedikit melengkung halus */
+  padding: 10px 16px;        /* Padding atas-bawah 10px, kiri-kanan 16px agar seimbang */
+  display: flex;
+  align-items: center;       /* CRITICAL: Membuat ikon dan teks input sejajar vertikal di tengah */
+  gap: 12px;                 /* Jarak antara ikon search dan teks input */
+  width: 450px;              /* Lebar kotak disesuaikan dengan desain di gambar */
+  box-sizing: border-box;    /* Memastikan padding tidak merusak ukuran width */
+}
+
+/* Mengatur ukuran ikon search di dalamnya (jika menggunakan SVG/Icon) */
+.search-box svg, 
+.search-box i {
+  color: #94a3b8;            /* Warna abu-abu soft untuk ikon */
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  color: #1e293b;
+  background: transparent;
+  padding: 0;                /* Reset padding bawaan browser */
+}
+
+.search-box input::placeholder {
+  color: #94a3b8;            /* Warna teks placeholder "Search class" */
+}
+
+/* --- CLASS LIST & CARDS --- */
+.class-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.class-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1.5fr 1.8fr;
+  align-items: center;
+}
+
+.class-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.class-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Variasi Warna Tema Mapel sesuai Gambar */
+.bg-robotic { background: #fce7f3; color: #db2777; }     /* Pink */
+.bg-programing { background: #fef9c3; color: #ca8a04; }  /* Kuning */
+.bg-science { background: #e0f2fe; color: #0284c7; }     /* Biru/Cyan */
+.bg-desain { background: #f3e8ff; color: #9333ea; }      /* Ungu */
+
+.class-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.class-details h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+/* Status Badges */
+.status {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 4px;
+  background: #ccfbf1;
+  color: #0d9488;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status.done {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+/* Kolom Jumlah Siswa */
+.class-student h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.class-student p {
+  margin: 2px 0 0 0;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Kolom Jadwal */
+.class-schedule h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.class-schedule p {
+  margin: 4px 0 0 0;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+/* Kolom Progress Bar */
+.class-progress {
+  display: flex;
+  flex-direction: column;
+}
+
+.class-progress h3 {
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  height: 12px;
+  background: #f1f5f9;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 20px;
+}
+
+/* Variasi Warna Progress Fill */
+.fill-robotic { background: #f472b6; }
+.fill-programing { background: #fbbf24; }
+.fill-science { background: #22d3ee; }
+.fill-desain { background: #a78bfa; }
+
+.class-progress span {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  white-space: nowrap;
+}

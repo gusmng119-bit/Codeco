@@ -1,34 +1,22 @@
-import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import Login from "../../features/Login/Login";
+import Login from "../../features/Auth/Login";
 
-const readLoggedIn = () => {
-  return typeof window !== "undefined" &&
-    localStorage.getItem("isLoggedIn") === "true";
+export const LoginRoute = () => {
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user) {
+    return <Login />;
+  }
+
+  if (user.role === "siswa")
+    return <Navigate to="/student/home" replace />;
+
+  if (user.role === "guru")
+    return <Navigate to="/teacher/home" replace />;
+
+  if (user.role === "admin")
+    return <Navigate to="/admin/home" replace />;
+
+  return <Login />;
 };
-
-export function LoginRoute() {
-  const [token, setToken] = useState(readLoggedIn);
-
-  useEffect(() => {
-    const syncToken = () => {
-      setToken(readLoggedIn());
-    };
-
-    // Works for multi-tab (storage event)
-    window.addEventListener("storage", syncToken);
-
-    // Guarantee redirect even if same-tab localStorage is updated
-    // (without relying on a custom event that is never dispatched).
-    const intervalId = window.setInterval(syncToken, 250);
-    syncToken();
-
-    return () => {
-      window.removeEventListener("storage", syncToken);
-      window.clearInterval(intervalId);
-    };
-  }, []);
-
-  return token ? <Navigate to="/dashboard" replace /> : <Login />;
-}
-

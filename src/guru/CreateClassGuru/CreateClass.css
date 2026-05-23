@@ -1,0 +1,257 @@
+.create-class-page {
+  padding: 24px 32px;
+  background-color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  color: #0f172a;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- HEADER PROFILE BAR --- */
+.cc-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 24px;
+  margin-bottom: 24px;
+  background-color: #fff;
+}
+
+.cc-profile-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cc-avatar-placeholder {
+  width: 36px;
+  height: 36px;
+  background-color: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.cc-welcome-text {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+/* --- SECTION TITLE BAR --- */
+.cc-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cc-main-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0;
+  color: #0f172a;
+}
+
+.cc-save-btn {
+  background-color: #4fb2be;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cc-save-btn:hover {
+  background-color: #3fa1ad;
+}
+
+/* --- HERO DISPLAY CARD WITH ROBOT --- */
+.cc-hero-card {
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 32px 40px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cc-hero-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.cc-class-name-placeholder {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+  color: #0f172a;
+}
+
+.cc-grade-placeholder {
+  font-size: 1.1rem;
+  color: #475569;
+  font-weight: 500;
+  margin: 0 0 32px 0;
+}
+
+.cc-meta-info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cc-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.cc-hero-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cc-robot-img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+/* --- TABS STRIP LAYOUT --- */
+.cc-tabs-container {
+  border: 1px solid #4fb2be;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.cc-tabs-nav {
+  background-color: #4fb2be;
+  display: flex;
+  padding: 6px 12px 0 12px;
+  gap: 6px;
+}
+
+.cc-tab-btn {
+  background: transparent;
+  border: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.cc-tab-btn.active {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+/* --- TAB CONTENT PANEL --- */
+.cc-tab-content {
+  padding: 32px;
+}
+
+.cc-materials-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cc-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cc-form-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.cc-form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #e2e8f0; /* Berwarna abu-abu tipis sesuai mockup */
+  font-size: 0.9rem;
+  color: #334155;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.cc-form-input::placeholder {
+  color: #94a3b8;
+}
+
+/* --- DRAG & DROP FILE UPLOADER ZONE --- */
+.cc-upload-zone {
+  border: 2px dashed #4fb2be;
+  border-radius: 16px;
+  padding: 24px;
+  background-color: #ffffff;
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cc-upload-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cc-upload-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cc-upload-main-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #475569;
+  margin: 0;
+}
+
+.cc-link-highlight {
+  color: #4fb2be;
+  text-decoration: none;
+}
+
+.cc-upload-sub-text {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.cc-empty-tab-text {
+  color: #64748b;
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 20px 0;
+}

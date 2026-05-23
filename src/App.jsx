@@ -1,40 +1,106 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./authProvider";
+import { useAuth } from "./authContext";
 
-import Dashboard from "./features/Dashboard/Dashboard";
-import Home from "./features/Home/Home";
-import Classroom from "./features/Classroom/Classroom";
-import Teacher from "./features/Teacher/Teacher";
-import Certificate from "./features/Certificate/Certificate";
-import Profile from "./features/Profile/Profile";
-import ClassMaterial from "./features/Material/Material";
-import FeedbackClass from "./features/Feedback/Feedback";
-import { LoginRoute } from "./shared/security/login.route";
-import { ProtectedRoute } from "./shared/security/protected.route";
+import Login from "./features/Login/Login";
+import StudentDashboard from "./features/Dashboard/Dashboard";
 
+/* ================= TEACHER ================= */
+import DashboardGuru from "./guru/DashboardGuru";
+import HomeGuru from "./guru/Pages/HomeGuru";
+import TeacherProfile from "./guru/ProfileGuru/ProfileGuru";
+import Class from "./guru/Class/Class";
+import Calendar from "./guru/Kalender/Calendar";
+import FeedbackGuru from "./guru/FeedbackGuru/FeedbackGuru";
+import Salary from "./guru/Salary/Salary";
+import CreateClassGuru from "./guru/CreateClassGuru/CreateClass";
+
+/* ======================================================
+   PROTECTED ROUTE (Dengan Fitur Auto-Tracking Debugger)
+====================================================== */
+const ProtectedRoute = ({ children, role }) => {
+  const { user } = useAuth();
+
+  // Membantu melacak di Console F12 jika terjadi mental log-out mendadak
+  console.log("=== SECURITY CHECK ===");
+  console.log("User State:", user);
+  console.log("Required Role:", role);
+
+  // 1. Jika state user hilang / ter-reset jadi null saat pindah halaman
+  if (!user) {
+    console.warn("Akses Ditolak: Sesi user kosong. Mengalihkan ke Login...");
+    return <Navigate to="/" replace />;
+  }
+
+  // 2. Jika role string tidak cocok (contoh: "guru" vs "Guru")
+  if (role && user.role?.toLowerCase() !== role.toLowerCase()) {
+    console.warn(`Akses Ditolak: Role tidak cocok. Butuh: ${role}, User: ${user.role}`);
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
+
+/* ======================================================
+   MAIN APPLICATION
+====================================================== */
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LoginRoute />} />
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<Navigate to="home" replace />} />
-        <Route path="home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="classroom" element={<ProtectedRoute><Classroom /></ProtectedRoute>} />
-        <Route path="teacher" element={<ProtectedRoute><Teacher /></ProtectedRoute>} />
-        <Route path="certificate" element={<ProtectedRoute><Certificate /></ProtectedRoute>} />
-        <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="material" element={<ProtectedRoute><ClassMaterial /></ProtectedRoute>} />
-        <Route path="feedback" element={<ProtectedRoute><FeedbackClass /></ProtectedRoute>} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
-      </Route>
-      <Route path="*" element={<div>404 Not Found</div>} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+
+        {/* ================= LOGIN ================= */}
+        <Route path="/" element={<Login />} />
+
+        {/* ================= STUDENT ================= */}
+        <Route
+          path="/student"
+          element={
+            <ProtectedRoute role="siswa">
+              <StudentDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ================= TEACHER (NESTED PARENT) ================= */}
+        <Route
+          path="/teacher"
+          element={
+            <ProtectedRoute role="guru">
+              <DashboardGuru />
+            </ProtectedRoute>
+          }
+        >
+          {/* Halaman utama ketika mengakses /teacher */}
+          <Route index element={<HomeGuru />} />
+
+          {/* PROFILE */}
+          <Route path="profile" element={<TeacherProfile />} />
+
+          {/* CLASSES */}
+          <Route path="classes" element={<Class />} />
+
+          {/* CREATE CLASS */}
+          <Route path="create-class" element={<CreateClassGuru />} />
+
+          {/* CALENDAR */}
+          <Route path="calendar" element={<Calendar />} />
+
+          {/* FEEDBACK */}
+          <Route path="feedback" element={<FeedbackGuru />} />
+
+          {/* SALARY */}
+          <Route path="salary" element={<Salary />} />
+        </Route>
+
+        {/* ================= NOT FOUND FALLBACK ================= */}
+        <Route
+          path="*"
+          element={<Navigate to="/" replace />}
+        />
+
+      </Routes>
+    </AuthProvider>
   );
 }
 

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import "./Teacher.css";
 
-import imagesari from "../../assets/Mrs. Sari.jpeg";
-import imagecoki from "../../assets/coki.jpg";
+import imagesari from "@/assets/mrs-sari.jpeg";
+import imagecoki from "@/assets/coki.jpg";
 
 const Teachers = () => {
-
   /* ================= STATE ================= */
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [notification, setNotification] = useState("");
+  const [requestedTeachers, setRequestedTeachers] = useState([]);
 
   /* ================= DATA ================= */
   const teachers = [
@@ -42,21 +42,6 @@ const Teachers = () => {
       linkedin: "linkedin.com/in/sari",
       tiktok: "@saricode",
     },
-
-    {
-      id: 3,
-      name: "Mrs. Sari",
-      subject: "Coding",
-      img: imagesari,
-      education: "S1 Sistem Informasi",
-      teaching: "Programming",
-      about:
-        "Ibu Sari fokus pada pembelajaran coding interaktif.",
-      ig: "sari_coding",
-      yt: "SariCodes",
-      linkedin: "linkedin.com/in/sari",
-      tiktok: "@saricode",
-    },
   ];
 
   /* ================= SEARCH ================= */
@@ -71,7 +56,6 @@ const Teachers = () => {
     setSelectedTeacher(teacher);
     setShowModal(true);
   };
-  const [requestedTeachers, setRequestedTeachers] = useState([]);
 
   const closeModal = () => {
     setShowModal(false);
@@ -79,25 +63,20 @@ const Teachers = () => {
   };
 
   /* ================= REQUEST ================= */
- const handleRequestTeacher = () => {
-  if (!selectedTeacher) return;
+  const handleRequestTeacher = (e) => {
+    e.stopPropagation(); // agar klik tombol tidak menutup modal
+    if (!selectedTeacher) return;
 
-  // kalau sudah request
-  if (requestedTeachers.includes(selectedTeacher.id)) return;
+    if (requestedTeachers.includes(selectedTeacher.id)) return;
 
-  setRequestedTeachers((prev) => [
-    ...prev,
-    selectedTeacher.id,
-  ]);
+    setRequestedTeachers((prev) => [...prev, selectedTeacher.id]);
 
-  setNotification(
-    `✅ Request sent successfully to ${selectedTeacher.name}`
-  );
+    setNotification(`✅ Request sent successfully to ${selectedTeacher.name}`);
 
-  setTimeout(() => {
-    setNotification("");
-  }, 3000);
-};
+    setTimeout(() => {
+      setNotification("");
+    }, 3000);
+  };
 
   return (
     <div className="teacher-page">
@@ -159,7 +138,7 @@ const Teachers = () => {
               <div className="modal-left">
 
                 <div className="teacher-photo-frame">
-                  <img src={selectedTeacher.img} alt="teacher" />
+                  <img src={selectedTeacher.img} alt={selectedTeacher.name} />
                 </div>
 
                 <div className="status-available">
@@ -212,16 +191,16 @@ const Teachers = () => {
                   <p>{selectedTeacher.about}</p>
                 </div>
 
-                {/* ✅ REQUEST BUTTON (POSITION TIDAK DIUBAH) */}
+                {/* ✅ REQUEST BUTTON */}
                 <button
-  className="request-button"
-  onClick={handleRequestTeacher}
-  disabled={requestedTeachers.includes(selectedTeacher.id)}
->
-  {requestedTeachers.includes(selectedTeacher.id)
-    ? "Requested"
-    : "Request"}
-</button>
+                  className="request-button"
+                  onClick={handleRequestTeacher}
+                  disabled={requestedTeachers.includes(selectedTeacher.id)}
+                >
+                  {requestedTeachers.includes(selectedTeacher.id)
+                    ? "Requested"
+                    : "Request"}
+                </button>
 
               </div>
 

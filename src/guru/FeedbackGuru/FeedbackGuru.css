@@ -1,0 +1,537 @@
+.feedback-page {
+  padding: 24px;
+  background-color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  color: #1e293b;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.feedback-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 24px;
+  margin-bottom: 24px;
+  background-color: #fff;
+}
+
+.profile-info-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-placeholder {
+  width: 36px;
+  height: 36px;
+  background-color: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.welcome-text {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.edit-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #4fb2be;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.feedback-dashboard-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  background-color: #fff;
+}
+
+.feedback-dashboard-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.left-alert-panel {
+  flex-grow: 1;
+}
+
+.section-title-main {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.deadline-alert-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background-color: #fff1f2;
+  border: 1px solid #ffe4e6;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.alert-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.alert-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.highlight-red {
+  color: #ef4444;
+}
+
+.alert-subtitle {
+  font-size: 0.85rem;
+  color: #475569;
+  margin: 0;
+}
+
+.right-counter-panel {
+  width: 140px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.counter-label {
+  font-size: 0.75rem;
+  color: #475569;
+  margin: 0;
+}
+
+.counter-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 4px 0;
+}
+
+.counter-status-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ef4444;
+  margin: 0;
+}
+
+.feedback-main-container {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  background-color: #fff;
+}
+
+.class-selector-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.selector-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.class-dropdown-select {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #334155;
+  background-color: #fff;
+  outline: none;
+}
+
+.info-deadline-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f9ff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #334155;
+  margin-bottom: 24px;
+}
+
+.info-left-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-right-text {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.badge-countdown {
+  background-color: #38bdf8;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.list-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.student-row-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 20px;
+  background-color: #fff;
+}
+
+.student-left-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.row-index-number {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  width: 16px;
+}
+
+.student-avatar-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+  object-fit: cover;
+}
+
+.student-name-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.student-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.status-badge {
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 80px;
+  text-align: center;
+}
+
+.status-badge.badge-pending {
+  background-color: #fff1f2;
+  color: #f43f5e;
+  border: 1px solid #ffe4e6;
+}
+
+.status-badge.badge-success {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #dcfce7;
+}
+
+.action-button-group {
+  width: 160px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-btn-feedback {
+  background-color: #4fb2be;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+.completed-action-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.action-btn-edit {
+  background-color: white;
+  color: #4fb2be;
+  border: 1px solid #4fb2be;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+.filled-timestamp-text {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+/* --- OVERLAY BACKGROUND MODAL --- */
+.fb-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px); /* Sedikit menaikkan efek blur latar belakang */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* --- KOTAK UTAMA MODAL (LEBIH BESAR & LUAS) --- */
+.fb-modal-content {
+  background: #ffffff;
+  width: 90%;
+  max-width: 680px; /* Diperbesar dari 520px ke 680px agar lebih lega */
+  border-radius: 20px; /* Sudut lengkungan diperhalus */
+  padding: 36px; /* Spasi dalam diperlebar agar tidak sesak */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  position: relative;
+  animation: slideUp 0.25s ease-out;
+}
+
+/* --- HEADER MODAL --- */
+.fb-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.fb-modal-title {
+  font-size: 1.5rem; /* Ukuran teks judul diperbesar */
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.fb-modal-close-btn {
+  background: #f1f5f9;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.fb-modal-close-btn:hover {
+  background: #e2e8f0;
+}
+
+/* --- PROFIL SISWA DI DALAM MODAL --- */
+.fb-modal-student-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  background: #f8fafc; /* Menambahkan background tipis pada nama siswa */
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+.fb-modal-avatar {
+  width: 52px; /* Ukuran avatar diperbesar */
+  height: 52px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  object-fit: cover;
+}
+
+.fb-modal-student-name {
+  font-size: 1.2rem; /* Ukuran teks nama diperbesar */
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* --- FORM BODY & TEXTAREA (AREA KETIK JAUH LEBIH BESAR) --- */
+.fb-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.fb-modal-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fb-modal-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.fb-modal-textarea {
+  width: 100%;
+  height: 240px; /* Tinggi kotak ketik dinaikkan dari 160px ke 240px */
+  padding: 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem; /* Ukuran font ketik lebih nyaman dibaca */
+  color: #334155;
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.fb-modal-textarea:focus {
+  border-color: #4fb2be;
+  box-shadow: 0 0 0 4px rgba(79, 178, 190, 0.15); /* Efek fokus modern */
+}
+
+/* --- INPUT UPLOAD FOTO --- */
+.fb-modal-upload-wrapper {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.fb-modal-upload-input {
+  width: 100%;
+  padding: 14px 54px 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #94a3b8;
+  background: #ffffff;
+  outline: none;
+}
+
+.fb-modal-upload-btn {
+  position: absolute;
+  right: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- FOOTER BUTTONS (TOMBOL LEBIH NYAMAN DIKLIK) --- */
+.fb-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 36px;
+}
+
+.fb-btn-cancel {
+  padding: 12px 32px; /* Tombol diperlebar */
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fb-btn-cancel:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.fb-btn-submit {
+  padding: 12px 32px; /* Tombol diperlebar */
+  border: none;
+  background: #4fb2be;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.fb-btn-submit:hover {
+  background: #3f9aa5;
+}
+
+.fb-btn-submit:active {
+  transform: scale(0.98); /* Efek tekan kecil saat diklik */
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
