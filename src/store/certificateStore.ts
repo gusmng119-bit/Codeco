@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { certificateApi } from "../api/endpoints/certificateApi";
 import type { CertificateItem } from "../api/types/features";
+import appConfig from "../config/appConfig";
 
 /* eslint-disable no-unused-vars */
 type CertificateState = {
@@ -30,7 +31,7 @@ const getLocalCertificates = (): CertificateItem[] => {
 };
 
 const useCertificateStore = create<CertificateState>((set, get) => ({
-  certificates: getLocalCertificates(),
+  certificates: appConfig.USE_LOCAL_FALLBACK ? getLocalCertificates() : [],
   searchTerm: "",
   selectedCert: null,
   showModal: false,
@@ -45,8 +46,14 @@ const useCertificateStore = create<CertificateState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const apiCerts = await certificateApi.getCertificates();
-      const localCerts = getLocalCertificates();
       
+      if (!appConfig.USE_LOCAL_FALLBACK) {
+        // Purely use strictly what Backend (BE) sends
+        set({ certificates: apiCerts, loading: false });
+        return;
+      }
+
+      const localCerts = getLocalCertificates();
       const certMap = new Map<string, CertificateItem>();
       [...localCerts, ...apiCerts].forEach((c) => certMap.set(c.className, c));
       const merged = Array.from(certMap.values());
@@ -77,13 +84,17 @@ const useCertificateStore = create<CertificateState>((set, get) => ({
     try {
       const savedCert = await certificateApi.saveCertificate(newCertData);
       const updated = [...get().certificates, savedCert];
-      if (typeof window !== "undefined") {
+      if (appConfig.USE_LOCAL_FALLBACK && typeof window !== "undefined") {
         localStorage.setItem("certificates", JSON.stringify(updated));
       }
       set({ certificates: updated });
       alert("Certificate saved!");
       return true;
     } catch {
+      if (!appConfig.USE_LOCAL_FALLBACK) {
+        alert("Failed to save certificate on backend.");
+        return false;
+      }
       const fallbackCert: CertificateItem = { id: Date.now(), ...newCertData };
       const updated = [...get().certificates, fallbackCert];
       if (typeof window !== "undefined") {

@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import "./Teacher.css";
 import useTeacherStore from "../../store/teacherStore";
 import type { TeacherItem } from "../../api/types/features";
+import EmptyState from "../../shared/components/EmptyState";
+import ErrorState from "../../shared/components/ErrorState";
 
 const Teachers = () => {
   const {
@@ -11,6 +13,7 @@ const Teachers = () => {
     searchTerm,
     notification,
     loading,
+    error,
     setSearchTerm,
     setSelectedTeacher,
     setShowModal,
@@ -60,12 +63,32 @@ const Teachers = () => {
         </div>
       </header>
 
-      {/* ===== GRID ===== */}
-      <div className="teacher-grid">
-        {loading && <p>Loading teachers...</p>}
+      {/* ===== GRID / FALLBACKS ===== */}
+      {loading && (
+        <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
+          <p>Loading teachers from backend...</p>
+        </div>
+      )}
 
-        {!loading &&
-          filteredTeachers.map((t, index) => (
+      {!loading && error && (
+        <ErrorState
+          title="Unable to load teachers list"
+          message={error}
+          onRetry={fetchTeachers}
+        />
+      )}
+
+      {!loading && !error && filteredTeachers.length === 0 && (
+        <EmptyState
+          title="No Teachers Found"
+          message="No teachers match your search query."
+          icon="🎓"
+        />
+      )}
+
+      {!loading && !error && filteredTeachers.length > 0 && (
+        <div className="teacher-grid">
+          {filteredTeachers.map((t, index) => (
             <div className="teacher-card" key={`${t.id}-${index}`}>
               <img src={t.img} alt={t.name} />
 
@@ -77,7 +100,8 @@ const Teachers = () => {
               </div>
             </div>
           ))}
-      </div>
+        </div>
+      )}
 
       {/* ===== MODAL ===== */}
       {showModal && selectedTeacher && (

@@ -1,8 +1,9 @@
 import axios from "axios";
 import type { InternalAxiosRequestConfig } from "axios";
+import appConfig from "../../config/appConfig";
 
 const axiosClient = axios.create({
-  baseURL: "/",
+  baseURL: appConfig.API_BASE_URL,
   timeout: 5000,
 });
 

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./Classroom.css";
 import useClassroomStore, { FilterType } from "../../store/classroomStore";
 import type { ClassItem } from "../../api/types/features";
+import EmptyState from "../../shared/components/EmptyState";
+import ErrorState from "../../shared/components/ErrorState";
 
 const Classroom = () => {
   const navigate = useNavigate();
@@ -15,6 +17,7 @@ const Classroom = () => {
     setSelectedClass,
     fetchClasses,
     loading,
+    error,
   } = useClassroomStore();
 
   useEffect(() => {
@@ -67,16 +70,32 @@ const Classroom = () => {
         </div>
       </div>
 
-      {/* CLASS LIST */}
-      <div className="class-list">
-        {loading && <p className="no-class">Loading classes...</p>}
+      {/* CLASS LIST / FALLBACKS */}
+      {loading && (
+        <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
+          <p className="no-class">Loading classes from backend...</p>
+        </div>
+      )}
 
-        {!loading && filteredClasses.length === 0 && (
-          <p className="no-class">No class found</p>
-        )}
+      {!loading && error && (
+        <ErrorState
+          title="Unable to load classroom schedules"
+          message={error}
+          onRetry={fetchClasses}
+        />
+      )}
 
-        {!loading &&
-          filteredClasses.map((c) => (
+      {!loading && !error && filteredClasses.length === 0 && (
+        <EmptyState
+          title="No Classes Found"
+          message="There are no classes matching your filter criteria. Try selecting 'All' or clearing search."
+          icon="📖"
+        />
+      )}
+
+      {!loading && !error && filteredClasses.length > 0 && (
+        <div className="class-list">
+          {filteredClasses.map((c) => (
             <div className="class-card" key={c.id}>
               {/* HEADER */}
               <div
@@ -112,7 +131,8 @@ const Classroom = () => {
               </div>
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

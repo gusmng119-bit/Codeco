@@ -9,12 +9,14 @@ import certificateImg from "../../assets/certificate.png";
 import useClassroomStore from "../../store/classroomStore";
 import useCertificateStore from "../../store/certificateStore";
 import useProfileStore from "../../store/profileStore";
+import useAttendanceStore from "../../store/attendanceStore";
 
 const Home = () => {
   const navigate = useNavigate();
   const { selectedClass, joined, joinClass, fetchClasses } = useClassroomStore();
   const { saveCertificate } = useCertificateStore();
   const { profile, fetchProfile } = useProfileStore();
+  const { markAttendance } = useAttendanceStore();
 
   const [showCertificate, setShowCertificate] = useState(false);
 
@@ -32,6 +34,11 @@ const Home = () => {
 
   const handleJoin = async () => {
     await joinClass(classData.id);
+    await markAttendance({
+      class_session_id: 1,
+      student_id: 1,
+      status: "present",
+    });
   };
 
   const handleDownloadCertificate = async () => {

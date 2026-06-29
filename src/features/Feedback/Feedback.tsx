@@ -3,12 +3,15 @@ import "./Feedback.css";
 import logo2 from "../../assets/logo2.jpg";
 import feedbackImg from "../../assets/feedback.png";
 import useFeedbackStore from "../../store/feedbackStore";
+import EmptyState from "../../shared/components/EmptyState";
+import ErrorState from "../../shared/components/ErrorState";
 
 const Feedback = () => {
   const {
     feedbackList,
     selectedItem,
     loading,
+    error,
     setSelectedItem,
     fetchFeedback,
   } = useFeedbackStore();
@@ -75,12 +78,32 @@ const Feedback = () => {
 
       <h2 className="feedback-section-title">Class Feedback</h2>
 
-      {/* LIST */}
-      <div className="feedback-list">
-        {loading && <p>Loading feedback...</p>}
+      {/* LIST / FALLBACKS */}
+      {loading && (
+        <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
+          <p>Loading feedback from backend...</p>
+        </div>
+      )}
 
-        {!loading &&
-          feedbackList.map((item) => (
+      {!loading && error && (
+        <ErrorState
+          title="Unable to load class feedback"
+          message={error}
+          onRetry={fetchFeedback}
+        />
+      )}
+
+      {!loading && !error && feedbackList.length === 0 && (
+        <EmptyState
+          title="No Feedback Records"
+          message="You don't have any teacher feedback records assigned to your class profile yet."
+          icon="📋"
+        />
+      )}
+
+      {!loading && !error && feedbackList.length > 0 && (
+        <div className="feedback-list">
+          {feedbackList.map((item) => (
             <div key={item.id} className="feedback-item-card">
               <div className="feedback-icon-wrapper">
                 <span className="feedback-icon">📋</span>
@@ -109,7 +132,8 @@ const Feedback = () => {
               </div>
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

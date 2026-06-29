@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import "./Certificate.css";
 import useCertificateStore from "../../store/certificateStore";
 import type { CertificateItem } from "../../api/types/features";
+import EmptyState from "../../shared/components/EmptyState";
+import ErrorState from "../../shared/components/ErrorState";
 
 const Certificates = () => {
   const {
@@ -10,6 +12,7 @@ const Certificates = () => {
     selectedCert,
     showModal,
     loading,
+    error,
     setSearchTerm,
     setSelectedCert,
     setShowModal,
@@ -68,15 +71,32 @@ const Certificates = () => {
         </div>
       </header>
 
-      {/* GRID */}
-      <div className="cert-grid">
-        {loading && <p>Loading certificates...</p>}
+      {/* GRID / FALLBACKS */}
+      {loading && (
+        <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
+          <p>Loading certificates from backend...</p>
+        </div>
+      )}
 
-        {!loading && filteredCertificates.length === 0 ? (
-          <p>No certificate yet</p>
-        ) : (
-          !loading &&
-          filteredCertificates.map((cert, index) => (
+      {!loading && error && (
+        <ErrorState
+          title="Unable to load certificates"
+          message={error}
+          onRetry={fetchCertificates}
+        />
+      )}
+
+      {!loading && !error && filteredCertificates.length === 0 && (
+        <EmptyState
+          title="No Certificates Earned Yet"
+          message="Complete your course requirements and achievements to unlock official certificates."
+          icon="🏆"
+        />
+      )}
+
+      {!loading && !error && filteredCertificates.length > 0 && (
+        <div className="cert-grid">
+          {filteredCertificates.map((cert, index) => (
             <div className="cert-card" key={`${cert.id}-${index}`}>
               <div className="cert-img-wrapper">
                 <img src={cert.image} alt="Certificate" />
@@ -97,9 +117,9 @@ const Certificates = () => {
                 </button>
               </div>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* MODAL */}
       {showModal && selectedCert && (

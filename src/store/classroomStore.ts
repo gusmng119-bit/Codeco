@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { classesApi } from "../api/endpoints/classesApi";
 import type { ClassItem } from "../api/types/features";
 import type { CreateClassesPayload, ClassData } from "../api/types/classes";
+import appConfig from "../config/appConfig";
 
 export type FilterType = "all" | "today" | "yesterday" | "upcoming";
 
@@ -58,8 +59,13 @@ const useClassroomStore = create<ClassroomState>((set, get) => ({
     try {
       await classesApi.joinClass({ classId });
       set({ joined: true });
-    } catch {
-      set({ joined: true });
+    } catch (err: unknown) {
+      if (appConfig.USE_LOCAL_FALLBACK) {
+        set({ joined: true });
+      } else {
+        const msg = (err as { message?: string })?.message || "Failed to join class";
+        set({ error: msg });
+      }
     }
   },
 
