@@ -7,6 +7,9 @@
  * 
  * API_BASE_URL:
  * - Base URL for Axios requests (configured via env VITE_API_BASE_URL).
+ * 
+ * BYPASS_LOGIN:
+ * - Set to `true` (or set env VITE_BYPASS_LOGIN="true"): Automatically bypasses login check and sets dummy token.
  */
 export const appConfig = {
   USE_LOCAL_FALLBACK:
@@ -21,6 +24,12 @@ export const appConfig = {
     import.meta.env.VITE_API_BASE_URL
       ? import.meta.env.VITE_API_BASE_URL
       : "/",
+  BYPASS_LOGIN:
+    typeof import.meta !== "undefined" &&
+    import.meta.env &&
+    import.meta.env.VITE_BYPASS_LOGIN !== undefined
+      ? import.meta.env.VITE_BYPASS_LOGIN === "true"
+      : false,
 };
 
 export default appConfig;

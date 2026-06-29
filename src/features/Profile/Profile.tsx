@@ -4,14 +4,21 @@ import "./Profile.css";
 import profileImg from "../../assets/Profile.png";
 import BannerImg from "../../assets/Baner.jpg";
 import useProfileStore from "../../store/profileStore";
+import useAuthStore from "../../store/authStore";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
   const { profile, editMode, loading, setEditMode, fetchProfile } = useProfileStore();
 
   useEffect(() => {
     fetchProfile();
   }, [fetchProfile]);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   const p = profile || {
     firstName: "Budiono",
@@ -32,10 +39,27 @@ const Profile = () => {
       </div>
 
       <div className="profile-content">
-        {/* ================= BACK BUTTON ================= */}
-        <button className="back-btn" onClick={() => navigate("/dashboard/home")}>
-          ⬅ Back
-        </button>
+        {/* ================= ACTIONS ================= */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <button className="back-btn" onClick={() => navigate("/dashboard/home")}>
+            ⬅ Back
+          </button>
+
+          <button
+            onClick={handleLogout}
+            style={{
+              padding: "8px 16px",
+              backgroundColor: "#fef2f2",
+              color: "#ef4444",
+              border: "1px solid #fecaca",
+              borderRadius: "10px",
+              fontWeight: "600",
+              cursor: "pointer",
+            }}
+          >
+            🚪 Logout
+          </button>
+        </div>
 
         {/* ================= AVATAR ================= */}
         <div className="avatar-wrapper">

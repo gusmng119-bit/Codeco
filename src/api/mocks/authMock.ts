@@ -5,17 +5,11 @@ import appConfig from "../../config/appConfig";
 if (appConfig.USE_LOCAL_FALLBACK) {
   const mock = new MockAdapter(axiosClient, { delayResponse: 800, onNoMatch: "passthrough" });
 
-  const DEMO_EMAIL = "gusmng119@gmail.com";
-  const DEMO_PASSWORD = "admin123";
-
   mock.onPost("/auth/login").reply((config) => {
     try {
       const payload = JSON.parse(config.data || "{}");
 
-      if (
-        payload.email === DEMO_EMAIL &&
-        payload.password === DEMO_PASSWORD
-      ) {
+      if (payload.email && payload.password) {
         return [
           200,
           {
