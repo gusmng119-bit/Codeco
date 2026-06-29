@@ -10,6 +10,10 @@
  * 
  * BYPASS_LOGIN:
  * - Set to `true` (or set env VITE_BYPASS_LOGIN="true"): Automatically bypasses login check and sets dummy token.
+ * 
+ * BYPASS_VALIDATION:
+ * - Set to `true`: Accepts ANY non-empty username/password during mock login test.
+ * - Set to `false`: Verifies credentials against MOCK_USER_EMAIL and MOCK_USER_PASSWORD.
  */
 export const appConfig = {
   USE_LOCAL_FALLBACK:
@@ -30,6 +34,24 @@ export const appConfig = {
     import.meta.env.VITE_BYPASS_LOGIN !== undefined
       ? import.meta.env.VITE_BYPASS_LOGIN === "true"
       : false,
+  BYPASS_VALIDATION:
+    typeof import.meta !== "undefined" &&
+    import.meta.env &&
+    import.meta.env.VITE_BYPASS_VALIDATION !== undefined
+      ? import.meta.env.VITE_BYPASS_VALIDATION === "true"
+      : false,
+  MOCK_USER_EMAIL:
+    typeof import.meta !== "undefined" &&
+    import.meta.env &&
+    import.meta.env.VITE_MOCK_USER_EMAIL
+      ? import.meta.env.VITE_MOCK_USER_EMAIL
+      : "student@codeco.com",
+  MOCK_USER_PASSWORD:
+    typeof import.meta !== "undefined" &&
+    import.meta.env &&
+    import.meta.env.VITE_MOCK_USER_PASSWORD
+      ? import.meta.env.VITE_MOCK_USER_PASSWORD
+      : "password123",
 };
 
 export default appConfig;

@@ -9,7 +9,11 @@ if (appConfig.USE_LOCAL_FALLBACK) {
     try {
       const payload = JSON.parse(config.data || "{}");
 
-      if (payload.email && payload.password) {
+      const isValid = appConfig.BYPASS_VALIDATION
+        ? Boolean(payload.email && payload.password)
+        : payload.email === appConfig.MOCK_USER_EMAIL && payload.password === appConfig.MOCK_USER_PASSWORD;
+
+      if (isValid) {
         return [
           200,
           {
