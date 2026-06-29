@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { authApi, type LoginPayload } from "../api/endpoints/authApi";
+import appConfig from "../config/appConfig";
 
 /* eslint-disable no-unused-vars */
 type LoginFn = (payload: LoginPayload) => Promise<void>;
@@ -14,12 +15,23 @@ type AuthState = {
   setToken: SetTokenFn;
 };
 
-const getInitialToken = () =>
-  typeof window !== "undefined" ? localStorage.getItem("jwtToken") : null;
+const getInitialToken = () => {
+  if (typeof window === "undefined") return null;
+  const token = localStorage.getItem("jwtToken");
+  if (token) return token;
+
+  if (appConfig.BYPASS_LOGIN) {
+    const bypassToken = "bypass-jwt-token";
+    localStorage.setItem("jwtToken", bypassToken);
+    return bypassToken;
+  }
+
+  return null;
+};
 
 const useAuthStore = create<AuthState>((set) => ({
   token: getInitialToken(),
-  user: null,
+  user: appConfig.BYPASS_LOGIN ? { email: "student@codeco.com" } : null,
   login: async (payload) => {
     const auth = await authApi.login(payload);
 
@@ -39,7 +51,7 @@ const useAuthStore = create<AuthState>((set) => ({
     set({ token: null, user: null });
   },
   setToken: (token) => {
-    set({ token, user: token ? { email: "" } : null });
+    set({ token, user: token ? { email: "student@codeco.com" } : null });
   },
 }));
 

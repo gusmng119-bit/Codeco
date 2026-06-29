@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import Login from "../../features/Login/Login";
 import useAuthStore from "../../store/authStore";
+import appConfig from "../../config/appConfig";
 
 export function LoginRoute() {
   const token = useAuthStore((state) => state.token);
@@ -19,5 +20,7 @@ export function LoginRoute() {
     };
   }, [setToken]);
 
-  return token ? <Navigate to="/dashboard" replace /> : <Login />;
+  const redirectDashboard = Boolean(token) || appConfig.BYPASS_LOGIN;
+
+  return redirectDashboard ? <Navigate to="/dashboard" replace /> : <Login />;
 }

@@ -1,34 +1,28 @@
 export type SubmitFeedbackPayload = {
-    class_session_id: number;
-    student_id: number;
-    teacher_id: number;
-    rating: number;
-    comments: string;
+  class_session_id: number;
+  student_id: number;
+  teacher_id: number;
+  rating: number;
+  comment: string;
+};
+
+export type FeedbackData = {
+  id: number;
+  class_session_id: number;
+  student_id: number;
+  teacher_id: number;
+  rating: number;
+  comment: string;
+  submitted_at: string;
 };
 
 export type SubmitFeedbackResponse = {
-    message: string;
-    data: {
-        id: number;
-        class_session_id: number;
-        student_id: number;
-        teacher_id: number;
-        rating: number;
-        comments: string;
-        submitted_at: string;
-    };
+  message: string;
+  data: FeedbackData;
 };
 
 export type SubmitFeedbackFailureResponse = {
-    message: string;
+  message: string;
 };
 
-export type RetrieveFeedbackResponse = {
-    id: number;
-    class_session_id: number;
-    student_id: number;
-    teacher_id: number;
-    rating: number;
-    comments: string;
-    submitted_at: string;
-};
+export type RetrieveFeedbackResponse = FeedbackData[];

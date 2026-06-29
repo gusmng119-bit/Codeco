@@ -1,73 +1,37 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import "./Teacher.css";
-
-import imagesari from "../../assets/Mrs. Sari.jpeg";
-import imagecoki from "../../assets/coki.jpg";
+import useTeacherStore from "../../store/teacherStore";
+import type { TeacherItem } from "../../api/types/features";
+import EmptyState from "../../shared/components/EmptyState";
+import ErrorState from "../../shared/components/ErrorState";
 
 const Teachers = () => {
+  const {
+    teachers,
+    selectedTeacher,
+    showModal,
+    searchTerm,
+    notification,
+    loading,
+    error,
+    setSearchTerm,
+    setSelectedTeacher,
+    setShowModal,
+    fetchTeachers,
+    requestTeacher,
+  } = useTeacherStore();
 
-  /* ================= STATE ================= */
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [notification, setNotification] = useState("");
+  useEffect(() => {
+    fetchTeachers();
+  }, [fetchTeachers]);
 
-  /* ================= DATA ================= */
-  const teachers = [
-    {
-      id: 1,
-      name: "Mr. Ilham",
-      subject: "Robotic",
-      img: imagecoki,
-      education: "S1 Teknik Informatika",
-      teaching: "Robotic",
-      about:
-        "Pak Ilham adalah pengajar Robotic dengan pengalaman pembelajaran berbasis praktik.",
-      ig: "IlhamGanteng11",
-      yt: "IlhamRobotic",
-      linkedin: "linkedin.com/in/ilham",
-      tiktok: "@ilhamsirobot",
-    },
-    {
-      id: 2,
-      name: "Mrs. Sari",
-      subject: "Coding",
-      img: imagesari,
-      education: "S1 Sistem Informasi",
-      teaching: "Programming",
-      about:
-        "Ibu Sari fokus pada pembelajaran coding interaktif.",
-      ig: "sari_coding",
-      yt: "SariCodes",
-      linkedin: "linkedin.com/in/sari",
-      tiktok: "@saricode",
-    },
-
-    {
-      id: 3,
-      name: "Mrs. Sari",
-      subject: "Coding",
-      img: imagesari,
-      education: "S1 Sistem Informasi",
-      teaching: "Programming",
-      about:
-        "Ibu Sari fokus pada pembelajaran coding interaktif.",
-      ig: "sari_coding",
-      yt: "SariCodes",
-      linkedin: "linkedin.com/in/sari",
-      tiktok: "@saricode",
-    },
-  ];
-
-  /* ================= SEARCH ================= */
   const filteredTeachers = teachers.filter(
     (teacher) =>
       teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       teacher.subject.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  /* ================= MODAL ================= */
-  const handleViewClick = (teacher) => {
+  const handleViewClick = (teacher: TeacherItem) => {
     setSelectedTeacher(teacher);
     setShowModal(true);
   };
@@ -77,25 +41,11 @@ const Teachers = () => {
     setSelectedTeacher(null);
   };
 
-  /* ================= REQUEST ================= */
-  const handleRequestTeacher = () => {
-    setNotification(
-      `✅ Request sent successfully to ${selectedTeacher.name}`
-    );
-
-    setTimeout(() => {
-      setNotification("");
-    }, 3000);
-  };
-
   return (
     <div className="teacher-page">
-
       {/* ===== NOTIFICATION ===== */}
       {notification && (
-        <div className="request-notification">
-          {notification}
-        </div>
+        <div className="request-notification">{notification}</div>
       )}
 
       {/* ===== HEADER ===== */}
@@ -113,23 +63,45 @@ const Teachers = () => {
         </div>
       </header>
 
-      {/* ===== GRID ===== */}
-      <div className="teacher-grid">
-        {filteredTeachers.map((t) => (
-          <div className="teacher-card" key={t.id}>
-            <img src={t.img} alt={t.name} />
+      {/* ===== GRID / FALLBACKS ===== */}
+      {loading && (
+        <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
+          <p>Loading teachers from backend...</p>
+        </div>
+      )}
 
-            <div className="teacher-info">
-              <h4>{t.name}</h4>
-              <p>{t.subject}</p>
+      {!loading && error && (
+        <ErrorState
+          title="Unable to load teachers list"
+          message={error}
+          onRetry={fetchTeachers}
+        />
+      )}
 
-              <button onClick={() => handleViewClick(t)}>
-                View
-              </button>
+      {!loading && !error && filteredTeachers.length === 0 && (
+        <EmptyState
+          title="No Teachers Found"
+          message="No teachers match your search query."
+          icon="🎓"
+        />
+      )}
+
+      {!loading && !error && filteredTeachers.length > 0 && (
+        <div className="teacher-grid">
+          {filteredTeachers.map((t, index) => (
+            <div className="teacher-card" key={`${t.id}-${index}`}>
+              <img src={t.img} alt={t.name} />
+
+              <div className="teacher-info">
+                <h4>{t.name}</h4>
+                <p>{t.subject}</p>
+
+                <button onClick={() => handleViewClick(t)}>View</button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* ===== MODAL ===== */}
       {showModal && selectedTeacher && (
@@ -143,17 +115,13 @@ const Teachers = () => {
             </button>
 
             <div className="teacher-modal-body">
-
               {/* ===== LEFT ===== */}
               <div className="modal-left">
-
                 <div className="teacher-photo-frame">
                   <img src={selectedTeacher.img} alt="teacher" />
                 </div>
 
-                <div className="status-available">
-                  Available
-                </div>
+                <div className="status-available">Available</div>
 
                 <div className="social-section">
                   <h4>Sosial Media</h4>
@@ -162,12 +130,10 @@ const Teachers = () => {
                   <p>🔗 {selectedTeacher.linkedin}</p>
                   <p>🎵 {selectedTeacher.tiktok}</p>
                 </div>
-
               </div>
 
               {/* ===== RIGHT ===== */}
               <div className="modal-right">
-
                 <h1>{selectedTeacher.name}</h1>
 
                 <span className="teacher-role">
@@ -175,7 +141,6 @@ const Teachers = () => {
                 </span>
 
                 <div className="info-list">
-
                   <div className="info-box">
                     <span>🎓</span>
                     <div>
@@ -191,7 +156,6 @@ const Teachers = () => {
                       <strong>{selectedTeacher.teaching}</strong>
                     </div>
                   </div>
-
                 </div>
 
                 <hr />
@@ -201,21 +165,17 @@ const Teachers = () => {
                   <p>{selectedTeacher.about}</p>
                 </div>
 
-                {/* ✅ REQUEST BUTTON (POSITION TIDAK DIUBAH) */}
                 <button
                   className="request-button"
-                  onClick={handleRequestTeacher}
+                  onClick={() => requestTeacher()}
                 >
                   Request
                 </button>
-
               </div>
-
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 };
