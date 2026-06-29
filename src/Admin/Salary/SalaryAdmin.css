@@ -1,0 +1,403 @@
+/* Container Halaman Gaji Utama */
+.salary-page-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   1. TOP FOUR SUMMARY CARDS
+   ========================================================================== */
+.salary-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.salary-summary-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Garis Gradasi Top Border Aksen Khas Mockup */
+.salary-summary-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.salary-summary-card.total::before { background: linear-gradient(to right, #4fb7c5, #bae6fd); }
+.salary-summary-card.due::before { background: linear-gradient(to right, #3b82f6, #93c5fd); }
+.salary-summary-card.pending::before { background: linear-gradient(to right, #a855f7, #c084fc); }
+.salary-summary-card.paid::before { background: linear-gradient(to right, #f97316, #fde047); }
+
+.summary-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.salary-summary-card.total .summary-icon-circle { background-color: #e0f2fe; color: #0284c7; }
+.salary-summary-card.due .summary-icon-circle { background-color: #dbeafe; color: #2563eb; }
+.salary-summary-card.pending .summary-icon-circle { background-color: #f3e8ff; color: #9333ea; }
+.salary-summary-card.paid .summary-icon-circle { background-color: #ffedd5; color: #ea580c; }
+
+.inner-icon-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2.5px solid currentColor;
+}
+
+.summary-info-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.summary-card-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #000000;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   2. SEARCH & FILTER CONTROL BAR
+   ========================================================================== */
+.salary-filter-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  gap: 16px;
+}
+
+.salary-search-box-wrapper {
+  position: relative;
+  flex: 1;
+  max-width: 320px;
+}
+
+.salary-search-input {
+  width: 100%;
+  padding: 10px 16px 10px 42px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  color: #334155;
+}
+
+.salary-search-icon-inside {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.salary-dropdown-selectors-group {
+  display: flex;
+  gap: 10px;
+}
+
+.salary-filter-dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   3. DATA LIST TABLE
+   ========================================================================== */
+.salary-table-border-wrapper {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.salary-main-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.salary-main-data-table th {
+  background-color: #f8fafc;
+  padding: 16px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.salary-main-data-table td {
+  padding: 16px;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.salary-main-data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.teacher-name-cell-text {
+  font-weight: 500;
+}
+
+.text-center-th, .text-center-td { text-align: center; }
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+.color-green-done { color: #10b981; }
+.color-orange-pending { color: #f97316; }
+
+/* Status Badges */
+.salary-status-badge {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.salary-status-badge.paid { background-color: #e6fcf5; color: #0ca678; }
+.salary-status-badge.unpaid { background-color: #fff0f6; color: #e64980; }
+
+.salary-action-cell-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.salary-action-icon-btn {
+  background: transparent;
+  border: none;
+  color: #475569;
+  cursor: pointer;
+  padding: 2px;
+  display: inline-flex;
+}
+
+/* ==========================================================================
+   4. LOWER DETAIL DI AREA BAWAH
+   ========================================================================== */
+.salary-lower-detail-card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.salary-detail-tabs-header {
+  border-bottom: 1px solid #f1f5f9;
+  padding: 0 24px;
+}
+
+.salary-tab-header-btn {
+  background: transparent;
+  border: none;
+  padding: 14px 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #94a3b8;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+
+.salary-tab-header-btn.active {
+  color: #ef4444;
+  border-bottom: 3px solid #ef4444;
+}
+
+/* Layout Split 3 Kolom Detail */
+.salary-detail-card-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1.2fr;
+  gap: 24px;
+  padding: 24px;
+  align-items: start;
+}
+
+/* Kolom Kiri: Identitas Guru */
+.salary-teacher-identity-side-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.avatar-frame-circular {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f1f5f9;
+  margin-bottom: 10px;
+}
+
+.avatar-frame-circular img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-teacher-title-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.detail-status-green-pill {
+  font-size: 12px;
+  font-weight: 700;
+  color: #22c55e;
+  margin-top: 2px;
+  margin-bottom: 14px;
+}
+
+.teacher-meta-spec-rows-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+}
+
+.meta-spec-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.icon-placeholder-box { font-size: 15px; }
+
+/* Kolom Tengah: Kotak Rincian Hitungan */
+.salary-calculation-breakdown-box {
+  width: 100%;
+}
+
+.calc-info-card-bordered {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #ffffff;
+}
+
+.calc-row-item-line {
+  display: flex;
+  font-size: 13px;
+  align-items: center;
+}
+
+.calc-lbl {
+  width: 125px;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.calc-val {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.calc-divider-dashed-line {
+  border-top: 1px dashed #cbd5e1;
+  margin: 4px 0;
+  width: 100%;
+}
+
+.total-gaji-highlight-row {
+  font-weight: 700;
+}
+
+.calc-lbl-total {
+  width: 125px;
+  color: #0ea5e9;
+  font-weight: 700;
+}
+
+.calc-val-total {
+  color: #0ea5e9;
+  font-weight: 700;
+}
+
+/* Kolom Kanan: Detail Bank & Catatan */
+.salary-bank-payment-details-box {
+  width: 100%;
+}
+
+.payment-block-main-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 14px 0;
+}
+
+.payment-data-rows-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-data-line-row {
+  display: flex;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.p-lbl {
+  width: 140px;
+  color: #000000;
+  font-weight: 700;
+}
+
+.p-val {
+  flex: 1;
+  color: #1e293b;
+  font-weight: 400;
+}

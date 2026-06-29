@@ -327,91 +327,103 @@
   white-space: nowrap;
 }
 
-/* --- OVERLAY BACKGROUND MODAL --- */
+/* ======================================================
+MODAL OVERLAY
+====================================================== */
 .fb-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(5px); /* Sedikit menaikkan efek blur latar belakang */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px);
   z-index: 9999;
   animation: fadeIn 0.2s ease-out;
 }
 
-/* --- KOTAK UTAMA MODAL (LEBIH BESAR & LUAS) --- */
+/* ======================================================
+MODAL CONTAINER
+====================================================== */
 .fb-modal-content {
-  background: #ffffff;
   width: 90%;
-  max-width: 680px; /* Diperbesar dari 520px ke 680px agar lebih lega */
-  border-radius: 20px; /* Sudut lengkungan diperhalus */
-  padding: 36px; /* Spasi dalam diperlebar agar tidak sesak */
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 680px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px;
   position: relative;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
   animation: slideUp 0.25s ease-out;
 }
 
-/* --- HEADER MODAL --- */
+/* ======================================================
+MODAL HEADER
+====================================================== */
 .fb-modal-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
 .fb-modal-title {
-  font-size: 1.5rem; /* Ukuran teks judul diperbesar */
+  margin: 0;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #0f172a;
 }
 
 .fb-modal-close-btn {
-  background: #f1f5f9;
-  border: none;
   width: 36px;
   height: 36px;
+  border: none;
   border-radius: 50%;
+  background: #f1f5f9;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
 }
 
 .fb-modal-close-btn:hover {
   background: #e2e8f0;
 }
 
-/* --- PROFIL SISWA DI DALAM MODAL --- */
+/* ======================================================
+STUDENT PROFILE
+====================================================== */
 .fb-modal-student-profile {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 28px;
-  background: #f8fafc; /* Menambahkan background tipis pada nama siswa */
   padding: 12px 16px;
+  margin-bottom: 28px;
+  background: #f8fafc;
   border-radius: 12px;
 }
 
 .fb-modal-avatar {
-  width: 52px; /* Ukuran avatar diperbesar */
+  width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: #e2e8f0;
   object-fit: cover;
+  background: #e2e8f0;
 }
 
 .fb-modal-student-name {
-  font-size: 1.2rem; /* Ukuran teks nama diperbesar */
+  font-size: 1.2rem;
   font-weight: 700;
   color: #1e293b;
 }
 
-/* --- FORM BODY & TEXTAREA (AREA KETIK JAUH LEBIH BESAR) --- */
+/* ======================================================
+FORM BODY
+====================================================== */
 .fb-modal-body {
   display: flex;
   flex-direction: column;
@@ -425,79 +437,161 @@
 }
 
 .fb-modal-label {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #0f172a;
 }
 
+/* ======================================================
+TEXTAREA FEEDBACK
+====================================================== */
 .fb-modal-textarea {
   width: 100%;
-  height: 240px; /* Tinggi kotak ketik dinaikkan dari 160px ke 240px */
+  min-height: 240px;
   padding: 16px;
   border: 1px solid #cbd5e1;
   border-radius: 12px;
   font-family: inherit;
-  font-size: 1rem; /* Ukuran font ketik lebih nyaman dibaca */
-  color: #334155;
-  resize: none;
-  outline: none;
+  font-size: 1rem;
   line-height: 1.6;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #334155;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fb-modal-textarea::placeholder {
+  color: #94a3b8;
 }
 
 .fb-modal-textarea:focus {
   border-color: #4fb2be;
-  box-shadow: 0 0 0 4px rgba(79, 178, 190, 0.15); /* Efek fokus modern */
+  box-shadow: 0 0 0 4px rgba(79, 178, 190, 0.15);
 }
 
-/* --- INPUT UPLOAD FOTO --- */
+/* ======================================================
+FILE UPLOAD
+====================================================== */
 .fb-modal-upload-wrapper {
-  display: flex;
   position: relative;
+  display: flex;
   align-items: center;
 }
 
 .fb-modal-upload-input {
   width: 100%;
-  padding: 14px 54px 14px 16px;
+  padding: 14px 60px 14px 16px;
   border: 1px solid #cbd5e1;
   border-radius: 12px;
-  font-size: 1rem;
-  color: #94a3b8;
+  font-size: 0.95rem;
+  color: #64748b;
   background: #ffffff;
   outline: none;
+  box-sizing: border-box;
+}
+
+.fb-modal-upload-input:focus {
+  border-color: #4fb2be;
 }
 
 .fb-modal-upload-btn {
   position: absolute;
-  right: 16px;
-  background: transparent;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
   border: none;
+  border-radius: 10px;
+  background: #f8fafc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.fb-modal-upload-btn:hover {
+  background: #e2e8f0;
+}
+
+.fb-modal-upload-btn input {
+  display: none;
+}
+
+/* ======================================================
+ERROR MESSAGE
+====================================================== */
+.upload-error {
+  margin-top: 8px;
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ======================================================
+IMAGE PREVIEW
+====================================================== */
+.image-preview-container {
+  position: relative;
+  margin-top: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  background: #ef4444;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
-/* --- FOOTER BUTTONS (TOMBOL LEBIH NYAMAN DIKLIK) --- */
+.remove-image-btn:hover {
+  background: #dc2626;
+}
+
+/* ======================================================
+FOOTER
+====================================================== */
 .fb-modal-footer {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 16px;
-  margin-top: 36px;
+  margin-top: 32px;
 }
 
 .fb-btn-cancel {
-  padding: 12px 32px; /* Tombol diperlebar */
+  padding: 12px 32px;
   border: 1px solid #cbd5e1;
+  border-radius: 10px;
   background: #ffffff;
   color: #334155;
-  font-weight: 600;
   font-size: 1rem;
-  border-radius: 10px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .fb-btn-cancel:hover {
@@ -506,15 +600,15 @@
 }
 
 .fb-btn-submit {
-  padding: 12px 32px; /* Tombol diperlebar */
+  padding: 12px 32px;
   border: none;
+  border-radius: 10px;
   background: #4fb2be;
   color: #ffffff;
-  font-weight: 600;
   font-size: 1rem;
-  border-radius: 10px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: all 0.2s ease;
 }
 
 .fb-btn-submit:hover {
@@ -522,16 +616,87 @@
 }
 
 .fb-btn-submit:active {
-  transform: scale(0.98); /* Efek tekan kecil saat diklik */
+  transform: scale(0.98);
 }
 
-/* --- ANIMATIONS --- */
+/* ======================================================
+ANIMATION
+====================================================== */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======================================================
+RESPONSIVE MOBILE
+====================================================== */
+@media (max-width: 768px) {
+  .fb-modal-content {
+    width: 95%;
+    padding: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .fb-modal-title {
+    font-size: 1.25rem;
+  }
+
+  .fb-modal-avatar {
+    width: 46px;
+    height: 46px;
+  }
+
+  .fb-modal-student-name {
+    font-size: 1rem;
+  }
+
+  .fb-modal-textarea {
+    min-height: 180px;
+  }
+
+  .fb-modal-footer {
+    flex-direction: column;
+  }
+
+  .fb-btn-cancel,
+  .fb-btn-submit {
+    width: 100%;
+  }
+}
+
+/* Menangani kondisi tombol simpan saat dinonaktifkan (teks feedback kosong) */
+.fb-btn-submit:disabled {
+  background: #94a3b8;
+  color: #f1f5f9;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.7;
+}
+
+/* Memastikan transisi kursor dan fokus tombol terlihat profesional */
+.fb-btn-cancel:focus-visible,
+.fb-btn-submit:focus-visible {
+  outline: 3px solid rgba(79, 178, 190, 0.4);
+  outline-offset: 2px;
+}
+
+/* Pastikan ini ada di bagian bawah file CSS Anda */
+.fb-btn-submit:disabled {
+  background: #94a3b8;
+  color: #f1f5f9;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.7;
+}
+
+.fb-btn-cancel:focus-visible,
+.fb-btn-submit:focus-visible {
+  outline: 3px solid rgba(79, 178, 190, 0.4);
+  outline-offset: 2px;
 }

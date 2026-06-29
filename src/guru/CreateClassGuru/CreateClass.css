@@ -255,3 +255,90 @@
   text-align: center;
   padding: 20px 0;
 }
+
+/* ======================================================
+FILE LIST DISPLAY STYLE (TEXT ONLY)
+====================================================== */
+.cc-file-list-container {
+  margin-top: 20px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.cc-file-list-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.cc-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cc-file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  transition: background-color 0.15s ease;
+}
+
+.cc-file-item:hover {
+  background-color: #f1f5f9;
+}
+
+.cc-file-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.cc-file-details {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cc-file-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.cc-file-size {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.cc-file-remove-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.cc-file-remove-btn:hover {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.cc-upload-error-msg {
+  color: #ef4444;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 8px;
+}

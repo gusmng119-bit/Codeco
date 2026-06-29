@@ -1,15 +1,9 @@
-# TODO - Fix login -> dashboard flow
+# TODO - Fix HomeAdmin modal & tampilan
 
-## Step 1 (Auth key consistency)
-- Update `src/shared/security/login.route.jsx`
-  - Change auth check from `localStorage.getItem("jwtToken")` to `localStorage.getItem("isLoggedIn") === "true"`.
+- [ ] Rapikan/bersihkan CSS `Codeco/src/Admin/Home/HomeAdmin.css` yang duplikatif khususnya untuk modal notifikasi
+- [ ] Perbaiki pemicu modal notifikasi agar konsisten (lonceng/badge pending feedback) dan beri dukungan UX (Escape/aria)
+- [x] Poles tampilan HomeAdmin agar lebih profesional (spacing, typography, hover ringan)
 
-- Update `src/shared/security/protected.route.jsx`
-  - Change auth check from `localStorage.getItem("jwtToken")` to `localStorage.getItem("isLoggedIn") === "true"`.
+- [x] Jalankan build/dev untuk memastikan tidak ada error
 
-## Step 2 (Verification)
-- Run the app and verify:
-  - Fresh state: `/` shows Login
-  - After login: redirect to `/dashboard`
-  - After logout: `/dashboard` is blocked and redirects to `/`
 

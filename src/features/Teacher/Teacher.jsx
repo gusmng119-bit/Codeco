@@ -42,6 +42,62 @@ const Teachers = () => {
       linkedin: "linkedin.com/in/sari",
       tiktok: "@saricode",
     },
+    {
+      id: 3,
+      name: "Mr. Ilham",
+      subject: "Robotic",
+      img: imagecoki,
+      education: "S1 Teknik Informatika",
+      teaching: "Robotic",
+      about:
+        "Pak Ilham adalah pengajar Robotic dengan pengalaman pembelajaran berbasis praktik.",
+      ig: "IlhamGanteng11",
+      yt: "IlhamRobotic",
+      linkedin: "linkedin.com/in/ilham",
+      tiktok: "@ilhamsirobot",
+    },
+    {
+      id: 4,
+      name: "Mrs. Sari",
+      subject: "Coding",
+      img: imagesari,
+      education: "S1 Sistem Informasi",
+      teaching: "Programming",
+      about:
+        "Ibu Sari fokus pada pembelajaran coding interaktif.",
+      ig: "sari_coding",
+      yt: "SariCodes",
+      linkedin: "linkedin.com/in/sari",
+      tiktok: "@saricode",
+    },
+     {
+      id: 5,
+      name: "Mrs. Sari",
+      subject: "Coding",
+      img: imagesari,
+      education: "S1 Sistem Informasi",
+      teaching: "Programming",
+      about:
+        "Ibu Sari fokus pada pembelajaran coding interaktif.",
+      ig: "sari_coding",
+      yt: "SariCodes",
+      linkedin: "linkedin.com/in/sari",
+      tiktok: "@saricode",
+    },
+     {
+      id: 6,
+      name: "Mrs. Sari",
+      subject: "Coding",
+      img: imagesari,
+      education: "S1 Sistem Informasi",
+      teaching: "Programming",
+      about:
+        "Ibu Sari fokus pada pembelajaran coding interaktif.",
+      ig: "sari_coding",
+      yt: "SariCodes",
+      linkedin: "linkedin.com/in/sari",
+      tiktok: "@saricode",
+    },
   ];
 
   /* ================= SEARCH ================= */

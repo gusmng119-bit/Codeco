@@ -220,3 +220,24 @@
   }
 
 }
+
+.profile-item input,
+.profile-item textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  margin-top: 6px;
+}
+
+.profile-item textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.profile-item input:focus,
+.profile-item textarea:focus {
+  border-color: #ea7e69;
+}
