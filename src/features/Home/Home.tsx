@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 import profileImg from "../../assets/Profile.png";
 import logo2 from "../../assets/logo2.jpg";
 import certificateImg from "../../assets/certificate.png";
 
-import useDashboardStore from "../../store/dashboardStore";
 import useClassroomStore from "../../store/classroomStore";
 import useCertificateStore from "../../store/certificateStore";
 import useProfileStore from "../../store/profileStore";
 
 const Home = () => {
-  const setPage = useDashboardStore((state) => state.setPage);
+  const navigate = useNavigate();
   const { selectedClass, joined, joinClass, fetchClasses } = useClassroomStore();
   const { saveCertificate } = useCertificateStore();
   const { profile, fetchProfile } = useProfileStore();
@@ -50,7 +50,7 @@ const Home = () => {
       {/* ================= USER GREETING ================= */}
       <header
         className="user-greeting-card"
-        onClick={() => setPage("profile")}
+        onClick={() => navigate("/dashboard/profile")}
         style={{ cursor: "pointer" }}
       >
         <div className="avatar-main">
@@ -96,7 +96,7 @@ const Home = () => {
           <div className="status-row">
             <div
               className={`status-card ${!joined ? "locked" : ""}`}
-              onClick={() => joined && setPage("feedback")}
+              onClick={() => joined && navigate("/dashboard/feedback")}
             >
               {!joined && <span className="icon-lock">🔒</span>}
               <h4>Teacher Feedback</h4>
@@ -114,7 +114,7 @@ const Home = () => {
             <div
               className={`status-card ${!joined ? "locked" : ""}`}
               onClick={() =>
-                joined ? setPage("material") : alert("Join class first!")
+                joined ? navigate("/dashboard/material") : alert("Join class first!")
               }
             >
               {!joined && <span className="icon-lock">📖</span>}

@@ -1,12 +1,12 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 import profileImg from "../../assets/Profile.png";
 import BannerImg from "../../assets/Baner.jpg";
 import useProfileStore from "../../store/profileStore";
-import useDashboardStore from "../../store/dashboardStore";
 
 const Profile = () => {
-  const setPage = useDashboardStore((state) => state.setPage);
+  const navigate = useNavigate();
   const { profile, editMode, loading, setEditMode, fetchProfile } = useProfileStore();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Profile = () => {
 
       <div className="profile-content">
         {/* ================= BACK BUTTON ================= */}
-        <button className="back-btn" onClick={() => setPage("home")}>
+        <button className="back-btn" onClick={() => navigate("/dashboard/home")}>
           ⬅ Back
         </button>
 

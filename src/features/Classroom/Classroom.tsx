@@ -1,11 +1,11 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Classroom.css";
 import useClassroomStore, { FilterType } from "../../store/classroomStore";
-import useDashboardStore from "../../store/dashboardStore";
 import type { ClassItem } from "../../api/types/features";
 
 const Classroom = () => {
-  const setPage = useDashboardStore((state) => state.setPage);
+  const navigate = useNavigate();
   const {
     classes,
     filter,
@@ -33,7 +33,7 @@ const Classroom = () => {
 
   const handleOpenClass = (c: ClassItem) => {
     setSelectedClass(c);
-    setPage("home");
+    navigate("/dashboard/home");
   };
 
   const filterOptions: FilterType[] = ["yesterday", "today", "upcoming", "all"];
