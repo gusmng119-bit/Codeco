@@ -1,12 +1,14 @@
 import { create } from "zustand";
 import { classesApi } from "../api/endpoints/classesApi";
 import type { ClassItem } from "../api/types/features";
+import type { CreateClassesPayload, ClassData } from "../api/types/classes";
 
 export type FilterType = "all" | "today" | "yesterday" | "upcoming";
 
 /* eslint-disable no-unused-vars */
 type ClassroomState = {
   classes: ClassItem[];
+  apiClasses: ClassData[];
   filter: FilterType;
   searchClass: string;
   selectedClass: ClassItem | null;
@@ -21,11 +23,13 @@ type ClassroomState = {
 
   fetchClasses: () => Promise<void>;
   joinClass: (classId: number) => Promise<void>;
+  createClass: (payload: CreateClassesPayload) => Promise<ClassData | null>;
 };
 /* eslint-enable no-unused-vars */
 
-const useClassroomStore = create<ClassroomState>((set) => ({
+const useClassroomStore = create<ClassroomState>((set, get) => ({
   classes: [],
+  apiClasses: [],
   filter: "all",
   searchClass: "",
   selectedClass: null,
@@ -42,7 +46,8 @@ const useClassroomStore = create<ClassroomState>((set) => ({
     set({ loading: true, error: null });
     try {
       const data = await classesApi.getClasses();
-      set({ classes: data, loading: false });
+      const apiData = await classesApi.getApiClasses().catch(() => []);
+      set({ classes: data, apiClasses: apiData, loading: false });
     } catch (err: unknown) {
       const msg = (err as { message?: string })?.message || "Failed to fetch classes";
       set({ error: msg, loading: false });
@@ -54,8 +59,20 @@ const useClassroomStore = create<ClassroomState>((set) => ({
       await classesApi.joinClass({ classId });
       set({ joined: true });
     } catch {
-      // Fallback join locally if API call encounters issues
       set({ joined: true });
+    }
+  },
+
+  createClass: async (payload) => {
+    set({ loading: true, error: null });
+    try {
+      const res = await classesApi.createClass(payload);
+      set({ apiClasses: [...get().apiClasses, res.data], loading: false });
+      return res.data;
+    } catch (err: unknown) {
+      const msg = (err as { message?: string })?.message || "Failed to create class";
+      set({ error: msg, loading: false });
+      return null;
     }
   },
 }));

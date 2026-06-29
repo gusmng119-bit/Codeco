@@ -153,13 +153,11 @@ let currentProfile: ProfileData = {
   streetAddress: "Jl. Tukad Balian No.45",
 };
 
-// MOCK ENDPOINTS
+// UI FEATURE ENDPOINTS
 mock.onGet("/classes").reply(200, initialClasses);
 mock.onPost("/classes/join").reply(200, { success: true, message: "Successfully joined class!" });
-
 mock.onGet("/teachers").reply(200, initialTeachers);
 mock.onPost("/teachers/request").reply(200, { success: true, message: "Request sent successfully!" });
-
 mock.onGet("/certificates").reply(200, initialCertificates);
 mock.onPost("/certificates").reply((config) => {
   const payload = JSON.parse(config.data || "{}");
@@ -167,15 +165,149 @@ mock.onPost("/certificates").reply((config) => {
   initialCertificates.push(newCert);
   return [200, newCert];
 });
-
 mock.onGet("/feedback").reply(200, initialFeedback);
 mock.onGet("/materials").reply(200, initialMaterials);
-
 mock.onGet("/profile").reply(200, currentProfile);
 mock.onPut("/profile").reply((config) => {
   const payload = JSON.parse(config.data || "{}");
   currentProfile = { ...currentProfile, ...payload };
   return [200, currentProfile];
+});
+
+// OFFICIAL DOCUMENTED API ENDPOINTS
+
+// 1. Users
+mock.onGet("/api/users").reply(200, [
+  { id: 1, name: "Student one", email: "studentone@test.com", role: "student", updated_at: "2026-05-14", created_at: "2026-05-14" },
+]);
+mock.onPost("/api/users").reply((config) => {
+  const payload = JSON.parse(config.data || "{}");
+  if (!payload.email) {
+    return [400, { message: "The email has already been taken.", errors: { email: ["The email has already been taken."] } }];
+  }
+  return [
+    200,
+    {
+      message: "User created successfully",
+      data: {
+        id: Date.now(),
+        name: payload.name || "Student three",
+        email: payload.email || "studentthree@test.com",
+        role: payload.role || "student",
+        updated_at: "2026-05-14",
+        created_at: "2026-05-14",
+      },
+    },
+  ];
+});
+mock.onPut("/api/users").reply((config) => {
+  const payload = JSON.parse(config.data || "{}");
+  return [200, { message: "User updated successfully", data: { id: 1, name: "Updated User", email: "updated@test.com", role: "student", updated_at: "2026-05-14", created_at: "2026-05-14", ...payload } }];
+});
+mock.onDelete("/api/users").reply(200, { message: "User deleted successfully" });
+
+// 2. Classes
+mock.onGet("/api/classes").reply(200, [
+  { id: 1, name: "STEAM", total_sessions: 2, price: 500000 },
+]);
+mock.onPost("/api/classes").reply((config) => {
+  const payload = JSON.parse(config.data || "{}");
+  if (!payload.price) {
+    return [400, { message: "The price field is required.", errors: { price: ["The price field is required."] } }];
+  }
+  return [
+    200,
+    {
+      message: "Class created successfully",
+      data: {
+        id: Date.now(),
+        name: payload.name || "STEAM",
+        total_sessions: payload.total_sessions || 2,
+        price: payload.price || 500000,
+        updated_at: "2026-05-14 ",
+        created_at: "2026-05-14",
+      },
+    },
+  ];
+});
+mock.onPut("/api/classes").reply(200, { message: "Class updated successfully", data: { id: 1, name: "Updated Class", total_sessions: 3, price: 600000 } });
+mock.onDelete("/api/classes").reply(200, { message: "Class deleted successfully" });
+
+// 3. Sessions
+mock.onGet("/api/sessions").reply(200, [
+  {
+    id: 1,
+    class_id: 6,
+    teacher_id: 1,
+    start_time: "2026-05-10 10:00:00",
+    end_time: "2026-05-10 12:00:00",
+    status: "scheduled",
+    created_at: "2026-05-14T05:40:00.000000Z",
+    updated_at: "2026-05-14T05:40:00.000000Z",
+  },
+]);
+mock.onPut("/api/sessions").reply(200, {
+  id: 1,
+  class_id: 6,
+  teacher_id: 1,
+  start_time: "2026-05-15 10:00:00",
+  end_time: "2026-05-15 12:00:00",
+  status: "scheduled",
+  created_at: "2026-05-14T05:40:00.000000Z",
+  updated_at: "2026-05-14T05:40:00.000000Z",
+});
+mock.onDelete("/api/sessions").reply(200, { message: "Session deleted successfully" });
+mock.onPost("/api/generate-sessions").reply(200, { message: "Session generated", class_id: 6 });
+mock.onPost("/api/sessions/complete").reply(200, { message: "Session completed successfully" });
+
+// 4. Feedback
+mock.onGet("/api/feedback").reply(200, [
+  {
+    id: 1,
+    class_session_id: 1,
+    student_id: 1,
+    teacher_id: 1,
+    rating: 5,
+    comment: "The session was very helpful.",
+    submitted_at: "2026-05-14T05:50:00.000000Z",
+  },
+]);
+mock.onPost("/api/feedback").reply((config) => {
+  const payload = JSON.parse(config.data || "{}");
+  return [
+    200,
+    {
+      message: "Feedback submitted successfully",
+      data: {
+        id: Date.now(),
+        class_session_id: payload.class_session_id || 1,
+        student_id: payload.student_id || 1,
+        teacher_id: payload.teacher_id || 1,
+        rating: payload.rating || 5,
+        comment: payload.comment || "The session was very helpful.",
+        submitted_at: "2026-05-14T05:50:00.000000Z",
+      },
+    },
+  ];
+});
+
+// 5. Attendance
+mock.onPost("/api/attendance").reply((config) => {
+  const payload = JSON.parse(config.data || "{}");
+  return [
+    200,
+    {
+      message: "Attendance marked successfully",
+      data: {
+        id: Date.now(),
+        class_session_id: payload.class_session_id || 1,
+        student_id: payload.student_id || 1,
+        status: payload.status || "present",
+        created_at: "2026-05-14T06:00:00.000000Z",
+        updated_at: "2026-05-14T06:00:00.000000Z",
+      },
+    },
+  ];
 });
 
 export default mock;
