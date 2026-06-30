@@ -21,10 +21,7 @@ const Home = () => {
   const [showCertificate, setShowCertificate] = useState(false);
 
   /* ================= PROFILE NAME ================= */
-  const [profileName] = useState(() => {
-    const savedProfile = JSON.parse(localStorage.getItem("profileData"));
-    return savedProfile?.firstName || "User";
-  });
+  const userName = profile?.firstName ? `${profile.firstName}!` : "Samsoro!";
 
   useEffect(() => {
     fetchClasses();
@@ -56,8 +53,6 @@ const Home = () => {
     setShowCertificate(false);
   };
 
-  const userName = profile?.firstName ? `${profile.firstName}!` : "Samsoro!";
-
   return (
     <>
       {/* ================= USER GREETING ================= */}
@@ -69,7 +64,7 @@ const Home = () => {
         <div className="avatar-main">
           <img src={profileImg} alt="Profile" />
         </div>
-        <h1>Hi, {profileName}!</h1>
+        <h1>Hi, {userName}</h1>
       </header>
 
       {/* ================= TODAY CLASS ================= */}
@@ -94,7 +89,6 @@ const Home = () => {
             disabled={joined}
           >
             {joined ? "Joined" : "Join Class"}
-            {isLocked ? "Upcoming Class" : joined ? "Joined" : "Join Class"}
           </button>
         </div>
       </section>

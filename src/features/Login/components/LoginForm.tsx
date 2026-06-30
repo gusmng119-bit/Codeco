@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../../store/authStore";
+import useAuthStore, { ROLE_REDIRECT } from "../../../store/authStore";
 
 type LoginFormValues = {
   email: string;
@@ -10,7 +10,6 @@ type LoginFormValues = {
 };
 
 const LoginForm = () => {
-
   const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
   const [loading, setLoading] = useState<boolean>(false);
@@ -20,8 +19,13 @@ const LoginForm = () => {
 
     try {
       await login(values);
-      message.success("Login successful! Welcome back.");
-      navigate("/dashboard");
+
+      // Ambil user dari store setelah login berhasil
+      const user = useAuthStore.getState().user;
+      const redirectTo = user ? ROLE_REDIRECT[user.role] : "/student";
+
+      message.success(`Login berhasil! Selamat datang, ${user?.name ?? "User"}.`);
+      navigate(redirectTo);
     } catch (error) {
       const errorMessage = axios.isAxiosError(error)
         ? error.response?.data?.message ?? "Invalid email or password."

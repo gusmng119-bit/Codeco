@@ -1,106 +1,13 @@
 import { useState, useEffect } from "react";
 import "./Teacher.css";
 
-import imagesari from "@/assets/mrs-sari.jpeg";
-import imagecoki from "@/assets/coki.jpg";
+import useTeacherStore from "@/store/teacherStore";
+import type { TeacherItem } from "@/api/types/features";
+import EmptyState from "@/shared/components/EmptyState";
+import ErrorState from "@/shared/components/ErrorState";
 
 const Teachers = () => {
-  /* ================= STATE ================= */
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [notification, setNotification] = useState("");
-  const [requestedTeachers, setRequestedTeachers] = useState([]);
-
-  /* ================= DATA ================= */
-  const teachers = [
-    {
-      id: 1,
-      name: "Mr. Ilham",
-      subject: "Robotic",
-      img: imagecoki,
-      education: "S1 Teknik Informatika",
-      teaching: "Robotic",
-      about:
-        "Pak Ilham adalah pengajar Robotic dengan pengalaman pembelajaran berbasis praktik.",
-      ig: "IlhamGanteng11",
-      yt: "IlhamRobotic",
-      linkedin: "linkedin.com/in/ilham",
-      tiktok: "@ilhamsirobot",
-    },
-    {
-      id: 2,
-      name: "Mrs. Sari",
-      subject: "Coding",
-      img: imagesari,
-      education: "S1 Sistem Informasi",
-      teaching: "Programming",
-      about:
-        "Ibu Sari fokus pada pembelajaran coding interaktif.",
-      ig: "sari_coding",
-      yt: "SariCodes",
-      linkedin: "linkedin.com/in/sari",
-      tiktok: "@saricode",
-    },
-    {
-      id: 3,
-      name: "Mr. Ilham",
-      subject: "Robotic",
-      img: imagecoki,
-      education: "S1 Teknik Informatika",
-      teaching: "Robotic",
-      about:
-        "Pak Ilham adalah pengajar Robotic dengan pengalaman pembelajaran berbasis praktik.",
-      ig: "IlhamGanteng11",
-      yt: "IlhamRobotic",
-      linkedin: "linkedin.com/in/ilham",
-      tiktok: "@ilhamsirobot",
-    },
-    {
-      id: 4,
-      name: "Mrs. Sari",
-      subject: "Coding",
-      img: imagesari,
-      education: "S1 Sistem Informasi",
-      teaching: "Programming",
-      about:
-        "Ibu Sari fokus pada pembelajaran coding interaktif.",
-      ig: "sari_coding",
-      yt: "SariCodes",
-      linkedin: "linkedin.com/in/sari",
-      tiktok: "@saricode",
-    },
-    {
-      id: 5,
-      name: "Mrs. Sari",
-      subject: "Coding",
-      img: imagesari,
-      education: "S1 Sistem Informasi",
-      teaching: "Programming",
-      about:
-        "Ibu Sari fokus pada pembelajaran coding interaktif.",
-      ig: "sari_coding",
-      yt: "SariCodes",
-      linkedin: "linkedin.com/in/sari",
-      tiktok: "@saricode",
-    },
-    {
-      id: 6,
-      name: "Mrs. Sari",
-      subject: "Coding",
-      img: imagesari,
-      education: "S1 Sistem Informasi",
-      teaching: "Programming",
-      about:
-        "Ibu Sari fokus pada pembelajaran coding interaktif.",
-      ig: "sari_coding",
-      yt: "SariCodes",
-      linkedin: "linkedin.com/in/sari",
-      tiktok: "@saricode",
-    },
-  ];
-
-  /* ================= SEARCH ================= */
+  /* ================= STORE (Zustand) ================= */
   const {
     teachers,
     selectedTeacher,
@@ -115,6 +22,9 @@ const Teachers = () => {
     fetchTeachers,
     requestTeacher,
   } = useTeacherStore();
+
+  /* ================= LOCAL STATE (bukan data) ================= */
+  const [requestedTeachers, setRequestedTeachers] = useState<number[]>([]);
 
   useEffect(() => {
     fetchTeachers();
@@ -137,18 +47,16 @@ const Teachers = () => {
   };
 
   /* ================= REQUEST ================= */
-  const handleRequestTeacher = (e) => {
-    e.stopPropagation(); // agar klik tombol tidak menutup modal
+  const handleRequestTeacher = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!selectedTeacher) return;
-
     if (requestedTeachers.includes(selectedTeacher.id)) return;
 
     setRequestedTeachers((prev) => [...prev, selectedTeacher.id]);
-
-    setNotification(`✅ Request sent successfully to ${selectedTeacher.name}`);
+    requestTeacher();
 
     setTimeout(() => {
-      setNotification("");
+      // notification is handled by the store
     }, 3000);
   };
 
@@ -296,4 +204,3 @@ const Teachers = () => {
 };
 
 export default Teachers;
-

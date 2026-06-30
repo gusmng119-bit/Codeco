@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "./features/auth/authContext";
+import useAuthStore from "./store/authStore";
+import type { UserRole } from "./api/types/auth";
 
 /* ================= LOGIN ================= */
 import Login from "./features/Login/Login";
@@ -8,44 +9,49 @@ import Login from "./features/Login/Login";
 import StudentDashboard from "./features/Dashboard/Dashboard";
 
 /* ================= TEACHER ================= */
-import DashboardGuru from "./guru/DashboardGuru";
-import HomeGuru from "./guru/Pages/HomeGuru";
-import TeacherProfile from "./guru/ProfileGuru/ProfileGuru";
-import Class from "./guru/Class/Class";
-import Calendar from "./guru/Kalender/Calendar";
-import FeedbackGuru from "./guru/FeedbackGuru/FeedbackGuru";
-import Salary from "./guru/Salary/Salary";
-import CreateClassGuru from "./guru/CreateClassGuru/CreateClass";
+import DashboardTeacher from "./features/Teacher/DashboardTeacher";
+import HomeTeacher from "./features/Teacher/Home/HomeTeacher";
+import ProfileTeacher from "./features/Teacher/Profile/ProfileTeacher";
+import ClassTeacher from "./features/Teacher/Class/ClassTeacher";
+import CalendarTeacher from "./features/Teacher/Calendar/CalendarTeacher";
+import FeedbackTeacher from "./features/Teacher/FeedbackTeacher/FeedbackTeacher";
+import SalaryTeacher from "./features/Teacher/Salary/SalaryTeacher";
+import CreateClass from "./features/Teacher/CreateClass/CreateClass";
 
 /* ================= ADMIN ================= */
-import DashboardAdmin from "./Admin/Dashboard/Dashboardadmin";
-import HomeAdmin from "./Admin/Home/HomeAdmin";
-import ClassesAdmin from "./Admin/Class/ClassesAdmin";
-import TeacherAdmin from "./Admin/Teacher/TeacherAdmin";
-import StudentAdmin from "./Admin/Student/StudentAdmin";
-import CalendarAdmin from "./Admin/Calendar/CalendarAdmin";
-import SalaryAdmin from "./Admin/Salary/SalaryAdmin";
-import ProfileAdmin from "./Admin/Profile/ProfileAdmin";
-
+import DashboardAdmin from "./features/Admin/DashboardAdmin";
+import HomeAdmin from "./features/Admin/Home/HomeAdmin";
+import ClassesAdmin from "./features/Admin/Classes/ClassesAdmin";
+import TeacherAdmin from "./features/Admin/Teacher/TeacherAdmin";
+import StudentAdmin from "./features/Admin/Student/StudentAdmin";
+import CalendarAdmin from "./features/Admin/Calendar/CalendarAdmin";
+import SalaryAdmin from "./features/Admin/Salary/SalaryAdmin";
+import ProfileAdmin from "./features/Admin/Profile/ProfileAdmin";
 
 /* ======================================================
    PROTECTED ROUTE
+   Membaca user dari authStore (Zustand) — bukan lagi authContext
 ====================================================== */
-const ProtectedRoute = ({ children, role }) => {
-  const { user } = useAuth();
+type ProtectedRouteProps = {
+  children: React.ReactNode;
+  role?: UserRole;
+};
 
-  if (!user) {
+const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
+  const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
+
+  // Belum login → ke halaman login
+  if (!token || !user) {
     return <Navigate to="/" replace />;
   }
 
-  if (
-    role &&
-    user.role?.toLowerCase() !== role.toLowerCase()
-  ) {
+  // Role tidak cocok → ke halaman login
+  if (role && user.role !== role) {
     return <Navigate to="/" replace />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 /* ======================================================
@@ -53,125 +59,67 @@ const ProtectedRoute = ({ children, role }) => {
 ====================================================== */
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
+    <Routes>
 
-        {/* ================= LOGIN ================= */}
-        <Route
-          path="/"
-          element={<Login />}
-        />
+      {/* ================= LOGIN ================= */}
+      <Route
+        path="/"
+        element={<Login />}
+      />
 
-        {/* ================= STUDENT ================= */}
-        <Route
-          path="/student"
-          element={
-            <ProtectedRoute role="siswa">
-              <StudentDashboard />
-            </ProtectedRoute>
-          }
-        />
+      {/* ================= STUDENT ================= */}
+      <Route
+        path="/student"
+        element={
+          <ProtectedRoute role="siswa">
+            <StudentDashboard />
+          </ProtectedRoute>
+        }
+      />
 
-        {/* ================= ADMIN ================= */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute role="admin">
-              <DashboardAdmin />
-            </ProtectedRoute>
-          }
-        >
-          <Route
-            index
-            element={<HomeAdmin />}
-          />
+      {/* ================= ADMIN ================= */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute role="admin">
+            <DashboardAdmin />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<HomeAdmin />} />
+        <Route path="classes"  element={<ClassesAdmin />} />
+        <Route path="teacher"  element={<TeacherAdmin />} />
+        <Route path="student"  element={<StudentAdmin />} />
+        <Route path="calendar" element={<CalendarAdmin />} />
+        <Route path="salary"   element={<SalaryAdmin />} />
+        <Route path="Profile"  element={<ProfileAdmin />} />
+      </Route>
 
-          <Route
-            path="classes"
-            element={<ClassesAdmin />}
-          />
+      {/* ================= TEACHER ================= */}
+      <Route
+        path="/teacher"
+        element={
+          <ProtectedRoute role="guru">
+            <DashboardTeacher />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<HomeTeacher />} />
+        <Route path="profile"      element={<ProfileTeacher />} />
+        <Route path="classes"      element={<ClassTeacher />} />
+        <Route path="create-class" element={<CreateClass />} />
+        <Route path="calendar"     element={<CalendarTeacher />} />
+        <Route path="feedback"     element={<FeedbackTeacher />} />
+        <Route path="salary"       element={<SalaryTeacher />} />
+      </Route>
 
-          <Route
-            path="teacher"
-            element={<TeacherAdmin />}
-          />
+      {/* ================= NOT FOUND ================= */}
+      <Route
+        path="*"
+        element={<Navigate to="/" replace />}
+      />
 
-          <Route
-            path="student"
-            element={<StudentAdmin />}
-          />
-
-          <Route
-            path="calendar"
-            element={<CalendarAdmin />}
-          />
-
-          <Route
-            path="salary"
-            element={<SalaryAdmin />}
-          />
-
-          <Route
-            path="Profile"
-            element={<ProfileAdmin />}
-          />
-
-
-        </Route>
-
-        {/* ================= TEACHER ================= */}
-        <Route
-          path="/teacher"
-          element={
-            <ProtectedRoute role="guru">
-              <DashboardGuru />
-            </ProtectedRoute>
-          }
-        >
-          <Route
-            index
-            element={<HomeGuru />}
-          />
-
-          <Route
-            path="profile"
-            element={<TeacherProfile />}
-          />
-
-          <Route
-            path="classes"
-            element={<Class />}
-          />
-
-          <Route
-            path="create-class"
-            element={<CreateClassGuru />}
-          />
-
-          <Route
-            path="calendar"
-            element={<Calendar />}
-          />
-
-          <Route
-            path="feedback"
-            element={<FeedbackGuru />}
-          />
-
-          <Route
-            path="salary"
-            element={<Salary />}
-          />
-        </Route>
-
-        {/* ================= NOT FOUND ================= */}
-        <Route
-          path="*"
-          element={<Navigate to="/" replace />}
-        />
-
-      </Routes>
-    </AuthProvider>
+    </Routes>
   );
 }
 
