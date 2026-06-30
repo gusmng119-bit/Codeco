@@ -265,6 +265,13 @@
 .request-button:hover {
   transform: scale(1.05);
 }
+.request-button.requested {
+  background: #bdbdbd;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.9;
+  border: none;
+}
 /* ================= REQUEST NOTIFICATION ================= */
 
 .request-notification {

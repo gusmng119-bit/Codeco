@@ -1,0 +1,97 @@
+/* Styling Container Halaman */
+.calendar-page {
+  padding: 24px;
+  background-color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Dropdown styling */
+.calendar-dropdown {
+  padding: 6px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  background-color: #fff;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Nav Button Arrows */
+.nav-btn {
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  background-color: #f8fafc;
+}
+
+/* --- EVENT CARD ABSOLUTE STYLING --- */
+.event-card {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: 'Inter', sans-serif;
+  border-left: 3px solid transparent;
+}
+
+.event-time-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.event-teacher {
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.event-subject {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* --- THEME KARTU JADWAL --- */
+.event-robotic {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  border-left-color: #38bdf8;
+}
+
+.event-desain {
+  background-color: #f3e8ff;
+  color: #9333ea;
+  border-left-color: #c084fc;
+}
+
+.event-programing {
+  background-color: #ffe4e6;
+  color: #e11d48;
+  border-left-color: #fb7185;
+}
+
+.event-science {
+  background-color: #fff7ed;
+  color: #ea580c;
+  border-left-color: #fb923c;
+}

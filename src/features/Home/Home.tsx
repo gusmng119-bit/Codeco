@@ -20,6 +20,9 @@ const Home = () => {
 
   const [showCertificate, setShowCertificate] = useState(false);
 
+  /* ================= PROFILE NAME ================= */
+  const userName = profile?.firstName ? `${profile.firstName}!` : "Samsoro!";
+
   useEffect(() => {
     fetchClasses();
     fetchProfile();
@@ -50,8 +53,6 @@ const Home = () => {
     setShowCertificate(false);
   };
 
-  const userName = profile?.firstName ? `${profile.firstName}!` : "Samsoro!";
-
   return (
     <>
       {/* ================= USER GREETING ================= */}
@@ -63,26 +64,22 @@ const Home = () => {
         <div className="avatar-main">
           <img src={profileImg} alt="Profile" />
         </div>
-
         <h1>Hi, {userName}</h1>
       </header>
 
       {/* ================= TODAY CLASS ================= */}
       <section className="class-highlight">
-        <h2 className="label-text">Today's class</h2>
-
-        <div className="hero-card">
+        <h2 className="label-text">Today's Class</h2>
+        <div className={`hero-card ${joined ? "hero-active" : ""}`}>
           <div className="hero-img-wrapper">
             <img src={logo2} alt="Class" />
           </div>
-
           <div className="hero-info">
             <h3>{classData.title}</h3>
             <p className="instructor">{classData.instructor}</p>
-
             <div className="hero-meta">
               <span>Today</span>
-              <span>🕒 {classData.time}</span>
+              <span>{classData.time}</span>
             </div>
           </div>
 
@@ -96,7 +93,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ================= DASHBOARD ================= */}
+      {/* ================= DASHBOARD GRID ================= */}
       <div className="dashboard-grid">
         <div className="grid-left-col">
           {/* FEEDBACK */}
@@ -139,13 +136,11 @@ const Home = () => {
             </div>
           </div>
 
-          {/* PROGRESS */}
+          {/* ================= PROGRESS ================= */}
           <div className="progress-section">
             <h4>Learning Progress</h4>
-
             <div className="progress-card-inner">
               <img src={logo2} alt="Robot" className="mini-robot" />
-
               <div className="progress-details">
                 <div className="progress-header">
                   <strong>{classData.title}</strong>
@@ -199,27 +194,10 @@ const Home = () => {
 
       {/* ================= CERTIFICATE MODAL ================= */}
       {showCertificate && (
-        <div
-          className="certificate-overlay"
-          onClick={() => setShowCertificate(false)}
-        >
-          <div
-            className="certificate-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="close-btn"
-              onClick={() => setShowCertificate(false)}
-            >
-              ✕
-            </button>
-
-            <img
-              src={certificateImg}
-              alt="Certificate"
-              className="certificate-preview"
-            />
-
+        <div className="certificate-overlay" onClick={() => setShowCertificate(false)}>
+          <div className="certificate-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setShowCertificate(false)}>✕</button>
+            <img src={certificateImg} alt="Certificate" className="certificate-preview" />
             <h3>{classData.title}</h3>
 
             <button

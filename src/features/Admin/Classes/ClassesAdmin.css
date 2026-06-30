@@ -1,0 +1,268 @@
+/* Container Utama */
+.classes-page-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header Section */
+.classes-header-section .header-text h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+}
+
+.classes-header-section .header-text p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 4px 0 0 0;
+}
+
+/* Filter Bar */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: #ffffff;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.search-wrapper input {
+  width: 100%;
+  padding: 10px 16px 10px 44px;
+  border: 1px solid #cbd5e1;
+  border-radius: 30px;
+  font-size: 14px;
+  outline: none;
+  color: #334155;
+}
+
+.filter-dropdowns {
+  display: flex;
+  gap: 8px;
+}
+
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 10px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  color: #334155;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-create-class {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #4fb7c5;
+  color: #ffffff;
+  border: none;
+  padding: 11px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(79, 183, 197, 0.2);
+}
+
+/* Table Design */
+.table-responsive {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.classes-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.classes-table th {
+  background-color: #f8fafc;
+  padding: 16px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.classes-table td {
+  padding: 18px 16px;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.classes-table tr:last-child td {
+  border-bottom: none;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.schedule-cell {
+  white-space: pre-line;
+  line-height: 1.4;
+}
+
+.status-badge {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.btn-edit-action {
+  background: transparent;
+  border: none;
+  color: #1e293b;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Detail Guru Card */
+.teacher-detail-card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.tabs-container {
+  border-bottom: 1px solid #f1f5f9;
+  padding: 0 24px;
+}
+
+.tab-item {
+  background: transparent;
+  border: none;
+  padding: 14px 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ef4444;
+  border-bottom: 3px solid #ef4444;
+  cursor: pointer;
+}
+
+.card-content {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 32px;
+  padding: 24px;
+  align-items: start;
+}
+
+.profile-main-info {
+  display: flex;
+  gap: 20px;
+}
+
+.teacher-large-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-text-group h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 4px 0;
+}
+
+.badge-guru-aktif {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #22c55e;
+  margin-bottom: 16px;
+}
+
+.meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.meta-item svg {
+  color: #94a3b8;
+}
+
+/* Additional Info Box (Kanan) */
+.additional-info-box {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.additional-info-box h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 16px 0;
+}
+
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-row {
+  display: flex;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.info-label {
+  width: 110px;
+  color: #64748b;
+}
+
+.info-value {
+  flex: 1;
+  color: #1e293b;
+}

@@ -1,7 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 import axiosClient from "../core/axiosClient";
 import imagecoki from "../../assets/coki.jpg";
-import imagesari from "../../assets/Mrs. Sari.jpeg";
+import imagesari from "../../assets/mrs-sari.jpeg";
 import certificateImg from "../../assets/certificate.png";
 import type { ClassItem, TeacherItem, CertificateItem, FeedbackItem, MaterialItem, ProfileData } from "../types/features";
 import appConfig from "../../config/appConfig";
@@ -305,4 +305,64 @@ if (appConfig.USE_LOCAL_FALLBACK) {
       },
     ];
   });
+
+  // =====================================================
+  // TEACHER FEATURE ENDPOINTS
+  // =====================================================
+  mock.onGet("/teacher/classes").reply(200, [
+    { id: 1, title: "Robotic",      students: 20, progress: 80,  color: "#ff7aa2", status: "Active", schedule: "Mon, Wed, Fri", time: "09.00 - 11.00" },
+    { id: 2, title: "Programming",  students: 10, progress: 80,  color: "#f4c95d", status: "Active", schedule: "Tue, Thu",      time: "13.00 - 15.00" },
+    { id: 3, title: "Science",      students: 20, progress: 100, color: "#56bbc4", status: "Done",   schedule: "Mon, Wed",      time: "10.00 - 12.00" },
+    { id: 4, title: "Design",       students: 20, progress: 80,  color: "#a78bfa", status: "Active", schedule: "Fri",           time: "09.00 - 11.00" },
+  ]);
+
+  mock.onGet("/teacher/salary").reply(200, {
+    summary: {
+      totalSalary:   "Rp 4.500.000",
+      pendingAmount: "Rp 1.500.000",
+      pendingCount:  1,
+      paidAmount:    "Rp 3.000.000",
+      paidCount:     4,
+    },
+    rows: [
+      { id: 1, date: "17 April 2026", className: "Robotic", grade: "Grade 1", total: "Rp 750.000", status: "Paid",    paymentDate: "18 April 2026" },
+      { id: 2, date: "17 April 2026", className: "Robotic", grade: "Grade 1", total: "Rp 750.000", status: "Pending", paymentDate: "18 April 2026" },
+      { id: 3, date: "17 April 2026", className: "Robotic", grade: "Grade 1", total: "Rp 750.000", status: "Paid",    paymentDate: "18 April 2026" },
+      { id: 4, date: "17 April 2026", className: "Robotic", grade: "Grade 1", total: "Rp 750.000", status: "Paid",    paymentDate: "18 April 2026" },
+      { id: 5, date: "17 April 2026", className: "Robotic", grade: "Grade 1", total: "Rp 750.000", status: "Paid",    paymentDate: "18 April 2026" },
+    ],
+  });
+
+  mock.onGet("/teacher/feedback-students").reply(200, [
+    { id: 1, name: "Samsoro",  avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Samsoro1",  status: "Belum diisi", statusType: "pending", feedback: "" },
+    { id: 2, name: "Budiono",  avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Budiono",   status: "Belum diisi", statusType: "pending", feedback: "" },
+    { id: 3, name: "Anindita", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Anindita",  status: "Selesai",     statusType: "success", feedback: "Kerja bagus! Pemahaman materi logika kodingnya sudah sangat matang.", filledTime: "Diisi: 17 April 2026, 12.40 PM" },
+  ]);
+
+  mock.onGet("/teacher/calendar-events").reply(200, [
+    { id: 1, dayIndex: 1, time: "8 AM",  displayTime: "08:00 AM", teacher: "Mr Ilham", subject: "Robotic",    type: "robotic"   },
+    { id: 2, dayIndex: 0, time: "10 AM", displayTime: "10:00 AM", teacher: "Mr Ilham", subject: "Robotic",    type: "robotic"   },
+    { id: 3, dayIndex: 2, time: "11 AM", displayTime: "11:00 AM", teacher: "Mr Ilham", subject: "Robotic",    type: "robotic"   },
+    { id: 4, dayIndex: 5, time: "11 AM", displayTime: "11:00 AM", teacher: "Mr Rio",   subject: "Desain",     type: "desain"    },
+    { id: 5, dayIndex: 5, time: "1 PM",  displayTime: "1:00 PM",  teacher: "Mr Ilham", subject: "Programing", type: "programing" },
+    { id: 6, dayIndex: 5, time: "3 PM",  displayTime: "3:00 PM",  teacher: "Mr Faisal",subject: "Science",    type: "science"   },
+  ]);
+
+  // =====================================================
+  // ADMIN FEATURE ENDPOINTS
+  // =====================================================
+  mock.onGet("/admin/students").reply(200, [
+    { id: 1, name: "Budiono Putrosono", email: "budiono@gmail.com", class: "Robotic", grade: "Grade 1", status: "Active" },
+    { id: 2, name: "Samsoro Hartono",   email: "samsoro@gmail.com", class: "Coding",  grade: "Grade 2", status: "Active" },
+    { id: 3, name: "Dewi Rahayu",       email: "dewi@gmail.com",    class: "Science", grade: "Grade 3", status: "Active" },
+    { id: 4, name: "Ahmad Fauzi",       email: "ahmad@gmail.com",   class: "Design",  grade: "Grade 1", status: "Inactive" },
+    { id: 5, name: "Rina Susanti",      email: "rina@gmail.com",    class: "Robotic", grade: "Grade 2", status: "Active" },
+  ]);
+
+  mock.onGet("/admin/classes").reply(200, [
+    { id: 1, name: "Robotic",     teacher: "Mr. Ilham", totalStudents: 20, schedule: "Mon, Wed, Fri", status: "Active" },
+    { id: 2, name: "Programming", teacher: "Mrs. Sari", totalStudents: 10, schedule: "Tue, Thu",      status: "Active" },
+    { id: 3, name: "Science",     teacher: "Mr. Faisal",totalStudents: 15, schedule: "Mon, Wed",      status: "Done"   },
+    { id: 4, name: "Design",      teacher: "Mr. Rio",   totalStudents: 12, schedule: "Fri",           status: "Active" },
+  ]);
 }

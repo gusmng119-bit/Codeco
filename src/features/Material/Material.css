@@ -6,34 +6,72 @@
 
 /* Banner */
 .material-header-banner {
-  /* Layout tetap sesuai keinginan Anda */
+  /* Layout */
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 30px;
-  border-radius: 30px;
-  color: white;
   margin-bottom: 30px;
-  
-  /* Agar noise dan gradasi tidak keluar dari border-radius */
+
+  border-radius: 30px;
+
+  /* Text */
+  color: white;
+
+  /* Position */
   position: relative;
   overflow: hidden;
 
-  /* Perbaikan Background: Mengikuti palet image_b648b5.jpg */
-  background-color: #EA7E69; /* Warna fallback */
-  background-image: 
-    /* Sudut Kiri Atas - Ungu/Magenta */
-    radial-gradient(at 0% 0%, #9E007E 0%, transparent 50%),
-    /* Sudut Kanan Atas - Peach Terang */
-    radial-gradient(at 100% 0%, #FFBFC4 0%, transparent 50%),
-    /* Sudut Kiri Bawah - Pink Cerah */
-    radial-gradient(at 0% 100%, #F04D9D 0%, transparent 50%),
-    /* Sudut Kanan Bawah - Ochre/Oranye Gelap */
-    radial-gradient(at 100% 100%, #B35900 0%, transparent 50%),
-    /* Tengah - Oranye Hangat (Warna dominan banner Anda) */
-    radial-gradient(at 50% 50%, #F19B68 0%, transparent 100%);
+  /* Background utama */
+  background-color: #5b7cfa;
+
+  /* Gradient seperti gambar */
+  background-image:
+    radial-gradient(at 15% 20%, #7df9ff 0px, transparent 50%),
+    radial-gradient(at 85% 15%, #c084fc 0px, transparent 45%),
+    radial-gradient(at 70% 75%, #00cfff 0px, transparent 50%),
+    radial-gradient(at 30% 85%, #6ee7f9 0px, transparent 45%),
+    radial-gradient(at 50% 50%, #3b82f6 0px, transparent 60%);
+
+  /* Efek glass & glow */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 10px 40px rgba(0, 174, 255, 0.25),
+    0 4px 20px rgba(139, 92, 246, 0.2);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  transition: all 0.3s ease;
 }
 
+/* Glow overlay */
+.material-header-banner::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.18),
+      rgba(255,255,255,0.02)
+    );
+
+  pointer-events: none;
+}
+
+/* Hover effect */
+.material-header-banner:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 45px rgba(0, 174, 255, 0.35),
+    0 8px 30px rgba(139, 92, 246, 0.28);
+}
 /* Efek Tekstur Grainy (Bintik-bintik halus) */
 .material-header-banner::before {
   content: "";

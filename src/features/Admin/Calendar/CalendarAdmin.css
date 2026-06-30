@@ -1,0 +1,270 @@
+/* ==========================================================================
+   CONTAINER PAGE
+   ========================================================================== */
+.calendar-page-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   FILTER & NAVIGATION
+   ========================================================================== */
+.calendar-filters-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.dropdown-selectors {
+  display: flex;
+  gap: 12px;
+}
+
+.cal-select {
+  min-width: 120px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #d8dee9;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 14px;
+  color: #111827;
+  cursor: pointer;
+  outline: none;
+}
+
+.calendar-navigation-title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.current-month-text {
+  font-size: 30px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.nav-arrow-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.arrow-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #d8dee9;
+  border-radius: 10px;
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4b5563;
+  transition: 0.2s;
+}
+
+.arrow-btn:hover {
+  background: #f8fafc;
+}
+
+/* ==========================================================================
+   MAIN CALENDAR
+   ========================================================================== */
+.calendar-grid-card {
+  width: 100%;
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   HEADER DAYS
+   ========================================================================== */
+.calendar-grid-header {
+  display: grid;
+  grid-template-columns: 70px repeat(7, 1fr);
+  border-bottom: 1px solid #ececec;
+}
+
+.time-column-header {
+  border-right: 1px solid #ececec;
+}
+
+.day-header-cell {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-right: 1px solid #ececec;
+}
+
+.day-header-cell:last-child {
+  border-right: none;
+}
+
+.day-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.day-date {
+  margin-top: 4px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ==========================================================================
+   BODY
+   ========================================================================== */
+.calendar-grid-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-time-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  min-height: 74px;
+  border-bottom: 1px solid #ececec;
+}
+
+.calendar-time-row:last-child {
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   TIME COLUMN
+   ========================================================================== */
+.time-label-cell {
+  border-right: 1px solid #ececec;
+  font-size: 13px;
+  color: #9ca3af;
+  text-align: center;
+  padding-top: 10px;
+  background: #ffffff;
+}
+
+/* ==========================================================================
+   DAYS GRID
+   ========================================================================== */
+.days-slots-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.event-slot-cell {
+  border-right: 1px solid #ececec;
+  position: relative;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.event-slot-cell:last-child {
+  border-right: none;
+}
+
+/* Highlight THU */
+.days-slots-row .event-slot-cell:nth-child(5) {
+  background: #eef6ff;
+}
+
+/* ==========================================================================
+   EVENT CARD
+   ========================================================================== */
+.event-card-item {
+  width: calc(100% - 4px);
+  min-height: 66px;
+  margin: 2px;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.event-card-time-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.video-icon-style {
+  width: 12px;
+  height: 12px;
+}
+
+.event-teacher {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.event-subject,
+.event-subject-only {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ==========================================================================
+   EVENT COLORS
+   ========================================================================== */
+
+.blue-schedule-card {
+  background: #eaf7ff;
+  color: #0284c7;
+  border-left: 3px solid #0284c7;
+}
+
+.purple-schedule-card {
+  background: #f4ecff;
+  color: #7c3aed;
+  border-left: 3px solid #7c3aed;
+}
+
+.red-schedule-card {
+  background: #ffe7ec;
+  color: #e11d48;
+  border-left: 3px solid #e11d48;
+}
+
+.orange-schedule-card {
+  background: #fff3e0;
+  color: #d97706;
+  border-left: 3px solid #d97706;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 992px) {
+  .current-month-text {
+    font-size: 22px;
+  }
+
+  .calendar-time-row {
+    min-height: 65px;
+  }
+
+  .day-date {
+    font-size: 16px;
+  }
+
+  .event-card-item {
+    min-height: 58px;
+    padding: 6px;
+  }
+}

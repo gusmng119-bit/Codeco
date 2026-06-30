@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import Login from "../../features/Login/Login";
-import useAuthStore from "../../store/authStore";
+import useAuthStore, { ROLE_REDIRECT } from "../../store/authStore";
 import appConfig from "../../config/appConfig";
 
 export function LoginRoute() {
   const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
   const setToken = useAuthStore((state) => state.setToken);
 
   useEffect(() => {
@@ -20,7 +21,14 @@ export function LoginRoute() {
     };
   }, [setToken]);
 
-  const redirectDashboard = Boolean(token) || appConfig.BYPASS_LOGIN;
+  const isAuthenticated = Boolean(token) || appConfig.BYPASS_LOGIN;
 
-  return redirectDashboard ? <Navigate to="/dashboard" replace /> : <Login />;
+  if (isAuthenticated) {
+    // Redirect ke halaman yang sesuai role
+    const role = user?.role ?? appConfig.BYPASS_LOGIN_ROLE;
+    const redirectTo = ROLE_REDIRECT[role] ?? "/student";
+    return <Navigate to={redirectTo} replace />;
+  }
+
+  return <Login />;
 }

@@ -1,0 +1,243 @@
+/* ==========================================================================
+   RESET & BASE STYLES
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   LAYOUT WRAPPER
+   ========================================================================== */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+/* ==========================================================================
+   SIDEBAR STYLING
+   ========================================================================== */
+.sidebar {
+  width: 260px;
+  background-color: #ffffff;
+  border-right: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Logo Image Container (Sesuai Gambar Polos Tanpa Border Dashed) */
+.sidebar-logo-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 28px;
+  padding: 0 8px;
+}
+
+.logo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: transparent;
+  border: none;
+}
+
+.sidebar-logo-img {
+  width: 55%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Menu Navigasi */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  color: #64748b;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+}
+
+/* Nav Item Aktif (Warna Toska Sesuai Gambar) */
+/* Nav Item Aktif (Sesuai kode warna #56bbc4) */
+.nav-item.active {
+  background-color: #56bbc4; /* Mengganti kode warna aktif menjadi #56bbc4 */
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(86, 187, 196, 0.25); /* Menyesuaikan warna shadow agar senada */
+}
+
+.nav-item.active .nav-icon {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   MAIN CONTENT AREA
+   ========================================================================== */
+.main-content-container {
+  flex: 1;
+  margin-left: 260px; /* Menyesuaikan lebar fixed sidebar agar tidak bertabrakan */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   TOP NAVBAR / HEADER
+   ========================================================================== */
+.top-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  background-color: transparent;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.header-title h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.header-title p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 4px 0 0 0;
+}
+
+/* Sisi Kanan Header (Notifikasi & Profil) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Lencana Notifikasi Bel */
+.notification-trigger {
+  position: relative;
+  color: #1e293b;
+  cursor: pointer;
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+}
+
+.badge-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+}
+
+/* Profil Identitas Admin */
+.admin-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  padding: 6px 14px 6px 6px;
+  border-radius: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}
+
+.avatar-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-role-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.profile-role {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.dropdown-arrow {
+  color: #64748b;
+}
+
+.profile-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* ==========================================================================
+   DYNAMIC OUTLET SPACE
+   ========================================================================== */
+.dashboard-main-view {
+  flex: 1;
+  padding: 0 32px 32px 32px;
+}

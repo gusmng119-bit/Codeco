@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./Teacher.css";
-import useTeacherStore from "../../store/teacherStore";
-import type { TeacherItem } from "../../api/types/features";
-import EmptyState from "../../shared/components/EmptyState";
-import ErrorState from "../../shared/components/ErrorState";
+
+import useTeacherStore from "@/store/teacherStore";
+import type { TeacherItem } from "@/api/types/features";
+import EmptyState from "@/shared/components/EmptyState";
+import ErrorState from "@/shared/components/ErrorState";
 
 const Teachers = () => {
+  /* ================= STORE (Zustand) ================= */
   const {
     teachers,
     selectedTeacher,
@@ -20,6 +22,9 @@ const Teachers = () => {
     fetchTeachers,
     requestTeacher,
   } = useTeacherStore();
+
+  /* ================= LOCAL STATE (bukan data) ================= */
+  const [requestedTeachers, setRequestedTeachers] = useState<number[]>([]);
 
   useEffect(() => {
     fetchTeachers();
@@ -39,6 +44,20 @@ const Teachers = () => {
   const closeModal = () => {
     setShowModal(false);
     setSelectedTeacher(null);
+  };
+
+  /* ================= REQUEST ================= */
+  const handleRequestTeacher = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!selectedTeacher) return;
+    if (requestedTeachers.includes(selectedTeacher.id)) return;
+
+    setRequestedTeachers((prev) => [...prev, selectedTeacher.id]);
+    requestTeacher();
+
+    setTimeout(() => {
+      // notification is handled by the store
+    }, 3000);
   };
 
   return (
@@ -118,7 +137,7 @@ const Teachers = () => {
               {/* ===== LEFT ===== */}
               <div className="modal-left">
                 <div className="teacher-photo-frame">
-                  <img src={selectedTeacher.img} alt="teacher" />
+                  <img src={selectedTeacher.img} alt={selectedTeacher.name} />
                 </div>
 
                 <div className="status-available">Available</div>
@@ -165,11 +184,15 @@ const Teachers = () => {
                   <p>{selectedTeacher.about}</p>
                 </div>
 
+                {/* ✅ REQUEST BUTTON */}
                 <button
                   className="request-button"
-                  onClick={() => requestTeacher()}
+                  onClick={handleRequestTeacher}
+                  disabled={requestedTeachers.includes(selectedTeacher.id)}
                 >
-                  Request
+                  {requestedTeachers.includes(selectedTeacher.id)
+                    ? "Requested"
+                    : "Request"}
                 </button>
               </div>
             </div>

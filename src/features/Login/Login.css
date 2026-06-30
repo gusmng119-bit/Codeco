@@ -1,98 +1,146 @@
-/* Import Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Fredoka+One&display=swap');
+/* Login.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .login-container {
   width: 100%;
   min-height: 100vh;
+  background: #ffffff;
   overflow: hidden;
-  /* Menggunakan Montserrat sebagai font utama sesuai preferensi */
   font-family: 'Montserrat', sans-serif;
 }
 
+/* FULL HEIGHT ROW */
 .login-row {
   min-height: 100vh;
 }
 
-/* LEFT SECTION */
+/* ================= LEFT SECTION ================= */
+
 .left-section {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
   background: #ffffff;
-  /* Padding disesuaikan agar konten lebih ke tengah secara visual */
-  padding: 60px 80px; 
-  position: relative;
-  z-index: 2;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 60px;
+}
+
+/* CONTENT WRAPPER */
+.content-wrapper {
+  width: 100%;
+  max-width: 650px;
 }
 
 /* LOGO */
 .logo-container-login {
-  margin-bottom: 20px;
+  margin-bottom: 85px;
 }
 
 .brand-logo-login {
-  width: 120px; /* Ukuran proporsional untuk logo codeco */
+  width: 95px;
   height: auto;
   object-fit: contain;
+  display: block;
 }
 
-/* CONTENT AREA */
-.login-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 450px; /* Mencegah form terlalu lebar */
-}
+/* ================= RIGHT SECTION ================= */
 
-/* Pastikan judul "Welcome!" menggunakan font yang diinginkan */
-.login-content h1 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 3.5rem;
-  margin-bottom: 2rem;
-  color: #000;
-}
-
-/* RIGHT SECTION */
 .right-section {
   height: 100vh;
-  padding: 0;
   overflow: hidden;
+  padding: 0 !important;
 }
 
-/* Menghapus overlay biru agar foto asli terlihat seperti di gambar referensi */
-.right-section::before {
-  display: none; 
+/* IMAGE WRAPPER */
+.image-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
 }
 
-.right-section img {
+/* HERO IMAGE */
+.login-hero-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Menjaga proporsi gambar seperti di screenshot */
+  object-fit: cover;
+
+  /* garis tipis seperti desain */
+  border-left: 2px solid #8fd5df;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1200px) {
-  .left-section {
-    padding: 40px 40px;
+/* ================= RESPONSIVE ================= */
+
+@media screen and (max-width: 1200px) {
+
+  .content-wrapper {
+    max-width: 560px;
+  }
+
+  .logo-container-login {
+    margin-bottom: 65px;
   }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 992px) {
+
   .left-section {
-    height: auto;
+    padding: 35px;
     min-height: 100vh;
-    padding: 40px 24px;
-    align-items: center; /* Konten rata tengah di mobile */
-  }
-  
-  .login-content {
-    width: 100%;
-    align-items: stretch;
   }
 
-  .right-section {
-    display: none; /* Sembunyikan gambar di mobile sesuai CSS awalmu */
+  .content-wrapper {
+    max-width: 100%;
+  }
+
+  .logo-container-login {
+    margin-bottom: 55px;
+  }
+
+  .brand-logo-login {
+    width: 82px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .left-section {
+    padding: 28px;
+  }
+
+  .content-wrapper {
+    max-width: 100%;
+  }
+
+  .logo-container-login {
+    margin-bottom: 45px;
+  }
+
+  .brand-logo-login {
+    width: 75px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+
+  .left-section {
+    padding: 22px;
+  }
+
+  .logo-container-login {
+    margin-bottom: 38px;
+  }
+
+  .brand-logo-login {
+    width: 68px;
   }
 }
