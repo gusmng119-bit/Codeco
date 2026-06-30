@@ -1,5 +1,5 @@
 import "./DashboardAdmin.css";
-import { Link, useLocation, Outlet } from "react-router-dom";
+import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
 import {
   Home,
   BookOpen,
@@ -9,14 +9,22 @@ import {
   Wallet,
   Bell,
   ChevronDown,
-  User
+  User,
+  LogOut
 } from "lucide-react";
 import logo1 from "@/assets/logo1.png";
 import useAuthStore from "@/store/authStore";
 
 const DashboardAdmin = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const authUser = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   const menuItems = [
     { name: "Home",      path: "/admin",          icon: <Home size={20} /> },
@@ -51,7 +59,7 @@ const DashboardAdmin = () => {
           </div>
         </div>
 
-        <nav className="sidebar-nav">
+        <nav className="sidebar-nav" style={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
             return (
@@ -65,6 +73,15 @@ const DashboardAdmin = () => {
               </Link>
             );
           })}
+
+          <div
+            className="nav-item logout-item"
+            onClick={handleLogout}
+            style={{ marginTop: "auto", color: "#ef4444", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", padding: "12px 24px" }}
+          >
+            <span className="nav-icon"><LogOut size={20} /></span>
+            <span>Logout</span>
+          </div>
         </nav>
       </aside>
 

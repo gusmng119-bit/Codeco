@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
 import { AiOutlineHome } from "react-icons/ai"; // home
-import { BiBook } from "react-icons/bi";       // classroom
+import { BiBook, BiLogOut } from "react-icons/bi"; // classroom, logout
 import { GiGraduateCap } from "react-icons/gi"; // teacher
 import { FaTrophy } from "react-icons/fa";     // certificate
 
@@ -15,8 +16,16 @@ import Certificate from "../Certificate/Certificate";
 import Profile from "../Profile/Profile";
 import ClassMaterial from "../Material/Material";
 import FeedbackClass from "../Feedback/Feedback";
+import useAuthStore from "@/store/authStore";
 
 const Dashboard = ({ setIsLoggedIn }) => {
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   /* ================================================= */
   /* ================= DEFAULT CLASS ================= */
@@ -350,7 +359,7 @@ const Dashboard = ({ setIsLoggedIn }) => {
 
         {/* ================= NAVIGATION ================= */}
 
-        <nav className="nav-menu">
+        <nav className="nav-menu" style={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
 
   <div
     className={`nav-item ${page === "home" ? "active" : ""}`}
@@ -382,6 +391,16 @@ const Dashboard = ({ setIsLoggedIn }) => {
   >
     <FaTrophy size={28} className="nav-icon" />
     <span>Certificate</span>
+  </div>
+
+  {/* LOGOUT */}
+  <div
+    className="nav-item logout-item"
+    onClick={handleLogout}
+    style={{ marginTop: "auto", color: "#ef4444" }}
+  >
+    <BiLogOut size={28} className="nav-icon" />
+    <span>Logout</span>
   </div>
 
 </nav>

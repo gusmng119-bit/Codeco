@@ -1,14 +1,21 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 import { AiOutlineHome } from "react-icons/ai";
-import { BiBook } from "react-icons/bi";
+import { BiBook, BiLogOut } from "react-icons/bi";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { FaCommentDots, FaWallet } from "react-icons/fa";
 import logo1 from "@/assets/logo1.png";
+import useAuthStore from "@/store/authStore";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   const activeMenu = (path: string) =>
     location.pathname.toLowerCase() === path.toLowerCase() ? "active" : "";
@@ -21,7 +28,7 @@ const Sidebar = () => {
       </div>
 
       {/* MENU */}
-      <nav className="nav-menu">
+      <nav className="nav-menu" style={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
         {/* DASHBOARD / HOME */}
         <div
           className={`nav-item ${activeMenu("/teacher")}`}
@@ -65,6 +72,16 @@ const Sidebar = () => {
         >
           <FaWallet />
           <span>Salary</span>
+        </div>
+
+        {/* LOGOUT */}
+        <div
+          className="nav-item logout-item"
+          onClick={handleLogout}
+          style={{ marginTop: "auto", color: "#ef4444" }}
+        >
+          <BiLogOut />
+          <span>Logout</span>
         </div>
       </nav>
     </aside>
