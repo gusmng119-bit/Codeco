@@ -11,7 +11,8 @@
 
 body {
   font-family: "Montserrat", sans-serif;
-  background-color: #f8fafc; /* Diubah menjadi terang agar serasi dengan dashboard */
+  background-color: #f8fafc;
+  /* Diubah menjadi terang agar serasi dengan dashboard */
   color: #333333;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -37,11 +38,11 @@ body {
   left: 0;
   top: 0;
   z-index: 100;
-  
+
   background: #ffffff;
   border-right: 1px solid #e2e8f0;
   padding: 30px 20px;
-  
+
   display: flex;
   flex-direction: column;
 }
@@ -79,7 +80,8 @@ body {
   font-size: 15px;
   font-weight: 600;
   text-transform: capitalize;
-  color: #64748b; /* Warna abu-abu soft profesional saat tidak aktif */
+  color: #64748b;
+  /* Warna abu-abu soft profesional saat tidak aktif */
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
@@ -89,16 +91,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 }
 
-/* State management design elements */
 .nav-item:hover {
   background-color: #f1f5f9;
   color: #1e293b;
 }
 
 .nav-item.active {
-  background-color: #49a2a6; /* Menyesuaikan aksen warna Classroom teal Anda */
+  background-color: #49a2a6;
+  /* Menyesuaikan aksen warna Classroom teal Anda */
   color: #ffffff;
 }
 
@@ -107,14 +110,15 @@ body {
    ======================================================= */
 .main-area {
   flex: 1;
-  margin-left: 260px; /* Memberikan ruang agar tidak tertimpa sidebar fixed */
+  margin-left: 260px;
+  /* Memberikan ruang agar tidak tertimpa sidebar fixed */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  
+
   /* ⚡ KRITIKAL: Memaksa semua elemen halaman anak (Classroom) 
      melebar penuh dan tidak menumpuk menciut di tengah */
-  align-items: stretch; 
+  align-items: stretch;
 }
 
 /* Penampung halaman utama interior */

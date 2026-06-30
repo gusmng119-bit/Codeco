@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Teacher.css";
 
 import imagesari from "@/assets/mrs-sari.jpeg";
@@ -70,7 +70,7 @@ const Teachers = () => {
       linkedin: "linkedin.com/in/sari",
       tiktok: "@saricode",
     },
-     {
+    {
       id: 5,
       name: "Mrs. Sari",
       subject: "Coding",
@@ -84,7 +84,7 @@ const Teachers = () => {
       linkedin: "linkedin.com/in/sari",
       tiktok: "@saricode",
     },
-     {
+    {
       id: 6,
       name: "Mrs. Sari",
       subject: "Coding",
@@ -101,14 +101,32 @@ const Teachers = () => {
   ];
 
   /* ================= SEARCH ================= */
+  const {
+    teachers,
+    selectedTeacher,
+    showModal,
+    searchTerm,
+    notification,
+    loading,
+    error,
+    setSearchTerm,
+    setSelectedTeacher,
+    setShowModal,
+    fetchTeachers,
+    requestTeacher,
+  } = useTeacherStore();
+
+  useEffect(() => {
+    fetchTeachers();
+  }, [fetchTeachers]);
+
   const filteredTeachers = teachers.filter(
     (teacher) =>
       teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       teacher.subject.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  /* ================= MODAL ================= */
-  const handleViewClick = (teacher) => {
+  const handleViewClick = (teacher: TeacherItem) => {
     setSelectedTeacher(teacher);
     setShowModal(true);
   };
@@ -136,12 +154,9 @@ const Teachers = () => {
 
   return (
     <div className="teacher-page">
-
       {/* ===== NOTIFICATION ===== */}
       {notification && (
-        <div className="request-notification">
-          {notification}
-        </div>
+        <div className="request-notification">{notification}</div>
       )}
 
       {/* ===== HEADER ===== */}
@@ -159,23 +174,45 @@ const Teachers = () => {
         </div>
       </header>
 
-      {/* ===== GRID ===== */}
-      <div className="teacher-grid">
-        {filteredTeachers.map((t) => (
-          <div className="teacher-card" key={t.id}>
-            <img src={t.img} alt={t.name} />
+      {/* ===== GRID / FALLBACKS ===== */}
+      {loading && (
+        <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
+          <p>Loading teachers from backend...</p>
+        </div>
+      )}
 
-            <div className="teacher-info">
-              <h4>{t.name}</h4>
-              <p>{t.subject}</p>
+      {!loading && error && (
+        <ErrorState
+          title="Unable to load teachers list"
+          message={error}
+          onRetry={fetchTeachers}
+        />
+      )}
 
-              <button onClick={() => handleViewClick(t)}>
-                View
-              </button>
+      {!loading && !error && filteredTeachers.length === 0 && (
+        <EmptyState
+          title="No Teachers Found"
+          message="No teachers match your search query."
+          icon="🎓"
+        />
+      )}
+
+      {!loading && !error && filteredTeachers.length > 0 && (
+        <div className="teacher-grid">
+          {filteredTeachers.map((t, index) => (
+            <div className="teacher-card" key={`${t.id}-${index}`}>
+              <img src={t.img} alt={t.name} />
+
+              <div className="teacher-info">
+                <h4>{t.name}</h4>
+                <p>{t.subject}</p>
+
+                <button onClick={() => handleViewClick(t)}>View</button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* ===== MODAL ===== */}
       {showModal && selectedTeacher && (
@@ -189,17 +226,13 @@ const Teachers = () => {
             </button>
 
             <div className="teacher-modal-body">
-
               {/* ===== LEFT ===== */}
               <div className="modal-left">
-
                 <div className="teacher-photo-frame">
                   <img src={selectedTeacher.img} alt={selectedTeacher.name} />
                 </div>
 
-                <div className="status-available">
-                  Available
-                </div>
+                <div className="status-available">Available</div>
 
                 <div className="social-section">
                   <h4>Sosial Media</h4>
@@ -208,12 +241,10 @@ const Teachers = () => {
                   <p>🔗 {selectedTeacher.linkedin}</p>
                   <p>🎵 {selectedTeacher.tiktok}</p>
                 </div>
-
               </div>
 
               {/* ===== RIGHT ===== */}
               <div className="modal-right">
-
                 <h1>{selectedTeacher.name}</h1>
 
                 <span className="teacher-role">
@@ -221,7 +252,6 @@ const Teachers = () => {
                 </span>
 
                 <div className="info-list">
-
                   <div className="info-box">
                     <span>🎓</span>
                     <div>
@@ -237,7 +267,6 @@ const Teachers = () => {
                       <strong>{selectedTeacher.teaching}</strong>
                     </div>
                   </div>
-
                 </div>
 
                 <hr />
@@ -257,16 +286,14 @@ const Teachers = () => {
                     ? "Requested"
                     : "Request"}
                 </button>
-
               </div>
-
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 };
 
 export default Teachers;
+
