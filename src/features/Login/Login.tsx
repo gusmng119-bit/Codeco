@@ -11,17 +11,17 @@ const Login = () => {
       <Row className="login-row" align="middle">
 
         <Col xl={12} lg={12} md={24} xs={24} className="left-section">
+          
+          <div className="logo-container-login">
+            <img src={logo1} alt="Logo" className="brand-logo-login" />
+          </div>
+
           <div className="content-wrapper">
-
-            <div className="logo-container-login">
-              <img src={logo1} alt="Logo" className="brand-logo-login" />
-            </div>
-
             <div className="login-content">
               <LoginForm />
             </div>
-
           </div>
+
         </Col>
 
         <Col xl={12} lg={12} md={0} xs={0} className="right-section">

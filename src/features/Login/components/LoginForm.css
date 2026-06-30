@@ -2,24 +2,20 @@
 
 .login-form-container {
   width: 100%;
-  max-width: 500px; /* diperkecil agar lebih profesional */
-
-  margin: 0 auto; /* posisi lebih ke tengah */
-  padding-left: 10px;
-  padding-right: 10px;
+  max-width: 400px; /* Lebar optimal sesuai snippet Figma */
+  margin: 0 auto;
 }
 
 /* ================= TITLE ================= */
 
 .login-title {
   font-family: 'Playfair Display', serif;
-  font-size: 68px; /* diperkecil */
+  font-size: 48px; /* Lebih proporsional sesuai Figma */
   font-weight: 700;
-  color: #000;
-  line-height: 1;
-  letter-spacing: -1.5px;
-  margin-bottom: 56px;
-
+  color: #000000;
+  line-height: 1.2;
+  margin-top: 24px;
+  margin-bottom: 40px;
   text-align: left;
 }
 
@@ -30,14 +26,14 @@
 }
 
 .login-form-container .ant-form-item-label {
-  padding-bottom: 8px;
+  padding-bottom: 6px;
 }
 
 .login-form-container .ant-form-item-label > label {
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px !important;
+  font-size: 14px !important;
   font-weight: 600 !important;
-  color: #111 !important;
+  color: #000000 !important;
 }
 
 /* HIDE REQUIRED ASTERISK */
@@ -45,122 +41,110 @@
   display: none !important;
 }
 
-/* ================= EMAIL INPUT ================= */
+/* ================= INPUT GENERAL ================= */
 
-.login-form-container .ant-input {
-  height: 56px !important;
-  border-radius: 35px !important;
-  border: 1.8px solid #2f2f2f !important;
-  background: #fff !important;
-
-  padding-left: 22px !important;
-  padding-right: 22px !important;
-
-  font-size: 16px !important;
+/* Raw input text (like Email) */
+.login-form-container .ant-input:not(.ant-input-affix-wrapper .ant-input) {
+  height: 48px !important;
+  border-radius: 24px !important;
+  border: 1px solid #4a4a4a !important;
+  background: #ffffff !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  font-size: 14px !important;
   font-weight: 500;
-
   box-shadow: none !important;
 }
 
-/* ================= PASSWORD WRAPPER ================= */
-
+/* Wrapper for password input */
 .login-form-container .ant-input-affix-wrapper {
-  height: 56px !important;
-  border-radius: 35px !important;
-  border: 1.8px solid #2f2f2f !important;
-  background: #fff !important;
-
-  padding-left: 22px !important;
-  padding-right: 22px !important;
-
+  height: 48px !important;
+  border-radius: 24px !important;
+  border: 1px solid #4a4a4a !important;
+  background: #ffffff !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  font-size: 14px !important;
+  font-weight: 500;
   box-shadow: none !important;
+  display: flex;
+  align-items: center;
 }
 
-/* REMOVE DOUBLE BORDER */
+/* Suffix icon styling inside wrapper */
+.login-form-container .ant-input-suffix {
+  margin-left: 8px;
+}
+
+.login-form-container .input-icon-suffix {
+  font-size: 18px;
+  color: #000000;
+}
+
+/* Remove default border inside password input wrapper */
 .login-form-container .ant-input-affix-wrapper > input.ant-input {
   border: none !important;
-  background: transparent !important;
   height: 100% !important;
   padding: 0 !important;
+  font-size: 14px !important;
+  background: transparent !important;
   box-shadow: none !important;
-
-  font-size: 16px !important;
-  font-weight: 500;
-}
-
-/* ================= ICON ================= */
-
-.login-form-container .ant-input-password-icon,
-.login-form-container .ant-input-suffix svg {
-  font-size: 21px;
-  color: #3c3c3c;
+  border-radius: 0 !important;
 }
 
 /* ================= PLACEHOLDER ================= */
 
 .login-form-container input::placeholder {
-  color: #9a9a9a;
-  font-size: 15px;
+  color: #a0a0a0 !important;
+  font-size: 14px;
   font-weight: 400;
 }
 
-/* ================= FOCUS ================= */
+/* ================= FOCUS STATES ================= */
 
 .login-form-container .ant-input:focus,
 .login-form-container .ant-input-focused,
 .login-form-container .ant-input-affix-wrapper-focused {
-  border-color: #6dc6d0 !important;
-  box-shadow: 0 0 0 3px rgba(109, 198, 208, 0.12) !important;
+  border-color: #54b9b9 !important;
+  box-shadow: 0 0 0 2px rgba(84, 185, 185, 0.2) !important;
 }
 
 /* ================= BUTTON ================= */
 
-.login-form-container .ant-btn-primary {
+.login-form-container .login-submit-btn {
   width: 100%;
-  height: 56px !important;
-
-  margin-top: 18px;
-
+  height: 48px !important;
+  margin-top: 16px;
   border: none !important;
-  border-radius: 35px !important;
-
-  background: #6cc7d2 !important;
-
+  border-radius: 24px !important;
+  background: #54b9b9 !important; /* Warna teal/tosca persis Figma */
   font-family: 'Montserrat', sans-serif;
-  font-size: 22px !important;
+  font-size: 16px !important;
   font-weight: 600 !important;
-  color: #fff !important;
-
+  color: #ffffff !important;
   box-shadow: none !important;
-
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* BUTTON HOVER */
-.login-form-container .ant-btn-primary:hover {
-  background: #5cbcc7 !important;
+.login-form-container .login-submit-btn:hover,
+.login-form-container .login-submit-btn:focus {
+  background: #479e9e !important;
+  color: #ffffff !important;
 }
 
 /* ================= RESPONSIVE ================= */
 
 @media screen and (max-width: 768px) {
-
   .login-form-container {
     max-width: 100%;
   }
 
   .login-title {
-    font-size: 52px;
-    margin-bottom: 42px;
-  }
-
-  .login-form-container .ant-input,
-  .login-form-container .ant-input-affix-wrapper {
-    height: 52px !important;
-  }
-
-  .login-form-container .ant-btn-primary {
-    height: 52px !important;
-    font-size: 20px !important;
+    font-size: 38px;
+    margin-bottom: 28px;
   }
 }
