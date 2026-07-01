@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 import profileImg from "../../assets/Profile.png";
@@ -18,28 +18,32 @@ const Profile = () => {
     email: "",
     phone: "",
     bio: "",
+    bankAccount: "",
     country: "",
     city: "",
     streetAddress: "",
   });
 
+  // Lacak referensi profile terakhir yang sudah di-sync ke formValues.
+  // Dibandingkan langsung saat render (bukan di dalam useEffect) supaya
+  // tidak melanggar aturan lint "no setState directly inside an effect".
+  const [syncedProfile, setSyncedProfile] = useState<ProfileData | null>(null);
+
+  if (profile && profile !== syncedProfile) {
+    setSyncedProfile(profile);
+    setFormValues(profile);
+  }
+
   useEffect(() => {
     fetchProfile();
   }, [fetchProfile]);
-
-  // Sync store profile data to local formValues once loaded
-  useEffect(() => {
-    if (profile) {
-      setFormValues(profile);
-    }
-  }, [profile]);
 
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormValues((prev) => ({
       ...prev,
@@ -57,6 +61,7 @@ const Profile = () => {
     email: "BudionoPutrosono@gmail.com",
     phone: "+628132567999",
     bio: 'STIKOM BALI!! "Always The First"',
+    bankAccount: "230010127",
     country: "Indonesia",
     city: "Denpasar",
     streetAddress: "Jl. Tukad Balian No.45",
@@ -200,6 +205,24 @@ const Profile = () => {
                 />
               ) : (
                 <p>{p.bio}</p>
+              )}
+            </div>
+
+            {/* Bank Account */}
+            <div className="info-item full-width">
+              <label>Bank Account</label>
+
+              {editMode ? (
+                <input
+                  type="text"
+                  name="bankAccount"
+                  value={currentValues?.bankAccount ?? ""}
+                  onChange={handleInputChange}
+                  className="profile-input"
+                  placeholder="Enter bank account"
+                />
+              ) : (
+                <p>{p?.bankAccount || "-"}</p>
               )}
             </div>
           </div>
