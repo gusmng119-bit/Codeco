@@ -100,16 +100,20 @@ const DashboardAdmin = () => {
               <span className="badge-count">13</span>
             </div>
 
-            <div className="admin-profile">
-              <div className="avatar-circle"><User size={20} /></div>
-              <div className="profile-info">
-                <div className="profile-role-row">
-                  <span className="profile-role">Admin</span>
-                  <ChevronDown size={14} className="dropdown-arrow" />
-                </div>
-                <p className="profile-name">{authUser?.name ?? "Admin"}</p>
-              </div>
-            </div>
+            <div
+  className="admin-profile"
+  onClick={() => navigate("/admin/profile")}
+  style={{ cursor: "pointer" }}
+>
+  <div className="avatar-circle"><User size={20} /></div>
+  <div className="profile-info">
+    <div className="profile-role-row">
+      <span className="profile-role">Admin</span>
+      <ChevronDown size={14} className="dropdown-arrow" />
+    </div>
+    <p className="profile-name">{authUser?.name ?? "Admin"}</p>
+  </div>
+</div>
           </div>
         </header>
 
