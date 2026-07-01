@@ -32,10 +32,10 @@ import useAuthStore from "@/store/authStore";
    ICON MAP berdasarkan nama kelas
 ===================================================== */
 const iconMap: Record<string, React.ReactNode> = {
-  Robotic:    <IoSettingsSharp />,
+  Robotic: <IoSettingsSharp />,
   Programming: <BiCodeAlt />,
-  Science:    <FaFlask />,
-  Design:     <FaPalette />,
+  Science: <FaFlask />,
+  Design: <FaPalette />,
 };
 
 const ClassTeacher = () => {
@@ -69,14 +69,6 @@ const ClassTeacher = () => {
           <img src={profile} alt="" />
           <h1>Hi, {user?.name ?? "Teacher"}!</h1>
         </div>
-
-        <button
-          className="create-btn"
-          onClick={() => navigate("/teacher/create-class")}
-          type="button"
-        >
-          + Create Class
-        </button>
 
       </div>
 
@@ -156,7 +148,12 @@ const ClassTeacher = () => {
       {!loading && !error && filtered.length > 0 && (
         <div className="class-list">
           {filtered.map((item) => (
-            <div className="class-card" key={item.id}>
+            <div 
+              className="class-card" 
+              key={item.id}
+              onClick={() => navigate("/teacher/create-class", { state: { classData: item } })}
+              style={{ cursor: "pointer" }}
+            >
 
               {/* LEFT */}
               <div className="class-left">

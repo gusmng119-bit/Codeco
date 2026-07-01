@@ -1,7 +1,10 @@
 import { useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./CreateClass.css";
 import useClassroomStore from "@/store/classroomStore";
 import useAuthStore from "@/store/authStore";
+import profile from "@/assets/mrs-sari.jpeg";
+import logo2 from "@/assets/logo2.jpg";
 
 // ==========================================
 // --- SVG ICONS ---
@@ -30,12 +33,21 @@ const FileTextIcon = () => (
   </svg>
 );
 
+const ArrowLeftIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+  </svg>
+);
+
 // ==========================================
 // --- MAIN COMPONENT ---
 // ==========================================
 const CreateClass = () => {
   const user = useAuthStore((state) => state.user);
   const { createClass, loading, error } = useClassroomStore();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const classData = location.state?.classData;
 
   const [activeTab, setActiveTab]       = useState("materials");
   const [meetingLink, setMeetingLink]   = useState("");
@@ -43,6 +55,17 @@ const CreateClass = () => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [uploadError, setUploadError]   = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const linkInputRef = useRef<HTMLInputElement>(null);
+
+  const getClassDate = (title?: string) => {
+    if (!title) return "April 30, 2026";
+    const cleanTitle = title.trim();
+    if (cleanTitle.startsWith("Robotic")) return "April 30, 2026";
+    if (cleanTitle.startsWith("Programming")) return "April 21, 2026";
+    if (cleanTitle.startsWith("Science")) return "April 22, 2026";
+    if (cleanTitle.startsWith("Design")) return "April 24, 2026";
+    return "April 30, 2026";
+  };
 
   const handleFileValidationAndAdd = (files: FileList) => {
     const valid: File[] = [];
@@ -72,12 +95,12 @@ const CreateClass = () => {
 
   const handleCreateClassSubmit = async () => {
     const result = await createClass({
-      name: "New Class",
+      name: classData?.title || "New Class",
       total_sessions: 5,
       price: 750000,
     });
     if (result) {
-      alert(`Kelas berhasil dibuat dengan ${uploadedFiles.length} file materi!`);
+      alert(`Kelas berhasil disimpan dengan ${uploadedFiles.length} file materi!`);
     }
   };
 
@@ -86,16 +109,24 @@ const CreateClass = () => {
       {/* TOP BAR */}
       <div className="cc-top-bar">
         <div className="cc-profile-group">
-          <div className="cc-avatar-placeholder">👨‍💻</div>
-          <h2 className="cc-welcome-text">Hi, {user?.name ?? "Teacher"}!</h2>
+          <img src={profile} alt="profile" className="cc-profile-avatar" />
+          <div className="cc-profile-text">
+            <h2 className="cc-welcome-text">Hi, {user?.name ?? "Teacher"}!</h2>
+            <p className="cc-sub-text">Teacher Dashboard</p>
+          </div>
         </div>
       </div>
 
       {/* SECTION HEADER */}
       <div className="cc-section-header">
-        <h3 className="cc-main-title">My Classes</h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <button className="cc-back-btn" onClick={() => navigate("/teacher/classes")} type="button">
+            <ArrowLeftIcon />
+          </button>
+          <h3 className="cc-main-title">My Classes</h3>
+        </div>
         <button className="cc-save-btn" onClick={handleCreateClassSubmit} disabled={loading}>
-          {loading ? "Creating..." : "Create Class"}
+          {loading ? "Saving..." : "Save Class"}
         </button>
       </div>
 
@@ -104,15 +135,14 @@ const CreateClass = () => {
       {/* HERO CARD */}
       <div className="cc-hero-card">
         <div className="cc-hero-left">
-          <h1 className="cc-class-name-placeholder">Classes Name</h1>
-          <p className="cc-grade-placeholder">Grade Level</p>
-          <div className="cc-meta-info-group">
-            <div className="cc-meta-item"><ClockIcon /><span>time</span></div>
-            <div className="cc-meta-item"><CalendarIcon /><span>dd-mm-yy</span></div>
+          <h1 className="cc-class-name-placeholder">{classData ? `${classData.title} Class` : "Classes Name"}</h1>
+          <div className="cc-meta-info-group" style={{ marginTop: '20px' }}>
+            <div className="cc-meta-item"><ClockIcon /><span>{classData?.time || "time"}</span></div>
+            <div className="cc-meta-item"><CalendarIcon /><span>{getClassDate(classData?.title)}</span></div>
           </div>
         </div>
         <div className="cc-hero-right">
-          <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=300" alt="Robot Illustration" className="cc-robot-img" />
+          <img src={logo2} alt="Robot Illustration" className="cc-robot-img" />
         </div>
       </div>
 
@@ -131,13 +161,35 @@ const CreateClass = () => {
           {activeTab === "materials" && (
             <div className="cc-materials-panel">
               <div className="cc-form-group">
-                <label className="cc-form-label">Link Meeting</label>
-                <input type="text" className="cc-form-input" placeholder="Meet, zoom and Microsoft Teams" value={meetingLink} onChange={(e) => setMeetingLink(e.target.value)} />
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                  <label className="cc-form-label" style={{ margin: 0 }}>Link Meeting</label>
+                  <button 
+                    className="cc-edit-link-btn" 
+                    type="button"
+                    onClick={() => linkInputRef.current?.focus()}
+                  >
+                    ✏️ Edit
+                  </button>
+                </div>
+                <input 
+                  type="text" 
+                  className="cc-form-input" 
+                  placeholder="Meet,zoom and Microsoft Teams" 
+                  value={meetingLink} 
+                  onChange={(e) => setMeetingLink(e.target.value)} 
+                  ref={linkInputRef}
+                />
               </div>
 
               <div className="cc-form-group">
-                <label className="cc-form-label">Materials Description</label>
-                <input type="text" className="cc-form-input" placeholder="PDF, PPT, DOCX and Gdrive" value={materialNote} onChange={(e) => setMaterialNote(e.target.value)} />
+                <label className="cc-form-label">Materials</label>
+                <input 
+                  type="text" 
+                  className="cc-form-input" 
+                  placeholder="PDF,PPT,DOCX and Gdrive" 
+                  value={materialNote} 
+                  onChange={(e) => setMaterialNote(e.target.value)} 
+                />
               </div>
 
               <div className="cc-upload-zone" onClick={() => fileInputRef.current?.click()} onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} style={{ cursor: "pointer" }}>
@@ -179,7 +231,7 @@ const CreateClass = () => {
 
           {activeTab === "students" && (
             <div className="cc-students-panel">
-              <p className="cc-empty-tab-text">Daftar siswa akan muncul di sini.</p>
+              <p className="cc-empty-tab-text">no student's in the class</p>
             </div>
           )}
         </div>
