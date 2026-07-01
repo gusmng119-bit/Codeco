@@ -1,133 +1,170 @@
-import { useEffect } from "react";
+import { useState, useMemo } from "react";
 import "./Material.css";
-import logo2 from "../../assets/logo2.jpg";
-import driveLogo from "../../assets/drive.png";
-import useMaterialStore from "../../store/materialStore";
-import EmptyState from "../../shared/components/EmptyState";
-import ErrorState from "../../shared/components/ErrorState";
+
+import logo2 from "@/assets/logo2.jpg";
+import driveLogo from "@/assets/drive.png";
+import useClassroomStore from "../../store/classroomStore";
 
 const ClassMaterial = () => {
-  const {
-    materials,
-    selectedMaterial,
-    loading,
-    error,
-    setSelectedMaterial,
-    fetchMaterials,
-  } = useMaterialStore();
+  const { selectedClass } = useClassroomStore();
+  const [selectedMaterial, setSelectedMaterial] = useState<any>(null);
 
-  useEffect(() => {
-    fetchMaterials();
-  }, [fetchMaterials]);
+  /* ================= DEFAULT CLASS ================= */
+  const currentClass = selectedClass || {
+    title: "Robotic Class",
+    instructor: "Mr. Ilham",
+  };
 
-  /* ================= DETAIL MATERIAL ================= */
-  if (selectedMaterial !== null) {
-    return (
-      <div className="material-page">
-        <div className="material-detail-card">
-          {/* CLOSE BUTTON */}
-          <button
-            className="close-btn"
-            onClick={() => setSelectedMaterial(null)}
-          >
-            ✕
-          </button>
+  /* ================= DRIVE LINK ================= */
+  const driveLink =
+    "https://drive.google.com/drive/folders/1IfJRHWldYcFOalWyduftC4_mg-Vq7UTF?usp=drive_link";
 
-          {/* HEADER */}
-          <div className="detail-header">
-            <div className="icon-circle">📄</div>
+  /* ================================================= */
+  /* ================= MATERIAL DATA ================= */
+  /* ================================================= */
 
-            <div>
-              <h2>{selectedMaterial.title}</h2>
-              <p>
-                {selectedMaterial.instructor} • {selectedMaterial.date}
-              </p>
-            </div>
+  const materialData = useMemo<Record<string, any[]>>(() => ({
+    "Robotic Class": [
+      {
+        id: 1,
+        title: "Introduction to Robot Components",
+        description: "Learn robot hardware, sensors, motors, and controller basics.",
+        date: "April 19, 2026",
+        progress: "1/5",
+        instructor: "Mr. Ilham",
+        link: driveLink,
+      },
+      {
+        id: 2,
+        title: "Basic Programming for Robots",
+        description: "Understanding robot logic, movement commands, and automation.",
+        date: "April 22, 2026",
+        progress: "2/5",
+        instructor: "Mr. Ilham",
+        link: driveLink,
+      },
+      {
+        id: 3,
+        title: "Robot Movement and Control Systems",
+        description: "Learn robot movement calibration and control systems.",
+        date: "April 25, 2026",
+        progress: "3/5",
+        instructor: "Mr. Ilham",
+        link: driveLink,
+      },
+      {
+        id: 4,
+        title: "Robot Design and Construction",
+        description: "Calibrating and designing robot chassis and frame mechanisms.",
+        date: "April 28, 2026",
+        progress: "4/5",
+        instructor: "Mr. Ilham",
+        link: driveLink,
+      },
+      {
+        id: 5,
+        title: "Robotics Project Presentation",
+        description: "Showcasing and testing your completed robotics automation projects.",
+        date: "May 2, 2026",
+        progress: "5/5",
+        instructor: "Mr. Ilham",
+        link: driveLink,
+      },
+    ],
+  }), []);
+
+  const materials = materialData[currentClass.title] || [];
+
+  return (
+    <div className="material-container">
+      {/* HEADER SECTION */}
+      <header className="class-header-material">
+        <div className="header-info-material">
+          <h1>{currentClass.title}</h1>
+          <p>{currentClass.instructor}</p>
+        </div>
+      </header>
+
+      {/* DETAILED CONTENT SECTION */}
+      <section className="detail-section">
+        {/* LEFT COLUMN: LIST OF TOPICS */}
+        <div className="topics-list-col">
+          <div className="list-header-material">
+            <h3>Topik materi</h3>
           </div>
 
-          <hr />
+          <div className="topics-scroll-area">
+            {materials.map((m) => (
+              <div
+                key={m.id}
+                className={`topic-card ${
+                  selectedMaterial?.id === m.id ? "selected-topic" : ""
+                }`}
+                onClick={() => setSelectedMaterial(m)}
+              >
+                <div className="card-top-row">
+                  <span className="date-tag">{m.date}</span>
+                  <span className="session-progress">{m.progress}</span>
+                </div>
+                <h4>{m.title}</h4>
+                <p className="inst-sub">Instructor: {m.instructor}</p>
+              </div>
+            ))}
 
-          <p className="material-desc">Please study this material</p>
-
-          {/* GOOGLE DRIVE CARD */}
-          <a
-            href={selectedMaterial.link}
-            target="_blank"
-            rel="noreferrer"
-            className="drive-box"
-          >
-            <div>
-              <h3>File Drive</h3>
-              <p>{selectedMaterial.link}</p>
-            </div>
-
-            <img src={driveLogo} alt="Drive" />
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  /* ================= LIST MATERIAL ================= */
-  return (
-    <div className="material-page">
-      {/* HEADER */}
-      <div className="material-header-banner">
-        <div className="header-content">
-          <h1>Robotic Class</h1>
-          <p>Mr. Ilham</p>
+            {materials.length === 0 && (
+              <p style={{ textAlign: "center", color: "#64748b", padding: "20px" }}>
+                Belum ada materi untuk kelas ini.
+              </p>
+            )}
+          </div>
         </div>
 
-        <div className="header-robot-img">
-          <img src={logo2} alt="Robot Mascot" />
-        </div>
-      </div>
+        {/* RIGHT COLUMN: DETAIL PREVIEW OF SELECTED TOPIC */}
+        <div className="material-preview-col">
+          {selectedMaterial ? (
+            <div className="preview-inner-box">
+              <div className="preview-header-row">
+                <span className="prev-date">{selectedMaterial.date}</span>
+              </div>
 
-      <h2 className="section-title">Materials</h2>
+              <div className="robot-banner-card">
+                <img src={logo2} alt="Robot banner" className="banner-logo" />
+                <div className="banner-text-details">
+                  <h3>{selectedMaterial.title}</h3>
+                  <p className="prev-inst">Instructor: {selectedMaterial.instructor}</p>
+                </div>
+              </div>
 
-      {/* CARD LIST / FALLBACKS */}
-      {loading && (
-        <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
-          <p>Loading materials from backend...</p>
-        </div>
-      )}
+              <div className="desc-box">
+                <h4>Description:</h4>
+                <p>{selectedMaterial.description}</p>
+              </div>
 
-      {!loading && error && (
-        <ErrorState
-          title="Unable to load course materials"
-          message={error}
-          onRetry={fetchMaterials}
-        />
-      )}
-
-      {!loading && !error && materials.length === 0 && (
-        <EmptyState
-          title="No Course Materials"
-          message="There are no learning materials uploaded for this course yet."
-          icon="📚"
-        />
-      )}
-
-      {!loading && !error && materials.length > 0 && (
-        <div className="material-list">
-          {materials.map((item) => (
-            <div
-              key={item.id}
-              className="material-item-card clickable"
-              onClick={() => setSelectedMaterial(item)}
-            >
-              <div className="icon-wrapper">📖</div>
-
-              <div className="material-info">
-                <h3>
-                  {item.title} ({item.progress})
-                </h3>
-                <p>{item.date}</p>
+              <div className="attachment-card">
+                <div className="drive-details">
+                  <img src={driveLogo} alt="Google Drive logo" className="gdrive-logo" />
+                  <div>
+                    <h4>Google drive</h4>
+                    <p>PDF, PPT, VIDEO &amp; DOCX</p>
+                  </div>
+                </div>
+                <a
+                  href={selectedMaterial.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="download-anchor-btn"
+                >
+                  Download materi
+                </a>
               </div>
             </div>
-          ))}
+          ) : (
+            <div className="select-prompt-box">
+              <p>Pilih salah satu topik di sebelah kiri untuk melihat detail materi.</p>
+            </div>
+          )}
         </div>
-      )}
+      </section>
     </div>
   );
 };

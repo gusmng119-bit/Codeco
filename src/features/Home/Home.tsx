@@ -58,7 +58,7 @@ const Home = () => {
       {/* ================= USER GREETING ================= */}
       <header
         className="user-greeting-card"
-        onClick={() => navigate("/dashboard/profile")}
+        onClick={() => navigate("/student/profile")}
         style={{ cursor: "pointer" }}
       >
         <div className="avatar-main">
@@ -100,7 +100,7 @@ const Home = () => {
           <div className="status-row">
             <div
               className={`status-card ${!joined ? "locked" : ""}`}
-              onClick={() => joined && navigate("/dashboard/feedback")}
+              onClick={() => joined && navigate("/student/feedback")}
             >
               {!joined && <span className="icon-lock">🔒</span>}
               <h4>Teacher Feedback</h4>
@@ -118,7 +118,7 @@ const Home = () => {
             <div
               className={`status-card ${!joined ? "locked" : ""}`}
               onClick={() =>
-                joined ? navigate("/dashboard/material") : alert("Join class first!")
+                joined ? navigate("/student/material") : alert("Join class first!")
               }
             >
               {!joined && <span className="icon-lock">📖</span>}

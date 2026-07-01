@@ -2,7 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import useAuthStore, { ROLE_REDIRECT } from "../../../store/authStore";
+import "./LoginForm.css";
 
 type LoginFormValues = {
   email: string;
@@ -46,6 +48,7 @@ const LoginForm = () => {
         layout="vertical"
         onFinish={handleSubmit}
         autoComplete="off"
+        requiredMark={false}
       >
         <Form.Item
           label="Email"
@@ -55,7 +58,11 @@ const LoginForm = () => {
             { type: "email", message: "Format email tidak valid" },
           ]}
         >
-          <Input size="large" placeholder="example@mail.com" />
+          <Input
+            size="large"
+            placeholder="Samsoro12@gmail.com"
+            suffix={<UserOutlined className="input-icon-suffix" />}
+          />
         </Form.Item>
 
         <Form.Item
@@ -65,7 +72,17 @@ const LoginForm = () => {
             { required: true, message: "Password wajib diisi" },
           ]}
         >
-          <Input.Password size="large" placeholder="Enter password" />
+          <Input.Password
+            size="large"
+            placeholder="• • • • • • • • • • • •"
+            iconRender={(visible) =>
+              visible ? (
+                <EyeTwoTone twoToneColor="#4a4a4a" />
+              ) : (
+                <EyeInvisibleOutlined style={{ color: "#4a4a4a" }} />
+              )
+            }
+          />
         </Form.Item>
 
         <Button
@@ -74,6 +91,7 @@ const LoginForm = () => {
           size="large"
           block
           loading={loading}
+          className="login-submit-btn"
         >
           {loading ? "Logging in..." : "Login"}
         </Button>
