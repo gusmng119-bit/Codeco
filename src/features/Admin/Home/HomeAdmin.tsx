@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import "./HomeAdmin.css";
 
 const HomeAdminContent = () => {
@@ -7,26 +7,6 @@ const HomeAdminContent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);         // Modal Create Class
   const [isTeacherModalOpen, setIsTeacherModalOpen] = useState(false); // Modal Add Teacher
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false); // Modal Add Student
-  const [isNotifOpen, setIsNotifOpen] = useState(false);         // Modal Notification (Lonceng)
-  const [activeTab, setActiveTab] = useState("class");           // Tab aktif pada Notification
-  const notifCloseBtnRef = useRef<HTMLButtonElement | null>(null);
-
-  useEffect(() => {
-    if (!isNotifOpen) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsNotifOpen(false);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    // Fokus ke tombol close agar lebih accessible
-    setTimeout(() => {
-      notifCloseBtnRef.current?.focus?.();
-    }, 0);
-
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isNotifOpen]);
 
   return (
 
@@ -81,8 +61,7 @@ const HomeAdminContent = () => {
         </div>
 
         {/* Pending Feedback */}
-        {/* Disini dipasang tombol pemicu lonceng agar mempermudah testing */}
-        <div className="stat-card border-feedback" style={{ cursor: 'pointer' }} onClick={() => setIsNotifOpen(true)}>
+        <div className="stat-card border-feedback">
           <div className="stat-icon-wrapper bg-feedback">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="icon-size">
               <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501c1.153-.086 2.294-.213 3.423-.379 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
@@ -410,62 +389,7 @@ const HomeAdminContent = () => {
         </div>
       )}
 
-      {/* ================= 7. NEW MODAL DIALOG (NOTIFICATION / LONCENG) ================= */}
-      {isNotifOpen && (
-        <div className="notif-overlay" onClick={() => setIsNotifOpen(false)} role="presentation">
-          <div
-            className="notif-modal-card"
-            onClick={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Notification"
-          >
-            <div className="notif-modal-header">
-              <h3>Notification</h3>
-              <button
-                className="notif-close-btn"
-                onClick={() => setIsNotifOpen(false)}
-                aria-label="Close notification"
-                ref={notifCloseBtnRef}
-              >
 
-                &times;
-              </button>
-            </div>
-
-
-            <div className="notif-tabs">
-              {['class', 'teacher', "student's", 'payment'].map((tab) => (
-                <button 
-                  key={tab}
-                  className={`notif-tab-btn ${activeTab === tab ? 'active' : ''}`}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-
-            <div className="notif-list-container">
-              {[...Array(8)].map((_, index) => (
-                <div className="notif-item-card" key={index}>
-                  <div className="notif-icon-pink-box">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="notif-gear-svg">
-                      <path fillRule="evenodd" d="M11.078 2.25c-.424 0-.751.344-.751.766v.163c0 .943-.637 1.74-1.545 1.956a2.417 2.417 0 0 1-1.637-.21l-.146-.084a.75.75 0 0 0-.992.21l-.747 1.295a.75.75 0 0 0 .193.996l.145.084c.801.462 1.157 1.455.836 2.333a2.417 2.417 0 0 1-1.342 1.467h-.168a.75.75 0 0 0-.75.75v1.493c0 .414.336.75.75.75h.168a2.417 2.417 0 0 1 1.342 1.467c.321.878-.035 1.871-.836 2.333l-.145.084a.75.75 0 0 0-.193.996l.747 1.295a.75.75 0 0 0 .992.21l.146-.084a2.417 2.417 0 0 1 1.637-.21c.908.216 1.545 1.013 1.545 1.956v.163c0 .422.327.766.751.766h1.494c.424 0 .751-.344.751-.766v-.163c0-.943.637-1.74 1.545-1.956a2.417 2.417 0 0 1 1.637.21l.146.084a.75.75 0 0 0 .992-.21l.747-1.295a.75.75 0 0 0-.193-.996l-.145-.084a2.417 2.417 0 0 1-.836-2.333 2.417 2.417 0 0 1 1.342-1.467h.168a.75.75 0 0 0 .75-.75v-1.493a.75.75 0 0 0-.75-.75h-.168a2.417 2.417 0 0 1-1.342-1.467c-.321-.878.035-1.871.836-2.333l.145-.084a.75.75 0 0 0 .193-.996l-.747-1.295a.75.75 0 0 0-.992-.21l-.146.084a2.417 2.417 0 0 1-1.637.21c-.908-.216-1.545-1.013-1.545-1.956v-.163a.75.75 0 0 0-.751-.766h-1.494ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div className="notif-text-content">
-                    <p className="notif-message">
-                      <strong>Robotic Class</strong> by Mr. Ilham has been finished <span className="notif-hour">(09:00-11:00)</span>
-                    </p>
-                    <span className="notif-time">2h ago</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );
