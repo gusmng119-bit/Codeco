@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import useAuthStore from "./store/authStore";
 import type { UserRole } from "./api/types/auth";
@@ -10,6 +11,7 @@ import StudentDashboard from "./features/Dashboard/Dashboard";
 import Home from "./features/Home/Home";
 import Classroom from "./features/Classroom/Classroom";
 import ClassMaterial from "./features/Material/Material";
+import MaterialDetail from "./features/Material/MaterialDetail";
 import Feedback from "./features/Feedback/Feedback";
 import TeacherList from "./features/Teacher/Teacher";
 import Certificate from "./features/Certificate/Certificate";
@@ -84,8 +86,10 @@ function App() {
         }
       >
         <Route index element={<Home />} />
+        <Route path="home/:id" element={<Home />} />
         <Route path="classroom" element={<Classroom />} />
         <Route path="material" element={<ClassMaterial />} />
+        <Route path="material/:id" element={<MaterialDetail />} />
         <Route path="feedback" element={<Feedback />} />
         <Route path="teacher" element={<TeacherList />} />
         <Route path="certificate" element={<Certificate />} />

@@ -94,7 +94,7 @@ const useAuthStore = create<AuthState>((set) => ({
 
   logout: () => {
     if (typeof window !== "undefined") {
-      localStorage.removeItem("jwtToken");
+      localStorage.clear();
       window.dispatchEvent(new Event("jwt-token-change"));
     }
     set({ token: null, user: null });

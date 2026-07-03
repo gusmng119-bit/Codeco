@@ -145,6 +145,16 @@ transform: translateY(-2px);
 transform: scale(0.95);
 }
 
+.join-now-btn:disabled,
+.join-now-btn.joined {
+  background: #bdbdbd;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.8;
+  pointer-events: none;
+  transform: none !important;
+}
+
 .join-now-btn.locked {
   background: #bdbdbd;
   color: #666;
@@ -267,6 +277,13 @@ CERTIFICATE SIDEBAR
   border-radius: 16px;
   min-height: 250px;
   text-align: center;
+  transition: all 0.3s ease;
+}
+
+.certificate-sidebar.locked {
+  opacity: 0.6;
+  background: #f9fafb;
+  border-style: dashed;
 }
 
 .trophy-locked-icon {

@@ -7,7 +7,7 @@ import type {
 import type { FeedbackItem } from "../types/features";
 
 export const feedbackEndpoints = {
-  getFeedback: defineEndpoint<void, FeedbackItem[]>({
+  getFeedback: defineEndpoint<{ materialId?: number }, FeedbackItem[]>({
     url: "/feedback",
     method: "get",
   }),

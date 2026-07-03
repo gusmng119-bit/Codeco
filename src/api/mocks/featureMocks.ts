@@ -105,11 +105,203 @@ if (appConfig.USE_LOCAL_FALLBACK) {
     },
   ];
 
-  const initialFeedback: FeedbackItem[] = [
+  const driveLink = "https://drive.google.com/drive/folders/1IfJRHWldYcFOalWyduftC4_mg-Vq7UTF?usp=drive_link";
+  const initialMaterials: MaterialItem[] = [
+    // Robotic Class (classId: 3)
     {
       id: 1,
-      title: "Introduction to robot components, assembly, and basic programming",
-      date: "April 17, 2024",
+      classId: 3,
+      title: "Introduction to Robot Components",
+      description: "Learn robot hardware, sensors, motors, and controller basics. Siswa akan mengenal komponen dasar robot mulai dari microcontroller, motor DC, hingga sensor ultrasonik.",
+      date: "April 19, 2026",
+      progress: "1/5",
+      instructor: "Mr. Ilham",
+      duration: "90 menit",
+      materialType: "Video + PDF",
+      link: driveLink,
+    },
+    {
+      id: 2,
+      classId: 3,
+      title: "Basic Programming for Robots",
+      description: "Understanding robot logic, movement commands, and automation. Membahas dasar pemrograman Arduino IDE untuk mengontrol pergerakan motor robot.",
+      date: "April 22, 2026",
+      progress: "2/5",
+      instructor: "Mr. Ilham",
+      duration: "120 menit",
+      materialType: "PPT + Kode Program",
+      link: driveLink,
+    },
+    {
+      id: 3,
+      classId: 3,
+      title: "Robot Movement and Control Systems",
+      description: "Learn robot movement calibration and control systems. Praktik kalibrasi roda, sensor gyro, dan sistem kendali PID sederhana.",
+      date: "April 25, 2026",
+      progress: "3/5",
+      instructor: "Mr. Ilham",
+      duration: "100 menit",
+      materialType: "Video + Modul",
+      link: driveLink,
+    },
+    {
+      id: 4,
+      classId: 3,
+      title: "Robot Design and Construction",
+      description: "Calibrating and designing robot chassis and frame mechanisms. Siswa merancang bentuk chassis menggunakan software CAD sederhana.",
+      date: "April 28, 2026",
+      progress: "4/5",
+      instructor: "Mr. Ilham",
+      duration: "110 menit",
+      materialType: "PDF + File CAD",
+      link: driveLink,
+    },
+    {
+      id: 5,
+      classId: 3,
+      title: "Robotics Project Presentation",
+      description: "Showcasing and testing your completed robotics automation projects. Sesi presentasi hasil akhir proyek robot otomatis.",
+      date: "May 2, 2026",
+      progress: "5/5",
+      instructor: "Mr. Ilham",
+      duration: "150 menit",
+      materialType: "Video Presentasi",
+      link: driveLink,
+    },
+
+    // Lego Class (classId: 2)
+    {
+      id: 6,
+      classId: 2,
+      title: "Introduction to Lego Mindstorms",
+      description: "Getting familiar with Lego smart hubs, motors, and structural connection elements.",
+      date: "April 21, 2026",
+      progress: "1/3",
+      instructor: "Mr. Ilham",
+      duration: "90 menit",
+      materialType: "Video + PDF",
+      link: driveLink,
+    },
+    {
+      id: 7,
+      classId: 2,
+      title: "Lego Gears and Motors Logic",
+      description: "Understanding gear ratios, torque, and basic motor speed settings in Lego programming app.",
+      date: "April 24, 2026",
+      progress: "2/3",
+      instructor: "Mr. Ilham",
+      duration: "120 menit",
+      materialType: "PPT + Modul",
+      link: driveLink,
+    },
+    {
+      id: 8,
+      classId: 2,
+      title: "Basic Lego Line Follower",
+      description: "Building a line-following robot using Lego color sensor and programming a dual-motor threshold control.",
+      date: "April 27, 2026",
+      progress: "3/3",
+      instructor: "Mr. Ilham",
+      duration: "100 menit",
+      materialType: "Modul + Demo",
+      link: driveLink,
+    },
+
+    // Coding for Kids (classId: 1)
+    {
+      id: 9,
+      classId: 1,
+      title: "Pengenalan Dasar Pemrograman",
+      description: "Mengenal konsep variabel, tipe data, dan struktur kontrol dasar dalam pemrograman menggunakan Python.",
+      date: "April 20, 2026",
+      progress: "1/4",
+      instructor: "Mr. Samsoro",
+      duration: "90 menit",
+      materialType: "Video + PDF",
+      link: driveLink,
+    },
+    {
+      id: 10,
+      classId: 1,
+      title: "Fungsi dan Looping",
+      description: "Mempelajari cara membuat fungsi, perulangan for & while, serta studi kasus sederhana.",
+      date: "April 23, 2026",
+      progress: "2/4",
+      instructor: "Mr. Samsoro",
+      duration: "100 menit",
+      materialType: "PPT + Kode Program",
+      link: driveLink,
+    },
+    {
+      id: 11,
+      classId: 1,
+      title: "Struktur Data Dasar",
+      description: "List, dictionary, dan tuple — bagaimana menyimpan dan mengolah data secara efisien.",
+      date: "April 26, 2026",
+      progress: "3/4",
+      instructor: "Mr. Samsoro",
+      duration: "95 menit",
+      materialType: "PDF + Modul",
+      link: driveLink,
+    },
+    {
+      id: 12,
+      classId: 1,
+      title: "Membangun Mini Project",
+      description: "Siswa membangun aplikasi sederhana (kalkulator/to-do list) menggunakan konsep yang sudah dipelajari.",
+      date: "April 29, 2026",
+      progress: "4/4",
+      instructor: "Mr. Samsoro",
+      duration: "130 menit",
+      materialType: "Video + Source Code",
+      link: driveLink,
+    },
+    // Robotic Class Advance (classId: 5)
+    {
+      id: 13,
+      classId: 5,
+      title: "Advanced Gyro Sensor Calibration",
+      description: "Learn precision alignment and calibration of 3-axis gyro sensors for steady robotics movement.",
+      date: "April 29, 2026",
+      progress: "1/3",
+      instructor: "Mr. Ilham",
+      duration: "90 menit",
+      materialType: "Video + PDF",
+      link: driveLink,
+    },
+    {
+      id: 14,
+      classId: 5,
+      title: "Robot Arm Servos Control",
+      description: "Calibrating angles, pulse widths, and multiple joint synchronization commands for robot arms.",
+      date: "May 1, 2026",
+      progress: "2/3",
+      instructor: "Mr. Ilham",
+      duration: "120 menit",
+      materialType: "PPT + Modul",
+      link: driveLink,
+    },
+    {
+      id: 15,
+      classId: 5,
+      title: "Autonomous Maze Solving Project",
+      description: "Students implement flood-fill or wall-following algorithms to solve a physical maze automatically.",
+      date: "May 3, 2026",
+      progress: "3/3",
+      instructor: "Mr. Ilham",
+      duration: "150 menit",
+      materialType: "Modul + Live Test",
+      link: driveLink,
+    },
+  ];
+
+  const initialFeedback: FeedbackItem[] = [
+    // Feedbacks for Robotic Class materials (materialId: 1 to 5)
+    {
+      id: 1,
+      materialId: 1,
+      title: "Introduction to Robot Components",
+      date: "April 19, 2026",
       progress: "1/5",
       instructor: "Mr. Ilham",
       link: "https://drive.google.com/",
@@ -117,8 +309,9 @@ if (appConfig.USE_LOCAL_FALLBACK) {
     },
     {
       id: 2,
-      title: "Basic Programming for Robots (Sensors and Actuators)",
-      date: "April 19, 2024",
+      materialId: 2,
+      title: "Basic Programming for Robots",
+      date: "April 22, 2026",
       progress: "2/5",
       instructor: "Mr. Ilham",
       link: "https://drive.google.com/",
@@ -126,22 +319,120 @@ if (appConfig.USE_LOCAL_FALLBACK) {
     },
     {
       id: 3,
+      materialId: 3,
       title: "Robot Movement and Control Systems",
-      date: "April 26, 2024",
+      date: "April 25, 2026",
       progress: "3/5",
       instructor: "Mr. Ilham",
       link: "https://drive.google.com/",
       feedback: "Great work implementing PID controller and movement logic!",
     },
-  ];
+    {
+      id: 4,
+      materialId: 4,
+      title: "Robot Design and Construction",
+      date: "April 28, 2026",
+      progress: "4/5",
+      instructor: "Mr. Ilham",
+      link: "https://drive.google.com/",
+      feedback: "Robust structural build. Solid chassis configuration.",
+    },
+    {
+      id: 5,
+      materialId: 5,
+      title: "Robotics Project Presentation",
+      date: "May 2, 2026",
+      progress: "5/5",
+      instructor: "Mr. Ilham",
+      link: "https://drive.google.com/",
+      feedback: "Excellent showcase. Great automation logic demonstration.",
+    },
 
-  const driveLink = "https://drive.google.com/drive/folders/1IfJRHWldYcFOalWyduftC4_mg-Vq7UTF?usp=drive_link";
-  const initialMaterials: MaterialItem[] = [
-    { id: 1, title: "Introduction to robot components, assembly, and basic programming", date: "April 19, 2026", progress: "1/5", instructor: "Mr. Ilham", link: driveLink },
-    { id: 2, title: "Basic Programming for Robots (Using Sensors and Actuators)", date: "April 22, 2026", progress: "2/5", instructor: "Mr. Ilham", link: driveLink },
-    { id: 3, title: "Robot Movement and Control Systems", date: "April 26, 2026", progress: "3/5", instructor: "Mr. Ilham", link: driveLink },
-    { id: 4, title: "Design and Building Simple Robots", date: "April 30, 2026", progress: "4/5", instructor: "Mr. Ilham", link: driveLink },
-    { id: 5, title: "Artificial Intelligence in Robotics", date: "May 4, 2026", progress: "5/5", instructor: "Mr. Ilham", link: driveLink },
+    // Feedbacks for Lego Class materials (materialId: 6 to 8)
+    {
+      id: 6,
+      materialId: 6,
+      title: "Introduction to Lego Mindstorms",
+      date: "April 21, 2026",
+      progress: "1/3",
+      instructor: "Mr. Ilham",
+      feedback: "Great enthusiasm learning the hubs and motors. Keep playing with the connections!",
+    },
+    {
+      id: 7,
+      materialId: 7,
+      title: "Lego Gears and Motors Logic",
+      date: "April 24, 2026",
+      progress: "2/3",
+      instructor: "Mr. Ilham",
+      feedback: "Excellent torque selection for climbing gears.",
+    },
+    {
+      id: 8,
+      materialId: 8,
+      title: "Basic Lego Line Follower",
+      date: "April 27, 2026",
+      progress: "3/3",
+      instructor: "Mr. Ilham",
+      feedback: "The sensor threshold values were perfectly calibrated. Well done!",
+    },
+
+    // Feedbacks for Coding for Kids materials (materialId: 9 to 12)
+    {
+      id: 9,
+      materialId: 9,
+      title: "Pengenalan Dasar Pemrograman",
+      date: "April 20, 2026",
+      progress: "1/4",
+      instructor: "Mr. Samsoro",
+      feedback: "Great start! Your variable naming is very neat.",
+    },
+    {
+      id: 10,
+      materialId: 10,
+      title: "Fungsi dan Looping",
+      date: "April 23, 2026",
+      progress: "2/4",
+      instructor: "Mr. Samsoro",
+      feedback: "Grasping loops nicely, try to avoid infinite loop scenarios in while statements.",
+    },
+    {
+      id: 11,
+      materialId: 11,
+      title: "Struktur Data Dasar",
+      date: "April 26, 2026",
+      progress: "3/4",
+      instructor: "Mr. Samsoro",
+      feedback: "List indexing is clear. Dictionary keys concept has been fully mastered.",
+    },
+    {
+      id: 12,
+      materialId: 12,
+      title: "Membangun Mini Project",
+      date: "April 29, 2026",
+      progress: "4/4",
+      instructor: "Mr. Samsoro",
+      feedback: "Fantastic mini project code! Very logical flow.",
+    },
+    // Feedbacks for Robotic Class Advance materials (materialId: 13, 14, none for 15)
+    {
+      id: 13,
+      materialId: 13,
+      title: "Advanced Gyro Sensor Calibration",
+      date: "April 29, 2026",
+      progress: "1/3",
+      instructor: "Mr. Ilham",
+      feedback: "Excellent precision! Calibration values are within tolerance levels.",
+    },
+    {
+      id: 14,
+      materialId: 14,
+      title: "Robot Arm Servos Control",
+      date: "May 1, 2026",
+      progress: "2/3",
+      instructor: "Mr. Ilham",
+      feedback: "Servo angles are correctly calibrated. Synchronization logic is correct.",
+    },
   ];
 
   let currentProfile: ProfileData = {
@@ -167,8 +458,24 @@ if (appConfig.USE_LOCAL_FALLBACK) {
     initialCertificates.push(newCert);
     return [200, newCert];
   });
-  mock.onGet("/feedback").reply(200, initialFeedback);
-  mock.onGet("/materials").reply(200, initialMaterials);
+  mock.onGet("/feedback").reply((config) => {
+    const params = config.params || {};
+    const materialId = params.materialId;
+    if (materialId) {
+      const filtered = initialFeedback.filter((f) => f.materialId === Number(materialId));
+      return [200, filtered];
+    }
+    return [200, initialFeedback];
+  });
+  mock.onGet("/materials").reply((config) => {
+    const params = config.params || {};
+    const classId = params.classId;
+    if (classId) {
+      const filtered = initialMaterials.filter((m) => m.classId === Number(classId));
+      return [200, filtered];
+    }
+    return [200, initialMaterials];
+  });
   mock.onGet("/profile").reply(200, currentProfile);
   mock.onPut("/profile").reply((config) => {
     const payload = JSON.parse(config.data || "{}");

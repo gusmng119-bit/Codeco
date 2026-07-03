@@ -1,80 +1,35 @@
-import { useState } from "react";
+import { useEffect, useMemo } from "react";
 import "./Feedback.css";
 
 import logo2 from "@/assets/logo2.jpg";
 import feedbackImg from "@/assets/feedback.png";
 import useClassroomStore from "../../store/classroomStore";
-
-interface FeedbackItem {
-  id: number;
-  title: string;
-  date: string;
-  progress: string;
-  instructor: string;
-  feedback: string;
-}
+import useMaterialStore from "../../store/materialStore";
+import useFeedbackStore from "../../store/feedbackStore";
 
 const Feedback = () => {
   const { selectedClass } = useClassroomStore();
-  const [selectedItem, setSelectedItem] = useState<FeedbackItem | null>(null);
+  const { materials, fetchMaterials } = useMaterialStore();
+  const { feedbackList, fetchFeedback, selectedItem, setSelectedItem } = useFeedbackStore();
 
   const currentClass = selectedClass || {
+    id: 3,
     title: "Robotic Class",
     instructor: "Mr. Ilham",
   };
 
-  const feedbackData: Record<string, FeedbackItem[]> = {
-    robotic: [
-      {
-        id: 1,
-        title: "Introduction to robot components, assembly, and basic programming",
-        date: "April 19, 2026",
-        progress: "1/5",
-        instructor: "Mr. Ilham",
-        feedback:
-          "You're doing a great job understanding the basics of robotics. I like how you're starting to connect the concepts clearly. Try to notice how robots are used around you in real life. Keep it up, your foundation is getting stronger.",
-      },
-      {
-        id: 2,
-        title: "Basic Programming for Robots",
-        date: "April 22, 2026",
-        progress: "2/5",
-        instructor: "Mr. Ilham",
-        feedback:
-          "You are grasping movement loops well. Just make sure to double check wire connectivity during serial setup next time.",
-      },
-      {
-        id: 3,
-        title: "Robot Movement and Control Systems",
-        date: "April 25, 2026",
-        progress: "3/5",
-        instructor: "Mr. Ilham",
-        feedback:
-          "Wonderful results calibrating motors. Try exploring diagonal path algorithms.",
-      },
-      {
-        id: 4,
-        title: "Robot Design and Construction",
-        date: "April 28, 2026",
-        progress: "4/5",
-        instructor: "Mr. Ilham",
-        feedback:
-          "Robust structural build. Solid chassis configuration.",
-      },
-      {
-        id: 5,
-        title: "Robotics Project Presentation",
-        date: "May 2, 2026",
-        progress: "5/5",
-        instructor: "Mr. Ilham",
-        feedback:
-          "Excellent showcase. Great automation logic demonstration.",
-      },
-    ],
-  };
+  useEffect(() => {
+    fetchMaterials(currentClass.id);
+  }, [currentClass.id, fetchMaterials]);
 
-  const key = currentClass.title.toLowerCase().includes("coding") ? "coding" : "robotic";
-  const feedbacks = feedbackData[key] || feedbackData.robotic;
+  useEffect(() => {
+    fetchFeedback();
+  }, [fetchFeedback]);
+
+  const feedbacks = useMemo(() => {
+    const materialIds = new Set(materials.map((m) => m.id));
+    return feedbackList.filter((f) => f.materialId && materialIds.has(f.materialId));
+  }, [feedbackList, materials]);
 
   return (
     <div className="feedback-page">

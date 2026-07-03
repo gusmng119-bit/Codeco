@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Home.css";
 
 import profileImg from "../../assets/Profile.png";
@@ -10,13 +10,18 @@ import useClassroomStore from "../../store/classroomStore";
 import useCertificateStore from "../../store/certificateStore";
 import useProfileStore from "../../store/profileStore";
 import useAttendanceStore from "../../store/attendanceStore";
+import useMaterialStore from "../../store/materialStore";
+import useFeedbackStore from "../../store/feedbackStore";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { selectedClass, joined, joinClass, fetchClasses } = useClassroomStore();
+  const { id } = useParams();
+  const { classes, selectedClass, joined, joinClass, fetchClasses, setSelectedClass, setJoined } = useClassroomStore();
   const { saveCertificate } = useCertificateStore();
   const { profile, fetchProfile } = useProfileStore();
   const { markAttendance } = useAttendanceStore();
+  const { materials, fetchMaterials } = useMaterialStore();
+  const { feedbackList, fetchFeedback } = useFeedbackStore();
 
   const [showCertificate, setShowCertificate] = useState(false);
 
@@ -26,13 +31,73 @@ const Home = () => {
   useEffect(() => {
     fetchClasses();
     fetchProfile();
-  }, [fetchClasses, fetchProfile]);
+    fetchFeedback();
+  }, [fetchClasses, fetchProfile, fetchFeedback]);
+
+  useEffect(() => {
+    if (id && classes.length > 0) {
+      const classIdNum = parseInt(id, 10);
+      const foundClass = classes.find((c) => c.id === classIdNum);
+      if (foundClass) {
+        setSelectedClass(foundClass);
+        const savedJoin = JSON.parse(localStorage.getItem("joinedClass") || "{}");
+        const isJoined = foundClass.type === "yesterday" || savedJoin[foundClass.title] || false;
+        setJoined(isJoined);
+      }
+    }
+  }, [id, classes, setSelectedClass, setJoined]);
 
   const classData = selectedClass || {
     id: 3,
     title: "Robotic Class",
     instructor: "Mr. Ilham",
     time: "09:00 - 11:00",
+    type: "upcoming" as const,
+  };
+
+  useEffect(() => {
+    fetchMaterials(classData.id);
+  }, [classData.id, fetchMaterials]);
+
+  // Compute progress based on materials and feedbackList
+  const totalMaterialsCount = materials.length;
+  const completedMaterialsCount = materials.filter((m) =>
+    feedbackList.some((f) => f.materialId === m.id)
+  ).length;
+
+  const progressPercent = totalMaterialsCount > 0 ? Math.round((completedMaterialsCount / totalMaterialsCount) * 100) : 0;
+  const progressText = `${completedMaterialsCount}/${totalMaterialsCount}`;
+
+  const getHeaderTitle = (type: string) => {
+    switch (type) {
+      case "yesterday":
+        return "Past Class";
+      case "upcoming":
+        return "Upcoming Class";
+      case "today":
+      default:
+        return "Today's Class";
+    }
+  };
+
+  const getButtonText = () => {
+    if (classData.type === "yesterday") {
+      return "Joined";
+    }
+    if (classData.type === "upcoming") {
+      return "Upcoming";
+    }
+    return joined ? "Joined" : "Join Class";
+  };
+
+  const isButtonDisabled = () => {
+    if (classData.type === "yesterday") {
+      return true;
+    }
+    if (classData.type === "upcoming") {
+      return true;
+    }
+    return joined;
   };
 
   // Fungsi Join yang langsung membuka Zoom
@@ -41,6 +106,12 @@ const Home = () => {
 
     // Tetap jalankan logic store (opsional)
     await joinClass(classData.id);
+
+    // Save joined state in localStorage so it persists
+    const savedJoin = JSON.parse(localStorage.getItem("joinedClass") || "{}");
+    savedJoin[classData.title] = true;
+    localStorage.setItem("joinedClass", JSON.stringify(savedJoin));
+
     await markAttendance({
       class_session_id: 1,
       student_id: 1,
@@ -76,7 +147,7 @@ const Home = () => {
 
       {/* ================= TODAY CLASS ================= */}
       <section className="class-highlight">
-        <h2 className="label-text">Today's Class</h2>
+        <h2 className="label-text">{getHeaderTitle(classData.type)}</h2>
         <div className={`hero-card ${joined ? "hero-active" : ""}`}>
           <div className="hero-img-wrapper">
             <img src={logo2} alt="Class" />
@@ -91,11 +162,11 @@ const Home = () => {
           </div>
 
           <button
-            className={`join-now-btn ${joined ? "joined" : ""}`}
+            className={`join-now-btn ${isButtonDisabled() ? "joined" : ""}`}
             onClick={handleJoin}
-            disabled={joined}
+            disabled={isButtonDisabled()}
           >
-            {joined ? "Joined" : "Join Class"}
+            {getButtonText()}
           </button>
         </div>
       </section>
@@ -135,9 +206,10 @@ const Home = () => {
                 <p>Material locked</p>
               ) : (
                 <ul>
-                  <li>{classData.title}</li>
-                  <li>Sensor Introduction</li>
-                  <li>Movement Logic</li>
+                  {materials.slice(0, 3).map((m) => (
+                    <li key={m.id}>{m.title}</li>
+                  ))}
+                  {materials.length === 0 && <li>No materials yet</li>}
                 </ul>
               )}
             </div>
@@ -151,7 +223,7 @@ const Home = () => {
               <div className="progress-details">
                 <div className="progress-header">
                   <strong>{classData.title}</strong>
-                  <span>{joined ? "50%" : "0%"}</span>
+                  <span>{joined ? `${progressPercent}%` : "0%"}</span>
                 </div>
 
                 <p className="teacher-sub">{classData.instructor}</p>
@@ -160,13 +232,17 @@ const Home = () => {
                   <div
                     className="progress-bar-fill"
                     style={{
-                      width: joined ? "50%" : "0%",
+                      width: joined ? `${progressPercent}%` : "0%",
                     }}
                   />
                 </div>
 
                 <p className="no-progress-msg">
-                  {joined ? "Progress Started!" : "🔒 No progress yet"}
+                  {joined
+                    ? progressPercent === 100
+                      ? "Progress Completed! (100%)"
+                      : `Progress Started! (${progressText})`
+                    : "🔒 No progress yet"}
                 </p>
               </div>
             </div>
@@ -174,11 +250,16 @@ const Home = () => {
         </div>
 
         {/* ================= CERTIFICATE ================= */}
-        <div className={`certificate-sidebar ${!joined ? "locked" : ""}`}>
-          {!joined ? (
+        <div className={`certificate-sidebar ${(!joined || progressPercent < 100) ? "locked" : ""}`}>
+          {(!joined || progressPercent < 100) ? (
             <>
               <span className="big-lock">🔒</span>
               <p>No Certificate yet</p>
+              {joined && (
+                <p style={{ fontSize: "0.85rem", color: "#666", marginTop: "10px" }}>
+                  Complete all materials to unlock (Progress: {progressPercent}%)
+                </p>
+              )}
             </>
           ) : (
             <>

@@ -32,6 +32,7 @@ export type CertificateItem = {
 
 export type FeedbackItem = {
   id: number;
+  materialId?: number;
   title: string;
   date: string;
   progress: string;
@@ -42,10 +43,14 @@ export type FeedbackItem = {
 
 export type MaterialItem = {
   id: number;
+  classId?: number;
   title: string;
+  description?: string;
   date: string;
   progress: string;
   instructor: string;
+  duration?: string;
+  materialType?: string;
   link: string;
 };
 
