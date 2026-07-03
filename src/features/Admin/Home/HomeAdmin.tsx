@@ -1,45 +1,34 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, type MouseEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import "./HomeAdmin.css";
 
 const HomeAdminContent = () => {
+  const navigate = useNavigate();
 
   // State untuk masing-masing modal
-  const [isModalOpen, setIsModalOpen] = useState(false);         // Modal Create Class
-  const [isTeacherModalOpen, setIsTeacherModalOpen] = useState(false); // Modal Add Teacher
-  const [isStudentModalOpen, setIsStudentModalOpen] = useState(false); // Modal Add Student
-  const [isNotifOpen, setIsNotifOpen] = useState(false);         // Modal Notification (Lonceng)
-  const [activeTab, setActiveTab] = useState("class");           // Tab aktif pada Notification
-  const notifCloseBtnRef = useRef<HTMLButtonElement | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);         // Modal Create Class
+  const [isTeacherModalOpen, setIsTeacherModalOpen] = useState<boolean>(false); // Modal Add Teacher
+  const [isStudentModalOpen, setIsStudentModalOpen] = useState<boolean>(false); // Modal Add Student
 
-  useEffect(() => {
-    if (!isNotifOpen) return;
+  // Handler navigasi dipisah supaya JSX tetap simpel
+  const goToCalendar = (
+    e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>
+  ): void => {
+    e.preventDefault();
+    navigate("/admin/calendar");
+  };
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsNotifOpen(false);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    // Fokus ke tombol close agar lebih accessible
-    setTimeout(() => {
-      notifCloseBtnRef.current?.focus?.();
-    }, 0);
-
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isNotifOpen]);
+  const goToSalary = (e: MouseEvent<HTMLAnchorElement>): void => {
+    e.preventDefault();
+    navigate("/admin/salary");
+  };
 
   return (
 
     <div className="home-container">
-      
-      {/* Catatan: Di bagian Header Dashboard atas, pastikan tombol ikon lonceng Anda 
-          ditambahkan properti onClick={() => setIsNotifOpen(true)} */}
 
       {/* ================= 1. TOP STATS CARDS ================= */}
-        <div className="stats-grid">
-      
-        {/* NOTE: Agar modal notifikasi muncul saat tombol lonceng ditekan,
-            kamu sudah bisa gunakan tombol ini untuk testing (Pending Feedback) */}
+      <div className="stats-grid">
 
         {/* Total Teacher */}
         <div className="stat-card border-teacher">
@@ -81,8 +70,7 @@ const HomeAdminContent = () => {
         </div>
 
         {/* Pending Feedback */}
-        {/* Disini dipasang tombol pemicu lonceng agar mempermudah testing */}
-        <div className="stat-card border-feedback" style={{ cursor: 'pointer' }} onClick={() => setIsNotifOpen(true)}>
+        <div className="stat-card border-feedback">
           <div className="stat-icon-wrapper bg-feedback">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="icon-size">
               <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501c1.153-.086 2.294-.213 3.423-.379 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
@@ -101,7 +89,7 @@ const HomeAdminContent = () => {
         <div className="data-table-card flex-7">
           <div className="table-header">
             <h3 className="table-title">Today's Class Schedule</h3>
-            <a href="#calendar" className="table-link">view calendar</a>
+            <a href="#calendar" className="table-link" onClick={goToCalendar}>view calendar</a>
           </div>
           <div className="table-responsive">
             <table className="main-table">
@@ -153,9 +141,9 @@ const HomeAdminContent = () => {
         <div className="data-table-card flex-5">
           <div className="table-header">
             <h3 className="table-title">Pending Salary</h3>
-            <a href="#salary" className="table-link">view all</a>
+            <a href="#salary" className="table-link" onClick={goToSalary}>view all</a>
           </div>
-          
+
           <div className="salary-summary">
             <span className="salary-label">Total Pending Salary</span>
             <h2 className="salary-amount">Rp 12.500.000</h2>
@@ -249,7 +237,7 @@ const HomeAdminContent = () => {
           </button>
 
           {/* Manage Schedule */}
-          <button className="action-btn">
+          <button className="action-btn" onClick={goToCalendar}>
             <div className="action-icon-circle bg-action-orange">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="#f97316" className="icon-size-sm">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
@@ -375,7 +363,7 @@ const HomeAdminContent = () => {
               </div>
               <button className="modal-close-btn" onClick={() => setIsStudentModalOpen(false)}>&times;</button>
             </div>
-            
+
             <form onSubmit={(e) => e.preventDefault()} className="modal-form">
               <div className="form-group">
                 <label>Student Name</label>
@@ -406,63 +394,6 @@ const HomeAdminContent = () => {
                 <button type="button" className="btn-save-custom" onClick={() => setIsStudentModalOpen(false)}>Save</button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
-
-      {/* ================= 7. NEW MODAL DIALOG (NOTIFICATION / LONCENG) ================= */}
-      {isNotifOpen && (
-        <div className="notif-overlay" onClick={() => setIsNotifOpen(false)} role="presentation">
-          <div
-            className="notif-modal-card"
-            onClick={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Notification"
-          >
-            <div className="notif-modal-header">
-              <h3>Notification</h3>
-              <button
-                className="notif-close-btn"
-                onClick={() => setIsNotifOpen(false)}
-                aria-label="Close notification"
-                ref={notifCloseBtnRef}
-              >
-
-                &times;
-              </button>
-            </div>
-
-
-            <div className="notif-tabs">
-              {['class', 'teacher', "student's", 'payment'].map((tab) => (
-                <button 
-                  key={tab}
-                  className={`notif-tab-btn ${activeTab === tab ? 'active' : ''}`}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-
-            <div className="notif-list-container">
-              {[...Array(8)].map((_, index) => (
-                <div className="notif-item-card" key={index}>
-                  <div className="notif-icon-pink-box">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="notif-gear-svg">
-                      <path fillRule="evenodd" d="M11.078 2.25c-.424 0-.751.344-.751.766v.163c0 .943-.637 1.74-1.545 1.956a2.417 2.417 0 0 1-1.637-.21l-.146-.084a.75.75 0 0 0-.992.21l-.747 1.295a.75.75 0 0 0 .193.996l.145.084c.801.462 1.157 1.455.836 2.333a2.417 2.417 0 0 1-1.342 1.467h-.168a.75.75 0 0 0-.75.75v1.493c0 .414.336.75.75.75h.168a2.417 2.417 0 0 1 1.342 1.467c.321.878-.035 1.871-.836 2.333l-.145.084a.75.75 0 0 0-.193.996l.747 1.295a.75.75 0 0 0 .992.21l.146-.084a2.417 2.417 0 0 1 1.637-.21c.908.216 1.545 1.013 1.545 1.956v.163c0 .422.327.766.751.766h1.494c.424 0 .751-.344.751-.766v-.163c0-.943.637-1.74 1.545-1.956a2.417 2.417 0 0 1 1.637.21l.146.084a.75.75 0 0 0 .992-.21l.747-1.295a.75.75 0 0 0-.193-.996l-.145-.084a2.417 2.417 0 0 1-.836-2.333 2.417 2.417 0 0 1 1.342-1.467h.168a.75.75 0 0 0 .75-.75v-1.493a.75.75 0 0 0-.75-.75h-.168a2.417 2.417 0 0 1-1.342-1.467c-.321-.878.035-1.871.836-2.333l.145-.084a.75.75 0 0 0 .193-.996l-.747-1.295a.75.75 0 0 0-.992-.21l-.146.084a2.417 2.417 0 0 1-1.637.21c-.908-.216-1.545-1.013-1.545-1.956v-.163a.75.75 0 0 0-.751-.766h-1.494ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div className="notif-text-content">
-                    <p className="notif-message">
-                      <strong>Robotic Class</strong> by Mr. Ilham has been finished <span className="notif-hour">(09:00-11:00)</span>
-                    </p>
-                    <span className="notif-time">2h ago</span>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       )}

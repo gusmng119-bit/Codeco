@@ -7,6 +7,13 @@ import Login from "./features/Login/Login";
 
 /* ================= STUDENT ================= */
 import StudentDashboard from "./features/Dashboard/Dashboard";
+import Home from "./features/Home/Home";
+import Classroom from "./features/Classroom/Classroom";
+import ClassMaterial from "./features/Material/Material";
+import Feedback from "./features/Feedback/Feedback";
+import TeacherList from "./features/Teacher/Teacher";
+import Certificate from "./features/Certificate/Certificate";
+import Profile from "./features/Profile/Profile";
 
 /* ================= TEACHER ================= */
 import DashboardTeacher from "./features/Teacher/DashboardTeacher";
@@ -75,7 +82,15 @@ function App() {
             <StudentDashboard />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<Home />} />
+        <Route path="classroom" element={<Classroom />} />
+        <Route path="material" element={<ClassMaterial />} />
+        <Route path="feedback" element={<Feedback />} />
+        <Route path="teacher" element={<TeacherList />} />
+        <Route path="certificate" element={<Certificate />} />
+        <Route path="profile" element={<Profile />} />
+      </Route>
 
       {/* ================= ADMIN ================= */}
       <Route

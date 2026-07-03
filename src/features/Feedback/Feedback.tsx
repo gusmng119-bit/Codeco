@@ -1,137 +1,152 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import "./Feedback.css";
-import logo2 from "../../assets/logo2.jpg";
-import feedbackImg from "../../assets/feedback.png";
-import useFeedbackStore from "../../store/feedbackStore";
-import EmptyState from "../../shared/components/EmptyState";
-import ErrorState from "../../shared/components/ErrorState";
+
+import logo2 from "@/assets/logo2.jpg";
+import feedbackImg from "@/assets/feedback.png";
+import useClassroomStore from "../../store/classroomStore";
+
+interface FeedbackItem {
+  id: number;
+  title: string;
+  date: string;
+  progress: string;
+  instructor: string;
+  feedback: string;
+}
 
 const Feedback = () => {
-  const {
-    feedbackList,
-    selectedItem,
-    loading,
-    error,
-    setSelectedItem,
-    fetchFeedback,
-  } = useFeedbackStore();
+  const { selectedClass } = useClassroomStore();
+  const [selectedItem, setSelectedItem] = useState<FeedbackItem | null>(null);
 
-  useEffect(() => {
-    fetchFeedback();
-  }, [fetchFeedback]);
+  const currentClass = selectedClass || {
+    title: "Robotic Class",
+    instructor: "Mr. Ilham",
+  };
 
-  /* ================= DETAIL PAGE ================= */
-  if (selectedItem) {
-    return (
-      <div className="feedback-page">
-        <div className="teacher-feedback-card">
-          {/* CLOSE */}
-          <button
-            className="close-btn"
-            onClick={() => setSelectedItem(null)}
+  const feedbackData: Record<string, FeedbackItem[]> = {
+    robotic: [
+      {
+        id: 1,
+        title: "Introduction to robot components, assembly, and basic programming",
+        date: "April 19, 2026",
+        progress: "1/5",
+        instructor: "Mr. Ilham",
+        feedback:
+          "You're doing a great job understanding the basics of robotics. I like how you're starting to connect the concepts clearly. Try to notice how robots are used around you in real life. Keep it up, your foundation is getting stronger.",
+      },
+      {
+        id: 2,
+        title: "Basic Programming for Robots",
+        date: "April 22, 2026",
+        progress: "2/5",
+        instructor: "Mr. Ilham",
+        feedback:
+          "You are grasping movement loops well. Just make sure to double check wire connectivity during serial setup next time.",
+      },
+      {
+        id: 3,
+        title: "Robot Movement and Control Systems",
+        date: "April 25, 2026",
+        progress: "3/5",
+        instructor: "Mr. Ilham",
+        feedback:
+          "Wonderful results calibrating motors. Try exploring diagonal path algorithms.",
+      },
+      {
+        id: 4,
+        title: "Robot Design and Construction",
+        date: "April 28, 2026",
+        progress: "4/5",
+        instructor: "Mr. Ilham",
+        feedback:
+          "Robust structural build. Solid chassis configuration.",
+      },
+      {
+        id: 5,
+        title: "Robotics Project Presentation",
+        date: "May 2, 2026",
+        progress: "5/5",
+        instructor: "Mr. Ilham",
+        feedback:
+          "Excellent showcase. Great automation logic demonstration.",
+      },
+    ],
+  };
+
+  const key = currentClass.title.toLowerCase().includes("coding") ? "coding" : "robotic";
+  const feedbacks = feedbackData[key] || feedbackData.robotic;
+
+  return (
+    <div className="feedback-page">
+      {/* HEADER BANNER */}
+      <div className="feedback-header-banner">
+        <div className="feedback-header-content">
+          <h1>{currentClass.title}</h1>
+          <p>{currentClass.instructor}</p>
+        </div>
+        <div className="feedback-robot-img">
+          <img src={logo2} alt="Robot" />
+        </div>
+      </div>
+
+      {/* SECTION TITLE */}
+      <h2 className="feedback-section-title">Teacher Feedback</h2>
+
+      {/* LIST OF FEEDBACK */}
+      <div className="feedback-list">
+        {feedbacks.map((item) => (
+          <div
+            key={item.id}
+            className={`feedback-item-card ${
+              selectedItem?.id === item.id ? "selected-feedback" : ""
+            }`}
+            onClick={() => setSelectedItem(item)}
           >
-            ✕
-          </button>
+            <div className="feedback-icon-wrapper">
+              <span className="feedback-icon">📝</span>
+            </div>
 
-          {/* HEADER */}
-          <div className="feedback-detail-header">
-            <div className="feedback-icon-teal">📄</div>
-
-            <div>
-              <h2>{selectedItem.title}</h2>
-              <p>
-                {selectedItem.instructor} • {selectedItem.date}
+            <div className="feedback-info">
+              <div className="feedback-card-header">
+                <h3>{item.title}</h3>
+                <span className="feedback-date">{item.date}</span>
+              </div>
+              <p className="feedback-preview">
+                Instructor: {item.instructor} • Progress: {item.progress}
               </p>
             </div>
           </div>
-
-          <hr />
-
-          {/* IMAGE */}
-          <div className="feedback-image">
-            <img src={feedbackImg} alt="Feedback" />
-          </div>
-
-          {/* FEEDBACK TEXT */}
-          <div className="feedback-text-section">
-            <p>{selectedItem.feedback}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* ================= LIST PAGE ================= */
-  return (
-    <div className="feedback-page">
-      {/* HEADER */}
-      <div className="feedback-header-banner">
-        <div className="feedback-header-content">
-          <h1>Robotics Class Feedback</h1>
-          <p>Mr. Ilham</p>
-        </div>
-
-        <div className="feedback-robot-img">
-          <img src={logo2} alt="Robot Mascot" />
-        </div>
+        ))}
       </div>
 
-      <h2 className="feedback-section-title">Class Feedback</h2>
+      {/* DETAIL PREVIEW (overlay seperti gambar) */}
+      {selectedItem && (
+        <div className="feedback-detail-overlay">
+          <div className="teacher-feedback-card">
+            <button className="close-btn" onClick={() => setSelectedItem(null)}>
+              ✕
+            </button>
 
-      {/* LIST / FALLBACKS */}
-      {loading && (
-        <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
-          <p>Loading feedback from backend...</p>
-        </div>
-      )}
-
-      {!loading && error && (
-        <ErrorState
-          title="Unable to load class feedback"
-          message={error}
-          onRetry={fetchFeedback}
-        />
-      )}
-
-      {!loading && !error && feedbackList.length === 0 && (
-        <EmptyState
-          title="No Feedback Records"
-          message="You don't have any teacher feedback records assigned to your class profile yet."
-          icon="📋"
-        />
-      )}
-
-      {!loading && !error && feedbackList.length > 0 && (
-        <div className="feedback-list">
-          {feedbackList.map((item) => (
-            <div key={item.id} className="feedback-item-card">
-              <div className="feedback-icon-wrapper">
-                <span className="feedback-icon">📋</span>
-              </div>
-
-              <div className="feedback-info">
-                <div className="feedback-card-header">
-                  <h3>
-                    {item.title} ({item.progress})
-                  </h3>
-                  <p className="feedback-date">{item.date}</p>
-                </div>
-
-                <p className="feedback-preview">
-                  {item.feedback.substring(0, 120)}...
+            <div className="feedback-detail-header">
+              <div className="feedback-icon-teal">📝</div>
+              <div className="feedback-detail-heading">
+                <h3>{selectedItem.title}</h3>
+                <p>
+                  {selectedItem.instructor} <span className="dot">•</span> {selectedItem.date}
                 </p>
-
-                <div className="feedback-view-more">
-                  <span
-                    className="feedback-view-btn"
-                    onClick={() => setSelectedItem(item)}
-                  >
-                    View feedback
-                  </span>
-                </div>
               </div>
             </div>
-          ))}
+
+            <div className="detail-divider" />
+
+            <div className="feedback-image">
+              <img src={feedbackImg} alt="Feedback" />
+            </div>
+
+            <div className="feedback-text-section">
+              <p>{selectedItem.feedback}</p>
+            </div>
+          </div>
         </div>
       )}
     </div>

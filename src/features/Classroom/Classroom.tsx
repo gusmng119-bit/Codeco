@@ -1,10 +1,8 @@
 import { useEffect } from "react";
+import { Calendar, User, Clock, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import "./Classroom.css";
 import useClassroomStore, { FilterType } from "../../store/classroomStore";
-import type { ClassItem } from "../../api/types/features";
-import EmptyState from "../../shared/components/EmptyState";
-import ErrorState from "../../shared/components/ErrorState";
+import "./Classroom.css";
 
 const Classroom = () => {
   const navigate = useNavigate();
@@ -15,9 +13,8 @@ const Classroom = () => {
     setFilter,
     setSearchClass,
     setSelectedClass,
+    setJoined,
     fetchClasses,
-    loading,
-    error,
   } = useClassroomStore();
 
   useEffect(() => {
@@ -25,114 +22,118 @@ const Classroom = () => {
   }, [fetchClasses]);
 
   const filteredClasses = classes.filter((c) => {
-    const matchFilter = filter === "all" || c.type === filter;
+    // Map backend class status/type if necessary, or check item values
+    const type = (c as any).type || "today"; // default fallback for visual labeling
+    const matchFilter = filter === "all" || type === filter;
     const matchSearch =
-      searchClass === "" ||
+      !searchClass ||
       c.title.toLowerCase().includes(searchClass.toLowerCase()) ||
       c.instructor.toLowerCase().includes(searchClass.toLowerCase());
-
     return matchFilter && matchSearch;
   });
 
-  const handleOpenClass = (c: ClassItem) => {
-    setSelectedClass(c);
-    navigate("/dashboard/home");
+  const handleOpenClass = (classData: any) => {
+    setSelectedClass(classData);
+    const savedJoin = JSON.parse(localStorage.getItem("joinedClass") || "{}");
+    setJoined(savedJoin[classData.title] || false);
+    
+    // Navigate to dashboard material or detail
+    navigate("/student/material");
   };
 
-  const filterOptions: FilterType[] = ["yesterday", "today", "upcoming", "all"];
-
   return (
-    <div className="classroom-page">
-      {/* HEADER */}
-      <div className="classroom-header">
-        {/* FILTER */}
-        <div className="filter-tabs">
-          {filterOptions.map((t) => (
+    <div className="custom-classroom-container">
+      {/* ================= CONTROLS HEADER ================= */}
+      <div className="custom-header-controls">
+        <div className="custom-tabs-group">
+          {[
+            { id: "yesterday", label: "Yesterday" },
+            { id: "today", label: "Today's" },
+            { id: "upcoming", label: "Upcoming" },
+            { id: "all", label: "See all" },
+          ].map((t) => (
             <button
-              key={t}
-              className={`tab ${filter === t ? "active" : ""}`}
-              onClick={() => setFilter(t)}
+              key={t.id}
+              className={`custom-tab-btn ${filter === t.id ? "active" : ""}`}
+              onClick={() => setFilter(t.id as FilterType)}
             >
-              {t.charAt(0).toUpperCase() + t.slice(1)}
+              {t.label}
             </button>
           ))}
         </div>
 
-        {/* SEARCH */}
-        <div className="search-box-cert">
+        <div className="custom-search-wrapper">
           <input
             type="text"
-            placeholder="Search class..."
+            placeholder="search class"
             value={searchClass}
             onChange={(e) => setSearchClass(e.target.value)}
           />
-          <span className="search-icon">🔍</span>
+          <span className="custom-search-icon">
+            <Search size={16} />
+          </span>
         </div>
       </div>
 
-      {/* CLASS LIST / FALLBACKS */}
-      {loading && (
-        <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
-          <p className="no-class">Loading classes from backend...</p>
-        </div>
-      )}
+      {/* ================= CARDS LIST ================= */}
+      <div className="custom-cards-list">
+        {filteredClasses.length === 0 && (
+          <p className="custom-no-data">No class found</p>
+        )}
 
-      {!loading && error && (
-        <ErrorState
-          title="Unable to load classroom schedules"
-          message={error}
-          onRetry={fetchClasses}
-        />
-      )}
-
-      {!loading && !error && filteredClasses.length === 0 && (
-        <EmptyState
-          title="No Classes Found"
-          message="There are no classes matching your filter criteria. Try selecting 'All' or clearing search."
-          icon="📖"
-        />
-      )}
-
-      {!loading && !error && filteredClasses.length > 0 && (
-        <div className="class-list">
-          {filteredClasses.map((c) => (
-            <div className="class-card" key={c.id}>
-              {/* HEADER */}
+        {filteredClasses.map((c) => {
+          const type = (c as any).type || "today";
+          return (
+            <div className="custom-class-card" key={c.id}>
+              
+              {/* Bagian Atas - Menggunakan Aset Ikon Kalender */}
               <div
-                className={`card-header ${
-                  c.type === "today"
-                    ? "bg-blue"
-                    : c.type === "upcoming"
-                    ? "bg-pink"
-                    : "bg-purple"
+                className={`custom-card-top-bar ${
+                  type === "today"
+                    ? "top-blue"
+                    : type === "upcoming"
+                    ? "top-pink"
+                    : "top-purple"
                 }`}
               >
-                <span>
-                  {c.type.charAt(0).toUpperCase() + c.type.slice(1)} Class
+                <span className="top-bar-label">
+                  {type === "today"
+                    ? "Today's Class"
+                    : type === "upcoming"
+                    ? "Next Class"
+                    : "Yesterday Class"}
                 </span>
-                <span>{c.date}</span>
+                <span className="top-bar-date">
+                  <Calendar size={16} /> {(c as any).date || "2026-05-08"}
+                </span>
               </div>
 
-              {/* BODY */}
-              <div className="card-body">
-                <h3>{c.title}</h3>
-                <p className="material-text">{c.material}</p>
-
-                <div className="card-footer">
-                  <div className="time-info">🕒 {c.time}</div>
-
-                  <button
-                    className="view-btn"
-                    onClick={() => handleOpenClass(c)}
-                  >
-                    {c.type === "today" ? "Join Class" : "View"}
+              {/* Bagian Konten Tengah */}
+              <div className="custom-card-middle-content">
+                <div className="custom-title-line">
+                  <h3>{c.title}</h3>
+                  <span className="custom-instructor">
+                    <User size={15} /> {c.instructor}
+                  </span>
+                </div>
+                
+                <p className="custom-material-desc">{(c as any).material || "Robot Introduction"}</p>
+                
+                {/* Bagian Bawah Kanan */}
+                <div className="custom-card-bottom-bar">
+                  <div className="custom-time-lbl">
+                    <Clock size={15} /> {(c as any).time || "09:00 - 11:00"}
+                  </div>
+                  <button className="custom-action-btn" onClick={() => handleOpenClass(c)}>
+                    {type === "today" ? "Join class" : "View"}
                   </button>
                 </div>
+
               </div>
             </div>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
     </div>
   );
 };

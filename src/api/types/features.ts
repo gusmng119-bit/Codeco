@@ -58,4 +58,5 @@ export type ProfileData = {
   country: string;
   city: string;
   streetAddress: string;
+  bankAccount: string;
 };

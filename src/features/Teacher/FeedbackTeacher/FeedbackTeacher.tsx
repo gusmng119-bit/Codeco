@@ -1,50 +1,49 @@
-import { useEffect } from "react";
+import React, { useEffect, useState, type ChangeEvent } from "react";
 import "./FeedbackTeacher.css";
-import { useState } from "react";
 import useTeacherFeedbackStore from "@/store/teacherFeedbackStore";
 import EmptyState from "@/shared/components/EmptyState";
 import ErrorState from "@/shared/components/ErrorState";
 import useAuthStore from "@/store/authStore";
 
-// ==========================================
-// --- REUSABLE SVG ICONS ---
-// ==========================================
 const ClockIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
   </svg>
 );
 
 const InfoIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/>
+    <circle cx="12" cy="12" r="10" />
+    <line x1="12" x2="12" y1="16" y2="12" />
+    <line x1="12" x2="12.01" y1="8" y2="8" />
   </svg>
 );
 
 const CloseIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
 
 const UploadCloudIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="17 8 12 3 7 8" />
+    <line x1="12" x2="12" y1="3" y2="15" />
   </svg>
 );
 
-// ==========================================
-// --- MAIN COMPONENT ---
-// ==========================================
 const FeedbackTeacher = () => {
   const user = useAuthStore((state) => state.user);
   const { students, loading, error, fetchStudents, saveFeedback } = useTeacherFeedbackStore();
 
-  const [isModalOpen, setIsModalOpen]       = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStudentId, setSelectedStudentId] = useState<number | null>(null);
-  const [feedbackText, setFeedbackText]     = useState("");
-  const [selectedImage, setSelectedImage]   = useState<File | null>(null);
-  const [errorMessage, setErrorMessage]     = useState("");
+  const [feedbackText, setFeedbackText] = useState("");
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     fetchStudents();
@@ -58,6 +57,8 @@ const FeedbackTeacher = () => {
     if (!student) return;
     setSelectedStudentId(id);
     setFeedbackText(student.feedback || "");
+    setSelectedImage(null);
+    setErrorMessage("");
     setIsModalOpen(true);
   };
 
@@ -69,11 +70,22 @@ const FeedbackTeacher = () => {
     setErrorMessage("");
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 1024 * 1024) { setErrorMessage("Ukuran gambar maksimal 1 MB"); setSelectedImage(null); return; }
-    if (!file.type.startsWith("image/")) { setErrorMessage("File harus berupa gambar"); setSelectedImage(null); return; }
+
+    if (file.size > 1024 * 1024) {
+      setErrorMessage("Ukuran gambar maksimal 1 MB");
+      setSelectedImage(null);
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      setErrorMessage("File harus berupa gambar");
+      setSelectedImage(null);
+      return;
+    }
+
     setErrorMessage("");
     setSelectedImage(file);
   };
@@ -86,22 +98,13 @@ const FeedbackTeacher = () => {
 
   return (
     <div className="feedback-page">
-
-      {/* TOP BAR */}
       <div className="feedback-top-bar">
         <div className="profile-info-group">
-          <div className="avatar-placeholder">👨‍💻</div>
+          <div className="avatar-placeholder"></div>
           <h2 className="welcome-text">Hi, {user?.name ?? "Teacher"}!</h2>
         </div>
-        <button className="edit-profile-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
-          </svg>
-          Edit Profile
-        </button>
       </div>
 
-      {/* DASHBOARD CARD */}
       <div className="feedback-dashboard-card">
         <div className="feedback-dashboard-inner">
           <div className="left-alert-panel">
@@ -109,7 +112,9 @@ const FeedbackTeacher = () => {
             <div className="deadline-alert-box">
               <div className="alert-icon-wrapper"><ClockIcon /></div>
               <div className="alert-text-wrapper">
-                <p className="alert-title">Deadline feedback <span className="highlight-red">1 hari setelah kelas berakhir</span></p>
+                <p className="alert-title">
+                  Deadline feedback <span className="highlight-red">1 hari setelah kelas berakhir</span>
+                </p>
                 <p className="alert-subtitle">Pastikan semua feedback diisi tepat waktu untuk mendapatkan salary</p>
               </div>
             </div>
@@ -122,7 +127,6 @@ const FeedbackTeacher = () => {
         </div>
       </div>
 
-      {/* MAIN CONTAINER */}
       <div className="feedback-main-container">
         <div className="class-selector-group">
           <label className="selector-label">Pilih Kelas</label>
@@ -144,7 +148,6 @@ const FeedbackTeacher = () => {
           </div>
         </div>
 
-        {/* STATES */}
         {loading && (
           <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
             <p>Loading students...</p>
@@ -159,7 +162,6 @@ const FeedbackTeacher = () => {
           <EmptyState title="No Students" message="Belum ada siswa di kelas ini." icon="👥" />
         )}
 
-        {/* STUDENT LIST */}
         {!loading && !error && students.length > 0 && (
           <div className="students-list-wrapper">
             <h4 className="list-title">Daftar Siswa</h4>
@@ -183,9 +185,7 @@ const FeedbackTeacher = () => {
                           <button className="action-btn-edit" onClick={() => handleOpenModal(student.id)}>
                             Lihat / Edit
                           </button>
-                          {student.filledTime && (
-                            <span className="filled-timestamp-text">{student.filledTime}</span>
-                          )}
+                          {student.filledTime && <span className="filled-timestamp-text">{student.filledTime}</span>}
                         </div>
                       )}
                     </div>
@@ -197,14 +197,14 @@ const FeedbackTeacher = () => {
         )}
       </div>
 
-      {/* MODAL */}
       {isModalOpen && selectedStudent && (
         <div className="fb-modal-overlay" onClick={handleCloseModal}>
           <div className="fb-modal-content" onClick={(e) => e.stopPropagation()}>
-
             <div className="fb-modal-header">
               <h2 className="fb-modal-title">Beri Feedback</h2>
-              <button className="fb-modal-close-btn" onClick={handleCloseModal}><CloseIcon /></button>
+              <button className="fb-modal-close-btn" onClick={handleCloseModal}>
+                <CloseIcon />
+              </button>
             </div>
 
             <div className="fb-modal-student-profile">
@@ -243,17 +243,13 @@ const FeedbackTeacher = () => {
             </div>
 
             <div className="fb-modal-footer">
-              <button type="button" className="fb-btn-cancel" onClick={handleCloseModal}>Batal</button>
-              <button
-                type="button"
-                className="fb-btn-submit"
-                onClick={handleSaveFeedback}
-                disabled={!feedbackText.trim()}
-              >
+              <button type="button" className="fb-btn-cancel" onClick={handleCloseModal}>
+                Batal
+              </button>
+              <button type="button" className="fb-btn-submit" onClick={handleSaveFeedback} disabled={!feedbackText.trim()}>
                 Simpan Feedback
               </button>
             </div>
-
           </div>
         </div>
       )}
