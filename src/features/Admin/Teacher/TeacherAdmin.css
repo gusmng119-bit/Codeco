@@ -345,3 +345,72 @@
   flex: 1;
   color: #1e293b;
 }
+
+.tab-nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 8px 4px;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-nav-btn.active {
+  color: #ef4444;
+  border-bottom-color: #ef4444;
+  font-weight: 600;
+}
+
+.payment-tab-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.payment-rincian-gaji-box,
+.payment-informasi-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+
+.payment-block-title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.payment-rows-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-row-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #374151;
+}
+
+.payment-row-label {
+  color: #6b7280;
+}
+
+.payment-divider-line {
+  border-top: 1px dashed #e5e7eb;
+  margin: 4px 0;
+}
+
+.payment-total-row .total {
+  color: #14b8a6;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .payment-tab-content {
+    grid-template-columns: 1fr;
+  }
+}
