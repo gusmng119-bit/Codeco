@@ -14,18 +14,31 @@
 /* ================= SEARCH ================= */
 
 .search-box-teacher {
-  border: 1px solid #ddd;
-  border-radius: 25px;
-  padding: 6px 15px;
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
 .search-box-teacher input {
-  border: none;
-  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 10px 38px 10px 16px;
   font-size: 14px;
+  outline: none;
+  width: 240px;
+  transition: border-color 0.3s;
+}
+
+.search-box-teacher input:focus {
+  border-color: #56bbc4;
+}
+
+.search-icon-teacher {
+  position: absolute;
+  right: 12px;
+  color: #888;
+  display: flex;
+  align-items: center;
 }
 
 /* ================= GRID ================= */
