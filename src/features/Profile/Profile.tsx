@@ -1,8 +1,11 @@
-import { useEffect, useState, type ChangeEvent } from "react";
-import "./Profile.css";
-import profileImg from "../../assets/Profile.png";
-import BannerImg from "../../assets/Baner.jpg";
-import useProfileStore from "../../store/profileStore";
+import { useEffect, useState, useRef, type ChangeEvent } from "react";
+import "../Teacher/Profile/ProfileTeacher.css";
+import { FaRegEdit, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import useProfileStore from "@/store/profileStore";
+import ErrorState from "@/shared/components/ErrorState";
+
+import banner from "@/assets/Baner.jpg";
+import profileImgDefault from "@/assets/Profile.png";
 
 type ProfileData = {
   firstName: string;
@@ -31,16 +34,38 @@ const Profile = () => {
     profile,
     editMode,
     loading,
+    error,
     setEditMode,
     fetchProfile,
     updateProfile,
   } = useProfileStore();
 
   const [formValues, setFormValues] = useState<ProfileData>(defaultProfile);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string>(() => {
+    return localStorage.getItem("profileAvatar") || profileImgDefault;
+  });
 
   useEffect(() => {
     fetchProfile();
   }, [fetchProfile]);
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setAvatarUrl(base64String);
+        localStorage.setItem("profileAvatar", base64String);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const currentValues = editMode ? formValues : (profile ?? defaultProfile);
 
@@ -65,153 +90,117 @@ const Profile = () => {
     setEditMode(false);
   };
 
+  if (loading) {
+    return (
+      <div style={{ padding: "40px", textAlign: "center", color: "#64748b" }}>
+        <p>Loading profile...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <ErrorState title="Unable to load profile" message={error} onRetry={fetchProfile} />;
+  }
+
   return (
-    <div className="profile-page">
+    <div className="teacher-profile-page">
+      {/* BANNER */}
       <div className="profile-banner">
-        <img src={BannerImg} alt="Banner" />
+        <img src={banner} alt="banner" />
       </div>
 
-      <div className="profile-content">
-        <div className="avatar-wrapper">
-          <div className="avatar-circle">
-            <img src={profileImg} alt="Profile" />
-          </div>
+      {/* PROFILE HEADER */}
+      <div className="profile-header">
+        <div className="profile-image-section">
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleAvatarChange}
+            accept="image/*"
+            style={{ display: "none" }}
+          />
+          <img src={avatarUrl} alt="student" className="profile-image" />
+          <button className="edit-photo-btn" onClick={handleAvatarClick}>
+            <FaRegEdit />
+          </button>
+        </div>
+        <h1>My Profile</h1>
+      </div>
+
+      {/* PERSONAL INFORMATION */}
+      <div className="profile-card">
+        <div className="card-header">
+          <h3>Personal Information</h3>
+          <button className="edit-btn" onClick={handleEditClick}>
+            <FaRegEdit />
+            {editMode ? " Save" : " Edit"}
+          </button>
         </div>
 
-        <h1 className="profile-title">My Profile</h1>
-
-        {loading && <p style={{ textAlign: "center" }}>Loading profile...</p>}
-
-        <div className="info-card">
-          <div className="card-header profile-header-edit">
-            <h3>Personal Information</h3>
-            <button
-              type="button"
-              className="edit-profile-btn"
-              onClick={handleEditClick}
-            >
-              {editMode ? "💾 Save" : "✏️ Edit"}
-            </button>
+        <div className="profile-grid">
+          <div className="profile-item">
+            <label>First Name</label>
+            {editMode
+              ? <input type="text" name="firstName" value={currentValues.firstName} onChange={handleInputChange} />
+              : <p>{currentValues.firstName || "-"}</p>}
           </div>
 
-          <div className="info-grid">
-            <div className="info-item">
-              <label>First Name</label>
-              {editMode ? (
-                <input
-                  type="text"
-                  name="firstName"
-                  value={currentValues.firstName}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p>{currentValues.firstName || "-"}</p>
-              )}
-            </div>
+          <div className="profile-item">
+            <label>Last Name</label>
+            {editMode
+              ? <input type="text" name="lastName" value={currentValues.lastName} onChange={handleInputChange} />
+              : <p>{currentValues.lastName || "-"}</p>}
+          </div>
 
-            <div className="info-item">
-              <label>Last Name</label>
-              {editMode ? (
-                <input
-                  type="text"
-                  name="lastName"
-                  value={currentValues.lastName}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p>{currentValues.lastName || "-"}</p>
-              )}
-            </div>
+          <div className="profile-item">
+            <label>Email</label>
+            {editMode
+              ? <input type="email" name="email" value={currentValues.email} onChange={handleInputChange} />
+              : <p className="with-icon"><FaEnvelope />{currentValues.email || "-"}</p>}
+          </div>
 
-            <div className="info-item">
-              <label>Email</label>
-              {editMode ? (
-                <input
-                  type="email"
-                  name="email"
-                  value={currentValues.email}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p>{currentValues.email || "-"}</p>
-              )}
-            </div>
+          <div className="profile-item">
+            <label>Phone Number</label>
+            {editMode
+              ? <input type="text" name="phone" value={currentValues.phone} onChange={handleInputChange} />
+              : <p className="with-icon"><FaPhoneAlt />{currentValues.phone || "-"}</p>}
+          </div>
 
-            <div className="info-item">
-              <label>Phone</label>
-              {editMode ? (
-                <input
-                  type="text"
-                  name="phone"
-                  value={currentValues.phone}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p>{currentValues.phone || "-"}</p>
-              )}
-            </div>
-
-            <div className="info-item full-width">
-              <label>Bio</label>
-              {editMode ? (
-                <textarea
-                  name="bio"
-                  value={currentValues.bio}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p>{currentValues.bio || "-"}</p>
-              )}
-            </div>
+          <div className="profile-item full-width">
+            <label>Bio</label>
+            {editMode
+              ? <textarea name="bio" value={currentValues.bio} onChange={handleInputChange} />
+              : <p>{currentValues.bio || "-"}</p>}
           </div>
         </div>
+      </div>
 
-        <div className="info-card">
-          <div className="card-header">
-            <h3>Address</h3>
+      {/* ADDRESS */}
+      <div className="profile-card">
+        <div className="card-header">
+          <h3>Address</h3>
+        </div>
+
+        <div className="profile-grid">
+          <div className="profile-item">
+            <label>Country</label>
+            {editMode
+              ? <input type="text" name="country" value={currentValues.country} onChange={handleInputChange} />
+              : <p>{currentValues.country || "-"}</p>}
           </div>
 
-          <div className="info-grid">
-            <div className="info-item">
-              <label>Country</label>
-              {editMode ? (
-                <input
-                  type="text"
-                  name="country"
-                  value={currentValues.country}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p>{currentValues.country || "-"}</p>
-              )}
-            </div>
+          <div className="profile-item">
+            <label>City / Province</label>
+            {editMode
+              ? <input type="text" name="city" value={currentValues.city} onChange={handleInputChange} />
+              : <p>{currentValues.city || "-"}</p>}
+          </div>
 
-            <div className="info-item">
-              <label>City / Province</label>
-              {editMode ? (
-                <input
-                  type="text"
-                  name="city"
-                  value={currentValues.city}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p>{currentValues.city || "-"}</p>
-              )}
-            </div>
-
-            <div className="info-item full-width">
-              <label>Street Address</label>
-              {editMode ? (
-                <textarea
-                  name="streetAddress"
-                  value={currentValues.streetAddress}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <p>{currentValues.streetAddress || "-"}</p>
-              )}
-            </div>
+          <div className="profile-item full-width">
+            <label>Street Address</label>
+            {editMode
+              ? <textarea name="streetAddress" value={currentValues.streetAddress} onChange={handleInputChange} />
+              : <p className="with-icon"><FaMapMarkerAlt />{currentValues.streetAddress || "-"}</p>}
           </div>
         </div>
       </div>
