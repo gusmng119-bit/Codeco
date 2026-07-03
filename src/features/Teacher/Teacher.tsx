@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Search } from "lucide-react";
 import "./Teacher.css";
 
 import useTeacherStore from "@/store/teacherStore";
@@ -71,14 +72,16 @@ const Teachers = () => {
       <header className="teacher-header">
         <h2>Our Teachers</h2>
 
-        <div className="search-box-cert">
+        <div className="search-box-teacher">
           <input
             type="text"
             placeholder="Search teacher..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <span className="search-icon">🔍</span>
+          <span className="search-icon-teacher">
+            <Search size={16} />
+          </span>
         </div>
       </header>
 

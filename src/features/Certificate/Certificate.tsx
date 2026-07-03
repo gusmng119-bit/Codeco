@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Search } from "lucide-react";
 import "./Certificate.css";
 import useCertificateStore from "../../store/certificateStore";
 import type { CertificateItem } from "../../api/types/features";
@@ -63,11 +64,13 @@ const Certificates = () => {
         <div className="search-box-cert">
           <input
             type="text"
-            placeholder="search certificate..."
+            placeholder="Search certificate..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <span className="search-icon">🔍</span>
+          <span className="search-icon-cert">
+            <Search size={16} />
+          </span>
         </div>
       </header>
 
