@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type ChangeEvent } from "react";
 import "./ProfileTeacher.css";
 import { FaRegEdit, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import useProfileStore from "@/store/profileStore";
@@ -22,7 +22,7 @@ const ProfileTeacher = () => {
     fetchProfile();
   }, [fetchProfile]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (!data) return;
     updateProfile({ [e.target.name]: e.target.value });
   };
@@ -99,6 +99,13 @@ const ProfileTeacher = () => {
             {editMode
               ? <textarea name="bio" value={data?.bio ?? ""} onChange={handleChange} />
               : <p>{data?.bio}</p>}
+          </div>
+
+          <div className="profile-item full-width">
+            <label>Bank Account</label>
+            {editMode
+              ? <input type="text" name="bankAccount" value={data?.bankAccount ?? ""} onChange={handleChange} />
+              : <p>{data?.bankAccount || "-"}</p>}
           </div>
         </div>
       </div>

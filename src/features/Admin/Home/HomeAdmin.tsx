@@ -1,25 +1,34 @@
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import "./HomeAdmin.css";
 
 const HomeAdminContent = () => {
+  const navigate = useNavigate();
 
   // State untuk masing-masing modal
-  const [isModalOpen, setIsModalOpen] = useState(false);         // Modal Create Class
-  const [isTeacherModalOpen, setIsTeacherModalOpen] = useState(false); // Modal Add Teacher
-  const [isStudentModalOpen, setIsStudentModalOpen] = useState(false); // Modal Add Student
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);         // Modal Create Class
+  const [isTeacherModalOpen, setIsTeacherModalOpen] = useState<boolean>(false); // Modal Add Teacher
+  const [isStudentModalOpen, setIsStudentModalOpen] = useState<boolean>(false); // Modal Add Student
+
+  // Handler navigasi dipisah supaya JSX tetap simpel
+  const goToCalendar = (
+    e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>
+  ): void => {
+    e.preventDefault();
+    navigate("/admin/calendar");
+  };
+
+  const goToSalary = (e: MouseEvent<HTMLAnchorElement>): void => {
+    e.preventDefault();
+    navigate("/admin/salary");
+  };
 
   return (
 
     <div className="home-container">
-      
-      {/* Catatan: Di bagian Header Dashboard atas, pastikan tombol ikon lonceng Anda 
-          ditambahkan properti onClick={() => setIsNotifOpen(true)} */}
 
       {/* ================= 1. TOP STATS CARDS ================= */}
-        <div className="stats-grid">
-      
-        {/* NOTE: Agar modal notifikasi muncul saat tombol lonceng ditekan,
-            kamu sudah bisa gunakan tombol ini untuk testing (Pending Feedback) */}
+      <div className="stats-grid">
 
         {/* Total Teacher */}
         <div className="stat-card border-teacher">
@@ -80,7 +89,7 @@ const HomeAdminContent = () => {
         <div className="data-table-card flex-7">
           <div className="table-header">
             <h3 className="table-title">Today's Class Schedule</h3>
-            <a href="#calendar" className="table-link">view calendar</a>
+            <a href="#calendar" className="table-link" onClick={goToCalendar}>view calendar</a>
           </div>
           <div className="table-responsive">
             <table className="main-table">
@@ -132,9 +141,9 @@ const HomeAdminContent = () => {
         <div className="data-table-card flex-5">
           <div className="table-header">
             <h3 className="table-title">Pending Salary</h3>
-            <a href="#salary" className="table-link">view all</a>
+            <a href="#salary" className="table-link" onClick={goToSalary}>view all</a>
           </div>
-          
+
           <div className="salary-summary">
             <span className="salary-label">Total Pending Salary</span>
             <h2 className="salary-amount">Rp 12.500.000</h2>
@@ -228,7 +237,7 @@ const HomeAdminContent = () => {
           </button>
 
           {/* Manage Schedule */}
-          <button className="action-btn">
+          <button className="action-btn" onClick={goToCalendar}>
             <div className="action-icon-circle bg-action-orange">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="#f97316" className="icon-size-sm">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
@@ -354,7 +363,7 @@ const HomeAdminContent = () => {
               </div>
               <button className="modal-close-btn" onClick={() => setIsStudentModalOpen(false)}>&times;</button>
             </div>
-            
+
             <form onSubmit={(e) => e.preventDefault()} className="modal-form">
               <div className="form-group">
                 <label>Student Name</label>
@@ -388,8 +397,6 @@ const HomeAdminContent = () => {
           </div>
         </div>
       )}
-
-
 
     </div>
   );

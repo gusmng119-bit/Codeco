@@ -1,33 +1,74 @@
+import { useState } from "react";
 import "./SalaryAdmin.css";
-import { Search, ChevronDown, Calendar, Eye, FileText, DollarSign } from "lucide-react";
 
-import teacherProfileImg from "@/assets/coki.jpg";
+interface SalaryRow {
+  no: number;
+  nama: string;
+  totalClass: number;
+  feedbackSelesai: number;
+  feedbackPending: number;
+  totalSalary: string;
+  status: "Paid" | "Unpaid";
+}
+
+interface SummaryCard {
+  id: number;
+  title: string;
+  value: string;
+  type: "total" | "due" | "pending" | "paid";
+}
 
 const SalaryAdmin = () => {
   // Data untuk 4 Summary Cards di bagian atas
-  const summaryCards = [
+  const summaryCards: SummaryCard[] = [
     { id: 1, title: "Total Salary", value: "Rp 30.200.000", type: "total" },
     { id: 2, title: "Harus Dibayar", value: "28", type: "due" },
     { id: 3, title: "Menunggu Feedback", value: "2", type: "pending" },
     { id: 4, title: "Terbayar", value: "24", type: "paid" },
   ];
 
-  // Data baris tabel gaji guru
-  const salaryData = [
+  // Data baris tabel gaji guru (typed sebagai state biar status bisa diubah)
+  const [salaryData, setSalaryData] = useState<SalaryRow[]>([
     { no: 1, nama: "Mr. Ilham", totalClass: 4, feedbackSelesai: 4, feedbackPending: 0, totalSalary: "Rp 2.000.000", status: "Paid" },
     { no: 1, nama: "Krisnawan Putrawan", totalClass: 3, feedbackSelesai: 2, feedbackPending: 1, totalSalary: "Rp 1.000.000", status: "Unpaid" },
     { no: 1, nama: "Krisnawan Putrawan", totalClass: 3, feedbackSelesai: 3, feedbackPending: 0, totalSalary: "Rp 1.500.000", status: "Paid" },
     { no: 1, nama: "Krisnawan Putrawan", totalClass: 2, feedbackSelesai: 1, feedbackPending: 1, totalSalary: "Rp 500.000", status: "Unpaid" },
     { no: 1, nama: "Krisnawan Putrawan", totalClass: 1, feedbackSelesai: 1, feedbackPending: 0, totalSalary: "Rp 500.000", status: "Paid" },
     { no: 1, nama: "Krisnawan Putrawan", totalClass: 1, feedbackSelesai: 1, feedbackPending: 0, totalSalary: "Rp 500.000", status: "Paid" },
-  ];
+  ]);
+
+  // State untuk modal ubah status
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const openStatusModal = (idx: number): void => {
+    setSelectedIndex(idx);
+    setModalOpen(true);
+  };
+
+  const closeStatusModal = (): void => {
+    setModalOpen(false);
+    setSelectedIndex(null);
+  };
+
+  const updateStatus = (newStatus: "Paid" | "Unpaid"): void => {
+    setSalaryData((prev: SalaryRow[]) =>
+      prev.map((row: SalaryRow, i: number) =>
+        i === selectedIndex ? { ...row, status: newStatus } : row
+      )
+    );
+    closeStatusModal();
+  };
+
+  const selectedRow: SalaryRow | null =
+    selectedIndex !== null ? salaryData[selectedIndex] : null;
 
   return (
     <div className="salary-page-container">
-      
+
       {/* 1. TOP SUMMARY CARDS */}
       <div className="salary-summary-grid">
-        {summaryCards.map((card) => (
+        {summaryCards.map((card: SummaryCard) => (
           <div key={card.id} className={`salary-summary-card ${card.type}`}>
             <div className="summary-icon-circle">
               <div className="inner-icon-dot"></div>
@@ -44,19 +85,12 @@ const SalaryAdmin = () => {
       <div className="salary-filter-control-bar">
         <div className="salary-search-box-wrapper">
           <input type="text" placeholder="Cari nama guru..." className="salary-search-input" />
-          <Search size={18} className="salary-search-icon-inside" />
         </div>
 
         <div className="salary-dropdown-selectors-group">
-          <button className="salary-filter-dropdown-btn">
-            Semua Kelas <ChevronDown size={16} />
-          </button>
-          <button className="salary-filter-dropdown-btn">
-            Semua Status <ChevronDown size={16} />
-          </button>
-          <button className="salary-filter-dropdown-btn font-medium">
-            <Calendar size={16} /> Semua Tanggal
-          </button>
+          <button className="salary-filter-dropdown-btn">Semua Kelas</button>
+          <button className="salary-filter-dropdown-btn">Semua Status</button>
+          <button className="salary-filter-dropdown-btn font-medium">Semua Tanggal</button>
         </div>
       </div>
 
@@ -72,11 +106,10 @@ const SalaryAdmin = () => {
               <th className="text-center-th">Feedback Pending</th>
               <th>Total Salary</th>
               <th>Status</th>
-              <th style={{ width: "80px", textAlign: "center" }}>Aksi</th>
             </tr>
           </thead>
           <tbody>
-            {salaryData.map((row, idx) => (
+            {salaryData.map((row: SalaryRow, idx: number) => (
               <tr key={idx}>
                 <td>{row.no}</td>
                 <td className="teacher-name-cell-text">{row.nama}</td>
@@ -85,17 +118,13 @@ const SalaryAdmin = () => {
                 <td className="text-center-td font-bold color-orange-pending">{row.feedbackPending}</td>
                 <td className="font-medium">{row.totalSalary}</td>
                 <td>
-                  <span className={`salary-status-badge ${row.status.toLowerCase()}`}>
+                  <button
+                    type="button"
+                    className={`salary-status-badge status-clickable ${row.status.toLowerCase()}`}
+                    onClick={() => openStatusModal(idx)}
+                  >
                     {row.status}
-                  </span>
-                </td>
-                <td className="salary-action-cell-icons">
-                  <button className="salary-action-icon-btn"><Eye size={16} /></button>
-                  {row.status === "Paid" ? (
-                    <button className="salary-action-icon-btn"><FileText size={16} /></button>
-                  ) : (
-                    <button className="salary-action-icon-btn"><DollarSign size={16} /></button>
-                  )}
+                  </button>
                 </td>
               </tr>
             ))}
@@ -110,15 +139,16 @@ const SalaryAdmin = () => {
         </div>
 
         <div className="salary-detail-card-layout-grid">
-          
+
           {/* Sisi Kiri: Profil & Kontak Identitas */}
           <div className="salary-teacher-identity-side-box">
-            <div className="avatar-frame-circular">
-              <img src={teacherProfileImg} alt="Mr Ilham" />
-            </div>
-            <h3 className="detail-teacher-title-name">Mr ilham</h3>
-            <span className="detail-status-green-pill">Paid</span>
-            
+            <h3 className="detail-teacher-title-name">
+              {selectedRow ? selectedRow.nama : "Mr Ilham"}
+            </h3>
+            <span className="detail-status-green-pill">
+              {selectedRow ? selectedRow.status : "Paid"}
+            </span>
+
             <div className="teacher-meta-spec-rows-list">
               <div className="meta-spec-item">
                 <span className="icon-placeholder-box">📚</span>
@@ -140,7 +170,9 @@ const SalaryAdmin = () => {
             <div className="calc-info-card-bordered">
               <div className="calc-row-item-line">
                 <span className="calc-lbl">Total Kelas Diajar</span>
-                <span className="calc-val">: 3 Kelas</span>
+                <span className="calc-val">
+                  : {selectedRow ? selectedRow.totalClass : 3} Kelas
+                </span>
               </div>
               <div className="calc-row-item-line">
                 <span className="calc-lbl">Tarif per kelas</span>
@@ -148,12 +180,16 @@ const SalaryAdmin = () => {
               </div>
               <div className="calc-row-item-line">
                 <span className="calc-lbl">Feedback Pending</span>
-                <span className="calc-val">: 1</span>
+                <span className="calc-val">
+                  : {selectedRow ? selectedRow.feedbackPending : 1}
+                </span>
               </div>
               <div className="calc-divider-dashed-line"></div>
               <div className="calc-row-item-line total-gaji-highlight-row">
                 <span className="calc-lbl-total">Total Gaji</span>
-                <span className="calc-val-total">: Rp 1.000.000</span>
+                <span className="calc-val-total">
+                  : {selectedRow ? selectedRow.totalSalary : "Rp 1.000.000"}
+                </span>
               </div>
             </div>
           </div>
@@ -164,7 +200,9 @@ const SalaryAdmin = () => {
             <div className="payment-data-rows-list">
               <div className="payment-data-line-row">
                 <span className="p-lbl">Status Pembayaran</span>
-                <span className="p-val">: Paid</span>
+                <span className="p-val">
+                  : {selectedRow ? selectedRow.status : "Paid"}
+                </span>
               </div>
               <div className="payment-data-line-row">
                 <span className="p-lbl">Tanggal Bayar</span>
@@ -187,6 +225,29 @@ const SalaryAdmin = () => {
 
         </div>
       </div>
+
+      {/* 5. MODAL UBAH STATUS PEMBAYARAN */}
+      {modalOpen && selectedRow !== null && (
+        <div className="status-modal-overlay" onClick={closeStatusModal}>
+          <div className="status-modal-box" onClick={(e) => e.stopPropagation()}>
+            <h3 className="status-modal-title">Ubah Status Pembayaran</h3>
+            <p className="status-modal-subtitle">{selectedRow.nama}</p>
+
+            <div className="status-modal-actions">
+              <button className="status-modal-btn paid" onClick={() => updateStatus("Paid")}>
+                Paid
+              </button>
+              <button className="status-modal-btn unpaid" onClick={() => updateStatus("Unpaid")}>
+                Unpaid
+              </button>
+            </div>
+
+            <button className="status-modal-close" onClick={closeStatusModal}>
+              Batal
+            </button>
+          </div>
+        </div>
+      )}
 
     </div>
   );

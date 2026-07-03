@@ -1,0 +1,163 @@
+/* ================= PAGE ================= */
+.admin-profile-page {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #eee;
+}
+
+/* ================= BANNER ================= */
+.admin-profile-page .profile-banner {
+  height: 160px;
+  overflow: hidden;
+}
+
+.admin-profile-page .profile-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================= HEADER ================= */
+.admin-profile-page .profile-header {
+  padding: 0 30px;
+  margin-top: -55px;
+  margin-bottom: 20px;
+}
+
+.admin-profile-page .profile-image-section {
+  position: relative;
+  width: 90px;
+  margin-bottom: 12px;
+}
+
+.admin-profile-page .profile-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: #f1f5f9;
+}
+
+.admin-profile-page .edit-photo-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.admin-profile-page .profile-header h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+}
+
+/* ================= CARD ================= */
+.admin-profile-page .profile-card {
+  margin: 0 30px 24px;
+  padding: 22px 24px;
+  border: 1px solid #eee;
+  border-radius: 16px;
+}
+
+.admin-profile-page .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.admin-profile-page .card-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.admin-profile-page .edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #ddd;
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #333;
+}
+
+.admin-profile-page .edit-btn:hover {
+  background: #f1f5f9;
+}
+
+/* ================= GRID ================= */
+.admin-profile-page .profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 40px;
+}
+
+.admin-profile-page .full-width {
+  grid-column: span 2;
+}
+
+.admin-profile-page .profile-item label {
+  display: block;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+
+.admin-profile-page .profile-item p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #111;
+}
+
+.admin-profile-page .profile-item p.with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-profile-page .profile-item input,
+.admin-profile-page .profile-item textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1.5px solid #ddd;
+  font-size: 0.95rem;
+  outline: none;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.admin-profile-page .profile-item textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .admin-profile-page .profile-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-profile-page .full-width {
+    grid-column: span 1;
+  }
+}

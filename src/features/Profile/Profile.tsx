@@ -1,45 +1,52 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, type ChangeEvent } from "react";
 import "./Profile.css";
 import profileImg from "../../assets/Profile.png";
 import BannerImg from "../../assets/Baner.jpg";
 import useProfileStore from "../../store/profileStore";
-import useAuthStore from "../../store/authStore";
-import type { ProfileData } from "../../api/types/features";
+
+type ProfileData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  bio: string;
+  country: string;
+  city: string;
+  streetAddress: string;
+};
+
+const defaultProfile: ProfileData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  bio: "",
+  country: "",
+  city: "",
+  streetAddress: "",
+};
 
 const Profile = () => {
-  const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
-  const { profile, editMode, loading, setEditMode, fetchProfile, updateProfile } = useProfileStore();
+  const {
+    profile,
+    editMode,
+    loading,
+    setEditMode,
+    fetchProfile,
+    updateProfile,
+  } = useProfileStore();
 
-  const [formValues, setFormValues] = useState<ProfileData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    bio: "",
-    country: "",
-    city: "",
-    streetAddress: "",
-  });
+  const [formValues, setFormValues] = useState<ProfileData>(defaultProfile);
 
   useEffect(() => {
     fetchProfile();
   }, [fetchProfile]);
 
-  // Sync store profile data to local formValues once loaded
-  useEffect(() => {
-    if (profile) {
-      setFormValues(profile);
-    }
-  }, [profile]);
+  const currentValues = editMode ? formValues : (profile ?? defaultProfile);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormValues((prev) => ({
       ...prev,
@@ -47,54 +54,24 @@ const Profile = () => {
     }));
   };
 
-  const handleSave = async () => {
-    await updateProfile(formValues);
-  };
+  const handleEditClick = () => {
+    if (!editMode) {
+      setFormValues(profile ?? defaultProfile);
+      setEditMode(true);
+      return;
+    }
 
-  const p = profile || {
-    firstName: "Budiono",
-    lastName: "Putrosono",
-    email: "BudionoPutrosono@gmail.com",
-    phone: "+628132567999",
-    bio: 'STIKOM BALI!! "Always The First"',
-    country: "Indonesia",
-    city: "Denpasar",
-    streetAddress: "Jl. Tukad Balian No.45",
+    updateProfile(formValues);
+    setEditMode(false);
   };
-
-  const currentValues = editMode ? formValues : p;
 
   return (
     <div className="profile-page">
-      {/* ================= BANNER ================= */}
       <div className="profile-banner">
         <img src={BannerImg} alt="Banner" />
       </div>
 
       <div className="profile-content">
-        {/* ================= ACTIONS ================= */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <button className="back-btn" onClick={() => navigate("/dashboard/home")}>
-            ⬅ Back
-          </button>
-
-          <button
-            onClick={handleLogout}
-            style={{
-              padding: "8px 16px",
-              backgroundColor: "#fef2f2",
-              color: "#ef4444",
-              border: "1px solid #fecaca",
-              borderRadius: "10px",
-              fontWeight: "600",
-              cursor: "pointer",
-            }}
-          >
-            🚪 Logout
-          </button>
-        </div>
-
-        {/* ================= AVATAR ================= */}
         <div className="avatar-wrapper">
           <div className="avatar-circle">
             <img src={profileImg} alt="Profile" />
@@ -105,26 +82,19 @@ const Profile = () => {
 
         {loading && <p style={{ textAlign: "center" }}>Loading profile...</p>}
 
-        {/* ================= PERSONAL INFO ================= */}
         <div className="info-card">
           <div className="card-header profile-header-edit">
-            <button
-              className="edit-profile-btn"
-              onClick={() => {
-                if (editMode) {
-                  handleSave();
-                } else {
-                  setEditMode(true);
-                }
-              }}
-            >
-              {editMode ? "💾 Save" : "Edit"}
-            </button>
             <h3>Personal Information</h3>
+            <button
+              type="button"
+              className="edit-profile-btn"
+              onClick={handleEditClick}
+            >
+              {editMode ? "💾 Save" : "✏️ Edit"}
+            </button>
           </div>
 
           <div className="info-grid">
-            {/* FIRST NAME */}
             <div className="info-item">
               <label>First Name</label>
               {editMode ? (
@@ -133,14 +103,12 @@ const Profile = () => {
                   name="firstName"
                   value={currentValues.firstName}
                   onChange={handleInputChange}
-                  className="profile-input"
                 />
               ) : (
-                <p>{p.firstName}</p>
+                <p>{currentValues.firstName || "-"}</p>
               )}
             </div>
 
-            {/* LAST NAME */}
             <div className="info-item">
               <label>Last Name</label>
               {editMode ? (
@@ -149,14 +117,12 @@ const Profile = () => {
                   name="lastName"
                   value={currentValues.lastName}
                   onChange={handleInputChange}
-                  className="profile-input"
                 />
               ) : (
-                <p>{p.lastName}</p>
+                <p>{currentValues.lastName || "-"}</p>
               )}
             </div>
 
-            {/* EMAIL */}
             <div className="info-item">
               <label>Email</label>
               {editMode ? (
@@ -165,14 +131,12 @@ const Profile = () => {
                   name="email"
                   value={currentValues.email}
                   onChange={handleInputChange}
-                  className="profile-input"
                 />
               ) : (
-                <p>{p.email}</p>
+                <p>{currentValues.email || "-"}</p>
               )}
             </div>
 
-            {/* PHONE */}
             <div className="info-item">
               <label>Phone</label>
               {editMode ? (
@@ -181,14 +145,12 @@ const Profile = () => {
                   name="phone"
                   value={currentValues.phone}
                   onChange={handleInputChange}
-                  className="profile-input"
                 />
               ) : (
-                <p>{p.phone}</p>
+                <p>{currentValues.phone || "-"}</p>
               )}
             </div>
 
-            {/* BIO */}
             <div className="info-item full-width">
               <label>Bio</label>
               {editMode ? (
@@ -196,23 +158,20 @@ const Profile = () => {
                   name="bio"
                   value={currentValues.bio}
                   onChange={handleInputChange}
-                  className="profile-textarea"
                 />
               ) : (
-                <p>{p.bio}</p>
+                <p>{currentValues.bio || "-"}</p>
               )}
             </div>
           </div>
         </div>
 
-        {/* ================= ADDRESS ======================= */}
         <div className="info-card">
           <div className="card-header">
             <h3>Address</h3>
           </div>
 
           <div className="info-grid">
-            {/* COUNTRY */}
             <div className="info-item">
               <label>Country</label>
               {editMode ? (
@@ -221,14 +180,12 @@ const Profile = () => {
                   name="country"
                   value={currentValues.country}
                   onChange={handleInputChange}
-                  className="profile-input"
                 />
               ) : (
-                <p>{p.country}</p>
+                <p>{currentValues.country || "-"}</p>
               )}
             </div>
 
-            {/* CITY */}
             <div className="info-item">
               <label>City / Province</label>
               {editMode ? (
@@ -237,14 +194,12 @@ const Profile = () => {
                   name="city"
                   value={currentValues.city}
                   onChange={handleInputChange}
-                  className="profile-input"
                 />
               ) : (
-                <p>{p.city}</p>
+                <p>{currentValues.city || "-"}</p>
               )}
             </div>
 
-            {/* ADDRESS */}
             <div className="info-item full-width">
               <label>Street Address</label>
               {editMode ? (
@@ -252,10 +207,9 @@ const Profile = () => {
                   name="streetAddress"
                   value={currentValues.streetAddress}
                   onChange={handleInputChange}
-                  className="profile-textarea"
                 />
               ) : (
-                <p>{p.streetAddress}</p>
+                <p>{currentValues.streetAddress || "-"}</p>
               )}
             </div>
           </div>

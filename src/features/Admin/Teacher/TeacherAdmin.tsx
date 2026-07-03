@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./TeacherAdmin.css";
 import { Search, ChevronDown, Calendar as CalendarIcon, Pencil, Trash2 } from "lucide-react";
 import useTeacherStore from "@/store/teacherStore";
@@ -8,6 +8,7 @@ import teacherAvatar from "@/assets/coki.jpg";
 
 const TeacherAdmin = () => {
   const { teachers, searchTerm, loading, error, setSearchTerm, fetchTeachers } = useTeacherStore();
+  const [activeDetailTab, setActiveDetailTab] = useState("detail"); // "detail" | "pembayaran"
 
   useEffect(() => { fetchTeachers(); }, [fetchTeachers]);
 
@@ -98,30 +99,100 @@ const TeacherAdmin = () => {
       {/* PROFILE DETAIL */}
       <div className="teacher-detail-tabs-card">
         <div className="detail-tabs-navigation">
-          <button className="tab-nav-btn active">Detail Guru</button>
-          <button className="tab-nav-btn">Pembayaran</button>
+          <button
+            type="button"
+            className={`tab-nav-btn ${activeDetailTab === "detail" ? "active" : ""}`}
+            onClick={() => setActiveDetailTab("detail")}
+          >
+            Detail Guru
+          </button>
+          <button
+            type="button"
+            className={`tab-nav-btn ${activeDetailTab === "pembayaran" ? "active" : ""}`}
+            onClick={() => setActiveDetailTab("pembayaran")}
+          >
+            Pembayaran
+          </button>
         </div>
-        <div className="detail-card-content">
-          <div className="profile-identity-box">
-            <img src={teacherAvatar} alt="Mr Ilham" className="teacher-avatar-img" />
-            <div className="identity-text-details">
-              <h3>Mr Ilham</h3>
-              <span className="label-status-active">Guru Aktif</span>
-              <div className="identity-meta-rows">
-                <div className="meta-row-item">📚 <span>Kelas: Coding</span></div>
-                <div className="meta-row-item">📧 <span>Email: ilham@codeco.com</span></div>
-                <div className="meta-row-item">📱 <span>Telepon: 0823-4321-3332</span></div>
+
+        {/* --- TAB: DETAIL GURU --- */}
+        {activeDetailTab === "detail" && (
+          <div className="detail-card-content">
+            <div className="profile-identity-box">
+              <img src={teacherAvatar} alt="Mr Ilham" className="teacher-avatar-img" />
+              <div className="identity-text-details">
+                <h3>Mr Ilham</h3>
+                <span className="label-status-active">Guru Aktif</span>
+                <div className="identity-meta-rows">
+                  <div className="meta-row-item">📚 <span>Kelas: Coding</span></div>
+                  <div className="meta-row-item">📧 <span>Email: ilham@codeco.com</span></div>
+                  <div className="meta-row-item">📱 <span>Telepon: 0823-4321-3332</span></div>
+                </div>
+              </div>
+            </div>
+            <div className="profile-supplementary-box">
+              <h4>Informasi Tambahan</h4>
+              <div className="supplementary-rows-list">
+                <div className="supp-row"><span className="supp-label">Tanggal Lahir</span><span className="supp-value">: 24 Mei 1990</span></div>
+                <div className="supp-row"><span className="supp-label">Alamat</span><span className="supp-value">: Jl. Tukad Balian No.45</span></div>
               </div>
             </div>
           </div>
-          <div className="profile-supplementary-box">
-            <h4>Informasi Tambahan</h4>
-            <div className="supplementary-rows-list">
-              <div className="supp-row"><span className="supp-label">Tanggal Lahir</span><span className="supp-value">: 24 Mei 1990</span></div>
-              <div className="supp-row"><span className="supp-label">Alamat</span><span className="supp-value">: Jl. Tukad Balian No.45</span></div>
+        )}
+
+        {/* --- TAB: PEMBAYARAN --- */}
+        {activeDetailTab === "pembayaran" && (
+          <div className="payment-tab-content">
+            <div className="payment-rincian-gaji-box">
+              <h4 className="payment-block-title">Rincian gaji</h4>
+              <div className="payment-rows-list">
+                <div className="payment-row-item">
+                  <span className="payment-row-label">Total Kelas Diajar</span>
+                  <span className="payment-row-value">: 3 Kelas</span>
+                </div>
+                <div className="payment-row-item">
+                  <span className="payment-row-label">Tarif per kelas</span>
+                  <span className="payment-row-value">: Rp 500.000</span>
+                </div>
+                <div className="payment-row-item">
+                  <span className="payment-row-label">Feedback Pending</span>
+                  <span className="payment-row-value">: 1</span>
+                </div>
+                <div className="payment-divider-line"></div>
+                <div className="payment-row-item payment-total-row">
+                  <span className="payment-row-label total">Total Gaji</span>
+                  <span className="payment-row-value total">: Rp 1.000.000</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="payment-informasi-box">
+              <h4 className="payment-block-title">Informasi Pembayaran</h4>
+              <div className="payment-rows-list">
+                <div className="payment-row-item">
+                  <span className="payment-row-label">Status Pembayaran</span>
+                  <span className="payment-row-value">: Paid</span>
+                </div>
+                <div className="payment-row-item">
+                  <span className="payment-row-label">Tanggal Bayar</span>
+                  <span className="payment-row-value">: 25 April 2026</span>
+                </div>
+                <div className="payment-row-item">
+                  <span className="payment-row-label">Metode Pembayaran</span>
+                  <span className="payment-row-value">: Transfer Bank</span>
+                </div>
+                <div className="payment-row-item">
+                  <span className="payment-row-label">Bank Tujuan</span>
+                  <span className="payment-row-value">: Bank BCA</span>
+                </div>
+                <div className="payment-row-item">
+                  <span className="payment-row-label">Catatan</span>
+                  <span className="payment-row-value">: Pembayaran Gaji April 2026</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

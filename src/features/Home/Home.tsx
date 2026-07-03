@@ -35,13 +35,20 @@ const Home = () => {
     time: "09:00 - 11:00",
   };
 
+  // Fungsi Join yang langsung membuka Zoom
   const handleJoin = async () => {
+    const zoomLink = "https://us05web.zoom.us/j/3586794809?pwd=9ZZcLp2WeVVKBhmqpalaJvd0LXWH2T.1";
+
+    // Tetap jalankan logic store (opsional)
     await joinClass(classData.id);
     await markAttendance({
       class_session_id: 1,
       student_id: 1,
       status: "present",
     });
+
+    // Buka Zoom di tab baru
+    window.open(zoomLink, "_blank", "noopener,noreferrer");
   };
 
   const handleDownloadCertificate = async () => {
@@ -109,7 +116,7 @@ const Home = () => {
                 <p>Will appear after joining class</p>
               ) : (
                 <>
-                  <p>⭐ Excellent participation!</p>
+                  <p> Excellent participation!</p>
                   <p>Keep practicing robotics logic.</p>
                 </>
               )}
