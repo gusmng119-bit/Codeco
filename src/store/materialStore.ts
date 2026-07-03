@@ -10,7 +10,7 @@ type MaterialState = {
   error: string | null;
 
   setSelectedMaterial: (item: MaterialItem | null) => void;
-  fetchMaterials: () => Promise<void>;
+  fetchMaterials: (classId?: number) => Promise<void>;
 };
 /* eslint-enable no-unused-vars */
 
@@ -22,10 +22,10 @@ const useMaterialStore = create<MaterialState>((set) => ({
 
   setSelectedMaterial: (selectedMaterial) => set({ selectedMaterial }),
 
-  fetchMaterials: async () => {
+  fetchMaterials: async (classId) => {
     set({ loading: true, error: null });
     try {
-      const data = await materialApi.getMaterials();
+      const data = await materialApi.getMaterials({ classId });
       set({ materials: data, loading: false });
     } catch (err: unknown) {
       const msg = (err as { message?: string })?.message || "Failed to load materials";

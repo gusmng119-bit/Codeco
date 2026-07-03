@@ -277,6 +277,13 @@ CERTIFICATE SIDEBAR
   border-radius: 16px;
   min-height: 250px;
   text-align: center;
+  transition: all 0.3s ease;
+}
+
+.certificate-sidebar.locked {
+  opacity: 0.6;
+  background: #f9fafb;
+  border-style: dashed;
 }
 
 .trophy-locked-icon {

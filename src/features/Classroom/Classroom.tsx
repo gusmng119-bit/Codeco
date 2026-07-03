@@ -36,7 +36,8 @@ const Classroom = () => {
   const handleOpenClass = (classData: ClassItem) => {
     setSelectedClass(classData);
     const savedJoin = JSON.parse(localStorage.getItem("joinedClass") || "{}");
-    setJoined(savedJoin[classData.title] || false);
+    const isJoined = classData.type === "yesterday" || savedJoin[classData.title] || false;
+    setJoined(isJoined);
     
     // Navigate to dashboard material or detail
     navigate(`/student/home/${classData.id}`);

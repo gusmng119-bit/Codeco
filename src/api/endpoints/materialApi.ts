@@ -2,7 +2,7 @@ import { createApiClient, defineEndpoint } from "../core/apiClient";
 import type { MaterialItem } from "../types/features";
 
 export const materialEndpoints = {
-  getMaterials: defineEndpoint<void, MaterialItem[]>({
+  getMaterials: defineEndpoint<{ classId?: number }, MaterialItem[]>({
     url: "/materials",
     method: "get",
   }),
