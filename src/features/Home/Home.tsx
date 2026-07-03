@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Home.css";
 
 import profileImg from "../../assets/Profile.png";
@@ -13,7 +13,8 @@ import useAttendanceStore from "../../store/attendanceStore";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { selectedClass, joined, joinClass, fetchClasses } = useClassroomStore();
+  const { id } = useParams();
+  const { classes, selectedClass, joined, joinClass, fetchClasses, setSelectedClass, setJoined } = useClassroomStore();
   const { saveCertificate } = useCertificateStore();
   const { profile, fetchProfile } = useProfileStore();
   const { markAttendance } = useAttendanceStore();
@@ -28,11 +29,56 @@ const Home = () => {
     fetchProfile();
   }, [fetchClasses, fetchProfile]);
 
+  useEffect(() => {
+    if (id && classes.length > 0) {
+      const classIdNum = parseInt(id, 10);
+      const foundClass = classes.find((c) => c.id === classIdNum);
+      if (foundClass) {
+        setSelectedClass(foundClass);
+        const savedJoin = JSON.parse(localStorage.getItem("joinedClass") || "{}");
+        setJoined(savedJoin[foundClass.title] || false);
+      }
+    }
+  }, [id, classes, setSelectedClass, setJoined]);
+
   const classData = selectedClass || {
     id: 3,
     title: "Robotic Class",
     instructor: "Mr. Ilham",
     time: "09:00 - 11:00",
+    type: "upcoming" as const,
+  };
+
+  const getHeaderTitle = (type: string) => {
+    switch (type) {
+      case "yesterday":
+        return "Past Class";
+      case "upcoming":
+        return "Upcoming Class";
+      case "today":
+      default:
+        return "Today's Class";
+    }
+  };
+
+  const getButtonText = () => {
+    if (classData.type === "yesterday") {
+      return "Joined";
+    }
+    if (classData.type === "upcoming") {
+      return "Upcoming";
+    }
+    return joined ? "Joined" : "Join Class";
+  };
+
+  const isButtonDisabled = () => {
+    if (classData.type === "yesterday") {
+      return true;
+    }
+    if (classData.type === "upcoming") {
+      return true;
+    }
+    return joined;
   };
 
   // Fungsi Join yang langsung membuka Zoom
@@ -41,6 +87,12 @@ const Home = () => {
 
     // Tetap jalankan logic store (opsional)
     await joinClass(classData.id);
+
+    // Save joined state in localStorage so it persists
+    const savedJoin = JSON.parse(localStorage.getItem("joinedClass") || "{}");
+    savedJoin[classData.title] = true;
+    localStorage.setItem("joinedClass", JSON.stringify(savedJoin));
+
     await markAttendance({
       class_session_id: 1,
       student_id: 1,
@@ -76,7 +128,7 @@ const Home = () => {
 
       {/* ================= TODAY CLASS ================= */}
       <section className="class-highlight">
-        <h2 className="label-text">Today's Class</h2>
+        <h2 className="label-text">{getHeaderTitle(classData.type)}</h2>
         <div className={`hero-card ${joined ? "hero-active" : ""}`}>
           <div className="hero-img-wrapper">
             <img src={logo2} alt="Class" />
@@ -91,11 +143,11 @@ const Home = () => {
           </div>
 
           <button
-            className={`join-now-btn ${joined ? "joined" : ""}`}
+            className={`join-now-btn ${isButtonDisabled() ? "joined" : ""}`}
             onClick={handleJoin}
-            disabled={joined}
+            disabled={isButtonDisabled()}
           >
-            {joined ? "Joined" : "Join Class"}
+            {getButtonText()}
           </button>
         </div>
       </section>

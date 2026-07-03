@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   const activeMenu = (path: string) => {
     if (path === "/student") {
-      return location.pathname === "/student" ? "active" : "";
+      return (location.pathname === "/student" || location.pathname.startsWith("/student/home")) ? "active" : "";
     }
     return location.pathname.startsWith(path) ? "active" : "";
   };

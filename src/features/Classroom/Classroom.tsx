@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Calendar, User, Clock, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import useClassroomStore, { FilterType } from "../../store/classroomStore";
+import type { ClassItem } from "../../api/types/features";
 import "./Classroom.css";
 
 const Classroom = () => {
@@ -23,7 +24,7 @@ const Classroom = () => {
 
   const filteredClasses = classes.filter((c) => {
     // Map backend class status/type if necessary, or check item values
-    const type = (c as any).type || "today"; // default fallback for visual labeling
+    const type = c.type || "today"; // default fallback for visual labeling
     const matchFilter = filter === "all" || type === filter;
     const matchSearch =
       !searchClass ||
@@ -32,13 +33,13 @@ const Classroom = () => {
     return matchFilter && matchSearch;
   });
 
-  const handleOpenClass = (classData: any) => {
+  const handleOpenClass = (classData: ClassItem) => {
     setSelectedClass(classData);
     const savedJoin = JSON.parse(localStorage.getItem("joinedClass") || "{}");
     setJoined(savedJoin[classData.title] || false);
     
     // Navigate to dashboard material or detail
-    navigate("/student/material");
+    navigate(`/student/home/${classData.id}`);
   };
 
   return (
@@ -82,7 +83,7 @@ const Classroom = () => {
         )}
 
         {filteredClasses.map((c) => {
-          const type = (c as any).type || "today";
+          const type = c.type || "today";
           return (
             <div className="custom-class-card" key={c.id}>
               
@@ -104,7 +105,7 @@ const Classroom = () => {
                     : "Yesterday Class"}
                 </span>
                 <span className="top-bar-date">
-                  <Calendar size={16} /> {(c as any).date || "2026-05-08"}
+                  <Calendar size={16} /> {c.date || "2026-05-08"}
                 </span>
               </div>
 
@@ -117,12 +118,12 @@ const Classroom = () => {
                   </span>
                 </div>
                 
-                <p className="custom-material-desc">{(c as any).material || "Robot Introduction"}</p>
+                <p className="custom-material-desc">{c.material || "Robot Introduction"}</p>
                 
                 {/* Bagian Bawah Kanan */}
                 <div className="custom-card-bottom-bar">
                   <div className="custom-time-lbl">
-                    <Clock size={15} /> {(c as any).time || "09:00 - 11:00"}
+                    <Clock size={15} /> {c.time || "09:00 - 11:00"}
                   </div>
                   <button className="custom-action-btn" onClick={() => handleOpenClass(c)}>
                     {type === "today" ? "Join class" : "View"}

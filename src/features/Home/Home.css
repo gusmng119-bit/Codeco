@@ -145,6 +145,16 @@ transform: translateY(-2px);
 transform: scale(0.95);
 }
 
+.join-now-btn:disabled,
+.join-now-btn.joined {
+  background: #bdbdbd;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.8;
+  pointer-events: none;
+  transform: none !important;
+}
+
 .join-now-btn.locked {
   background: #bdbdbd;
   color: #666;

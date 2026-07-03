@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import useAuthStore from "./store/authStore";
 import type { UserRole } from "./api/types/auth";
@@ -84,6 +85,7 @@ function App() {
         }
       >
         <Route index element={<Home />} />
+        <Route path="home/:id" element={<Home />} />
         <Route path="classroom" element={<Classroom />} />
         <Route path="material" element={<ClassMaterial />} />
         <Route path="feedback" element={<Feedback />} />
