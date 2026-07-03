@@ -1,8 +1,8 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Material.css";
 
 import logo2 from "@/assets/logo2.jpg";
-import driveLogo from "@/assets/drive.png";
 import useClassroomStore from "../../store/classroomStore";
 import useMaterialStore from "../../store/materialStore";
 
@@ -25,8 +25,9 @@ const BookIcon = () => (
 );
 
 const ClassMaterial = () => {
+  const navigate = useNavigate();
   const { selectedClass } = useClassroomStore();
-  const { materials, fetchMaterials, selectedMaterial, setSelectedMaterial } = useMaterialStore();
+  const { materials, fetchMaterials } = useMaterialStore();
 
   const currentClass = selectedClass || {
     id: 3,
@@ -56,10 +57,8 @@ const ClassMaterial = () => {
         {materials.map((m) => (
           <div
             key={m.id}
-            className={`material-item-card clickable ${
-              selectedMaterial?.id === m.id ? "selected-topic" : ""
-            }`}
-            onClick={() => setSelectedMaterial(m)}
+            className="material-item-card clickable"
+            onClick={() => navigate(`/student/material/${m.id}`)}
           >
             <div className="icon-wrapper">
               <BookIcon />
@@ -83,57 +82,6 @@ const ClassMaterial = () => {
           </p>
         )}
       </div>
-
-      {selectedMaterial && (
-        <div className="material-detail-card">
-          <button className="close-btn" onClick={() => setSelectedMaterial(null)} type="button">
-            ✕
-          </button>
-
-          <div className="detail-header">
-            <div className="icon-circle">
-              <BookIcon />
-            </div>
-            <div>
-              <h3>{selectedMaterial.title}</h3>
-              <p>
-                {selectedMaterial.date} • {selectedMaterial.progress} •{" "}
-                {selectedMaterial.materialType}
-              </p>
-            </div>
-          </div>
-
-          <div className="material-desc">
-            <h4>Description:</h4>
-            <p>{selectedMaterial.description}</p>
-          </div>
-
-          <a
-            href={selectedMaterial.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="drive-box clickable"
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-              <img src={driveLogo} alt="Google Drive" />
-              <div>
-                <h4>Google Drive</h4>
-                <p>PDF, PPT, VIDEO & DOCX</p>
-              </div>
-            </div>
-            <span style={{ fontWeight: "600", color: "#4285f4" }}>Download →</span>
-          </a>
-        </div>
-      )}
-
-      {!selectedMaterial && (
-        <div
-          className="select-prompt-box"
-          style={{ textAlign: "center", padding: "40px 20px", color: "#64748b" }}
-        >
-          <p>Pilih salah satu topik di sebelah kiri untuk melihat detail materi.</p>
-        </div>
-      )}
     </div>
   );
 };
