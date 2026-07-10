@@ -1,39 +1,143 @@
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import useAuthStore from "./store/authStore";
+import type { UserRole } from "./api/types/auth";
 
-import Dashboard from "./features/Dashboard/Dashboard";
+/* ================= LOGIN ================= */
+import Login from "./features/Login/Login";
+
+/* ================= STUDENT ================= */
+import StudentDashboard from "./features/Dashboard/Dashboard";
 import Home from "./features/Home/Home";
 import Classroom from "./features/Classroom/Classroom";
-import Teacher from "./features/Teacher/Teacher";
+import ClassMaterial from "./features/Material/Material";
+import MaterialDetail from "./features/Material/MaterialDetail";
+import Feedback from "./features/Feedback/Feedback";
+import TeacherList from "./features/Teacher/Teacher";
 import Certificate from "./features/Certificate/Certificate";
 import Profile from "./features/Profile/Profile";
-import ClassMaterial from "./features/Material/Material";
-import FeedbackClass from "./features/Feedback/Feedback";
-import { LoginRoute } from "./shared/security/login.route";
-import { ProtectedRoute } from "./shared/security/protected.route";
 
+/* ================= TEACHER ================= */
+import DashboardTeacher from "./features/Teacher/DashboardTeacher";
+import HomeTeacher from "./features/Teacher/Home/HomeTeacher";
+import ProfileTeacher from "./features/Teacher/Profile/ProfileTeacher";
+import ClassTeacher from "./features/Teacher/Class/ClassTeacher";
+import CalendarTeacher from "./features/Teacher/Calendar/CalendarTeacher";
+import FeedbackTeacher from "./features/Teacher/FeedbackTeacher/FeedbackTeacher";
+import SalaryTeacher from "./features/Teacher/Salary/SalaryTeacher";
+import CreateClass from "./features/Teacher/CreateClass/CreateClass";
+
+/* ================= ADMIN ================= */
+import DashboardAdmin from "./features/Admin/DashboardAdmin";
+import HomeAdmin from "./features/Admin/Home/HomeAdmin";
+import ClassesAdmin from "./features/Admin/Classes/ClassesAdmin";
+import TeacherAdmin from "./features/Admin/Teacher/TeacherAdmin";
+import StudentAdmin from "./features/Admin/Student/StudentAdmin";
+import CalendarAdmin from "./features/Admin/Calendar/CalendarAdmin";
+import SalaryAdmin from "./features/Admin/Salary/SalaryAdmin";
+import ProfileAdmin from "./features/Admin/Profile/ProfileAdmin";
+
+/* ======================================================
+   PROTECTED ROUTE
+   Membaca user dari authStore (Zustand) — bukan lagi authContext
+====================================================== */
+type ProtectedRouteProps = {
+  children: React.ReactNode;
+  role?: UserRole;
+};
+
+const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
+  const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
+
+  // Belum login → ke halaman login
+  if (!token || !user) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Role tidak cocok → ke halaman login
+  if (role && user.role !== role) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <>{children}</>;
+};
+
+/* ======================================================
+   APP
+====================================================== */
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<LoginRoute />} />
+
+      {/* ================= LOGIN ================= */}
       <Route
-        path="/dashboard"
+        path="/"
+        element={<Login />}
+      />
+
+      {/* ================= STUDENT ================= */}
+      <Route
+        path="/student"
         element={
-          <ProtectedRoute>
-            <Dashboard />
+          <ProtectedRoute role="siswa">
+            <StudentDashboard />
           </ProtectedRoute>
         }
       >
-        <Route index element={<Navigate to="home" replace />} />
-        <Route path="home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="classroom" element={<ProtectedRoute><Classroom /></ProtectedRoute>} />
-        <Route path="teacher" element={<ProtectedRoute><Teacher /></ProtectedRoute>} />
-        <Route path="certificate" element={<ProtectedRoute><Certificate /></ProtectedRoute>} />
-        <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="material" element={<ProtectedRoute><ClassMaterial /></ProtectedRoute>} />
-        <Route path="feedback" element={<ProtectedRoute><FeedbackClass /></ProtectedRoute>} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route index element={<Home />} />
+        <Route path="home/:id" element={<Home />} />
+        <Route path="classroom" element={<Classroom />} />
+        <Route path="material" element={<ClassMaterial />} />
+        <Route path="material/:id" element={<MaterialDetail />} />
+        <Route path="feedback" element={<Feedback />} />
+        <Route path="teacher" element={<TeacherList />} />
+        <Route path="certificate" element={<Certificate />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
-      <Route path="*" element={<div>404 Not Found</div>} />
+
+      {/* ================= ADMIN ================= */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute role="admin">
+            <DashboardAdmin />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<HomeAdmin />} />
+        <Route path="classes"  element={<ClassesAdmin />} />
+        <Route path="teacher"  element={<TeacherAdmin />} />
+        <Route path="student"  element={<StudentAdmin />} />
+        <Route path="calendar" element={<CalendarAdmin />} />
+        <Route path="salary"   element={<SalaryAdmin />} />
+        <Route path="Profile"  element={<ProfileAdmin />} />
+      </Route>
+
+      {/* ================= TEACHER ================= */}
+      <Route
+        path="/teacher"
+        element={
+          <ProtectedRoute role="guru">
+            <DashboardTeacher />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<HomeTeacher />} />
+        <Route path="profile"      element={<ProfileTeacher />} />
+        <Route path="classes"      element={<ClassTeacher />} />
+        <Route path="create-class" element={<CreateClass />} />
+        <Route path="calendar"     element={<CalendarTeacher />} />
+        <Route path="feedback"     element={<FeedbackTeacher />} />
+        <Route path="salary"       element={<SalaryTeacher />} />
+      </Route>
+
+      {/* ================= NOT FOUND ================= */}
+      <Route
+        path="*"
+        element={<Navigate to="/" replace />}
+      />
+
     </Routes>
   );
 }

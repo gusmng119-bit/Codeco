@@ -1,160 +1,215 @@
-/* ================= PAGE ================= */
-
-.classroom-page {
+/* CONTAINER UTAMA */
+.custom-classroom-container {
+  font-family: 'Montserrat', sans-serif;
   width: 100%;
+  padding: 10px 10px;
+  box-sizing: border-box;
 }
 
-/* ================= HEADER ================= */
-
-.classroom-header {
+/* NAVIGATION TABS & SEARCH ROW */
+.custom-header-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
+  width: 100%;
 }
 
-/* ================= FILTER TABS ================= */
-
-.filter-tabs {
+.custom-tabs-group {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
-.tab {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background: white;
+.custom-tabs-group .custom-tab-btn {
+  background: none;
+  border: 1px solid #e2e8f0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333333;
+  padding: 6px 16px;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: 0.3s;
-}
-
-.tab:hover {
-  background: #f3f3f3;
-}
-
-.tab.active {
-  background: black;
-  color: white;
-  border-color: black;
-}
-
-/* ================= SEARCH ================= */
-
-.search-box-cert {
-  position: relative;
-}
-
-.search-box-cert input {
-  padding: 10px 35px 10px 12px;
   border-radius: 8px;
-  border: 1px solid #ddd;
-  outline: none;
+  transition: all 0.2s ease;
 }
 
-.search-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+.custom-tabs-group .custom-tab-btn.active {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
 }
 
-/* ================= CLASS LIST ================= */
-
-.class-list {
+/* SEARCH INPUT STYLE */
+.custom-search-wrapper {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* ================= CARD ================= */
-
-.class-card {
-  background: white;
-  border-radius: 15px;
-  overflow: hidden;
-  border: 1px solid #ddd;
-  transition: 0.3s;
-}
-
-.class-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-/* ================= CARD HEADER ================= */
-
-.card-header {
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  font-weight: 700;
-  color: white;
-}
-
-/* HEADER COLORS */
-
-.bg-blue {
-  background-color: #a3e4f1;
-}
-
-.bg-pink {
-  background-color: #f8a5b2;
-}
-
-.bg-purple {
-  background-color: #c1a3f1;
-}
-
-/* ================= CARD BODY ================= */
-
-.card-body {
-  padding: 20px;
-}
-
-.class-title-row h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-/* ================= INSTRUCTOR ================= */
-
-.instructor-info {
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-}
-
-.material-text {
-  font-size: 0.85rem;
-  color: #666;
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-/* ================= FOOTER ================= */
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
-.time-info {
-  font-weight: 600;
+.custom-search-wrapper input {
+  border: 1px solid #cccccc;
+  border-radius: 12px;
+  padding: 8px 35px 8px 15px;
+  font-size: 15px;
+  outline: none;
+  width: 220px;
 }
 
-.view-btn {
-  background: #64b5c1;
-  color: white;
-  border: none;
-  padding: 8px 22px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
+.custom-search-wrapper .custom-search-icon {
+  position: absolute;
+  right: 12px;
+  font-size: 14px;
+  color: #666666;
 }
 
-.view-btn:hover {
-  background: #4da2ae;
+/* CARDS WRAPPER GRID */
+.custom-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+}
+
+/* KARTU UTAMA - DIATUR SEBAGAI BLOK KOLOM VERTikal */
+.custom-class-card {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  
+  /* ⚡ MEMAKSA ELEMEN MENYUSUN KE BAWAH, BUKAN KE SAMPING */
+  display: flex !important;
+  flex-direction: column !important; 
+  
+  width: 100% !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+/* KEPALA KARTU (MEMBENTANG PENUH DI ATAS) */
+.custom-card-top-bar {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 12px 24px !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  width: 100% !important; /* Wajib full lebar */
+}
+
+/* Warna Latar Belakang Kepala */
+.custom-card-top-bar.top-blue { background-color: #72c5dd !important; }
+.custom-card-top-bar.top-pink { background-color: #f18c98 !important; }
+.custom-card-top-bar.top-purple { background-color: #ba9ec7 !important; }
+
+/* KONTEN TENGAH KARTU */
+.custom-card-middle-content {
+  padding: 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+/* Baris Judul & Instruktur */
+.custom-title-line {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+}
+
+.custom-card-middle-content h3 {
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #000000 !important;
+}
+
+.custom-instructor {
+  font-size: 15px !important;
+  color: #4b5563 !important;
+  font-weight: 500 !important;
+}
+
+/* Deskripsi Penjelasan Materi */
+.custom-material-desc {
+  margin: 0 !important;
+  font-size: 15px !important;
+  color: #333333 !important;
+  line-height: 1.5 !important;
+  margin-bottom: 10px !important;
+}
+
+/* KAKI KARTU (WAKTU DAN TOMBOL KE KANAN BAWAH) */
+.custom-card-bottom-bar {
+  display: flex !important;
+  justify-content: flex-end !important; /* Membawa ke ujung kanan bawah */
+  align-items: center !important;
+  gap: 20px !important;
+  width: 100% !important;
+  border-top: 1px dashed #e2e8f0 !important;
+  padding-top: 15px !important;
+}
+
+.custom-time-lbl {
+  font-size: 15px !important;
+  color: #222222 !important;
+  font-weight: 500 !important;
+}
+
+/* TOMBOL AKSI UTAMA */
+.custom-action-btn {
+  background-color: #43a4b3 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 30px !important;
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  cursor: pointer !important;
+  transition: background 0.2s !important;
+}
+
+.custom-action-btn:hover {
+  background-color: #33818d !important;
+}
+/* =======================================================
+   SETTING ASSET IKON REACT (LUCIDE)
+   ======================================================= */
+.top-bar-date, 
+.custom-instructor, 
+.custom-time-lbl {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important; /* Jarak antara ikon asset dan teks */
+}
+
+/* Animasi opsional: Membuat ikon React di kanan atas berputar pelan */
+.icon-spin {
+  animation: spinEffect 8s linear infinite;
+}
+
+@keyframes spinEffect {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* =======================================================
+   PENYELARASAN ASET IKON BARU (LUCIDE)
+   ======================================================= */
+.top-bar-date, 
+.custom-instructor, 
+.custom-time-lbl {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important; /* Jarak antara ikon dengan tulisan */
+}
+
+/* Mengatur ketebalan garis ikon agar serasi dengan teks dashboard */
+.top-bar-date svg,
+.custom-instructor svg,
+.custom-time-lbl svg {
+  stroke-width: 2.5px;
 }

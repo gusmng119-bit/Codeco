@@ -1,137 +1,150 @@
-/* LoginForm.css */
+/* ================= CONTAINER ================= */
 
 .login-form-container {
   width: 100%;
-  max-width: 500px; /* Diperlebar sedikit agar proporsional dengan gambar */
-  padding: 0;
+  max-width: 400px; /* Lebar optimal sesuai snippet Figma */
+  margin: 0 auto;
 }
+
+/* ================= TITLE ================= */
 
 .login-title {
-  /* Menghapus gradien, kembali ke warna hitam solid sesuai gambar */
-  font-family: 'Montserrat', sans-serif;
-  font-size: 3.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; /* Lebih proporsional sesuai Figma */
   font-weight: 700;
-  margin-bottom: 2.5rem;
   color: #000000;
-  -webkit-text-fill-color: initial; /* Menghapus efek sebelumnya */
-  background: none;
-  animation: none; /* Opsional: hapus jika ingin static seperti gambar */
+  line-height: 1.2;
+  margin-top: 24px;
+  margin-bottom: 40px;
+  text-align: left;
 }
 
-/* Sembunyikan subtitle jika tidak ada di gambar referensi */
-.login-subtitle {
-  display: none;
+/* ================= FORM LABEL ================= */
+
+.login-form-container .ant-form-item {
+  margin-bottom: 24px;
 }
 
-.login-form {
+.login-form-container .ant-form-item-label {
+  padding-bottom: 6px;
+}
+
+.login-form-container .ant-form-item-label > label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #000000 !important;
+}
+
+/* HIDE REQUIRED ASTERISK */
+.login-form-container .ant-form-item-required::before {
+  display: none !important;
+}
+
+/* ================= INPUT GENERAL ================= */
+
+/* Raw input text (like Email) */
+.login-form-container .ant-input:not(.ant-input-affix-wrapper .ant-input) {
+  height: 48px !important;
+  border-radius: 24px !important;
+  border: 1px solid #4a4a4a !important;
+  background: #ffffff !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  font-size: 14px !important;
+  font-weight: 500;
+  box-shadow: none !important;
+}
+
+/* Wrapper for password input */
+.login-form-container .ant-input-affix-wrapper {
+  height: 48px !important;
+  border-radius: 24px !important;
+  border: 1px solid #4a4a4a !important;
+  background: #ffffff !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  font-size: 14px !important;
+  font-weight: 500;
+  box-shadow: none !important;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
 }
 
-/* Styling Label (Email & Password) */
-.login-form label {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  display: block;
-  color: #000;
+/* Suffix icon styling inside wrapper */
+.login-form-container .ant-input-suffix {
+  margin-left: 8px;
 }
 
-/* Input Field: Dibuat sangat bulat dan abu-abu muda */
-.login-form input {
-  width: 100%;
-  padding: 1.2rem 1.5rem;
-  background-color: #e5e7eb; /* Abu-abu terang sesuai gambar */
-  border: none;
-  border-radius: 50px; /* Fully rounded */
-  font-size: 1rem;
-  outline: none;
-  transition: background-color 0.3s ease;
+.login-form-container .input-icon-suffix {
+  font-size: 18px;
+  color: #000000;
 }
 
-.login-form input:focus {
-  background-color: #d1d5db;
+/* Remove default border inside password input wrapper */
+.login-form-container .ant-input-affix-wrapper > input.ant-input {
+  border: none !important;
+  height: 100% !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
-/* Button: Warna Tosca/Teal dan Fully Rounded */
-.login-button {
-  background: #5ebdc2; /* Warna teal/tosca sesuai gambar */
-  color: white;
-  border: none;
-  border-radius: 50px; /* Fully rounded */
-  height: 60px;
-  font-family: 'Fredoka One', cursive; /* Menggunakan font sesuai preferensi desainmu */
+/* ================= PLACEHOLDER ================= */
+
+.login-form-container input::placeholder {
+  color: #a0a0a0 !important;
+  font-size: 14px;
   font-weight: 400;
-  font-size: 1.25rem;
-  cursor: pointer;
-  margin-top: 1.5rem;
-  box-shadow: none; /* Menghapus shadow agar flat sesuai gambar */
-  transition: background-color 0.3s ease, transform 0.1s active;
 }
 
-.login-button:hover {
-  background-color: #4da8ad;
-  transform: none;
-  box-shadow: none;
+/* ================= FOCUS STATES ================= */
+
+.login-form-container .ant-input:focus,
+.login-form-container .ant-input-focused,
+.login-form-container .ant-input-affix-wrapper-focused {
+  border-color: #54b9b9 !important;
+  box-shadow: 0 0 0 2px rgba(84, 185, 185, 0.2) !important;
 }
 
-.login-button:active {
-  transform: scale(0.98);
-}
+/* ================= BUTTON ================= */
 
-.forgot-password {
-  display: none; /* Sembunyikan jika ingin benar-benar mirip screenshot */
-}
-
-@media (max-width: 768px) {
-  .login-title {
-    font-size: 2.5rem;
-    text-align: center;
-  }
-}
-/* Menghilangkan wrapper bawaan AntD agar tidak terlihat double */
-.login-form .ant-input-affix-wrapper {
-  background-color: #e5e7eb !important; /* Latar belakang abu-abu */
-  border: none !important; /* Hapus kotak luar */
-  border-radius: 50px !important; /* Bulat sempurna */
-  padding: 0 1.5rem !important;
-  box-shadow: none !important;
-}
-
-/* Menghilangkan garis biru saat fokus pada wrapper */
-.login-form .ant-input-affix-wrapper-focused {
-  box-shadow: none !important;
-  outline: none !important;
-  background-color: #d1d5db !important; /* Gelap sedikit saat diklik */
-}
-
-/* Mengatur input di dalamnya agar transparan dan menyatu */
-.login-form .ant-input-affix-wrapper input {
-  background-color: transparent !important;
+.login-form-container .login-submit-btn {
+  width: 100%;
+  height: 48px !important;
+  margin-top: 16px;
   border: none !important;
-  height: 60px; /* Sesuaikan tinggi agar proporsional */
+  border-radius: 24px !important;
+  background: #54b9b9 !important; /* Warna teal/tosca persis Figma */
   font-family: 'Montserrat', sans-serif;
-  outline: none !important;
-}
-
-/* Khusus untuk input email (yang bukan password) */
-.login-form .ant-input {
-  background-color: #e5e7eb !important;
-  border: none !important;
-  border-radius: 50px !important;
-  height: 60px;
-  padding: 0 1.5rem !important;
-  outline: none !important;
-}
-
-.login-form .ant-input:focus {
-  background-color: #d1d5db !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
   box-shadow: none !important;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Mengatur warna icon mata (eye icon) agar rapi */
-.login-form .ant-input-suffix {
-  margin-right: 10px;
+/* BUTTON HOVER */
+.login-form-container .login-submit-btn:hover,
+.login-form-container .login-submit-btn:focus {
+  background: #479e9e !important;
+  color: #ffffff !important;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media screen and (max-width: 768px) {
+  .login-form-container {
+    max-width: 100%;
+  }
+
+  .login-title {
+    font-size: 38px;
+    margin-bottom: 28px;
+  }
 }

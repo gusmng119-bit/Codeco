@@ -41,26 +41,30 @@
 /* ================= SEARCH ================= */
 .search-box-cert {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .search-box-cert input {
-  padding: 10px 40px 10px 15px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 10px 38px 10px 16px;
+  font-size: 14px;
   outline: none;
-  width: 230px;
-  transition: 0.3s;
+  width: 240px;
+  transition: border-color 0.3s;
 }
 
 .search-box-cert input:focus {
   border-color: #56bbc4;
 }
 
-.search-icon {
+.search-icon-cert {
   position: absolute;
   right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+  color: #888;
+  display: flex;
+  align-items: center;
 }
 
 /* ================= GRID ================= */

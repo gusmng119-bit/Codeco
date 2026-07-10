@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import useAuthStore from "../../store/authStore";
+import appConfig from "../../config/appConfig";
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -8,5 +9,6 @@ type ProtectedRouteProps = {
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const token = useAuthStore((state) => state.token);
-  return token ? children : <Navigate to="/" replace />;
+  const isAllowed = Boolean(token) || appConfig.BYPASS_LOGIN;
+  return isAllowed ? children : <Navigate to="/" replace />;
 }

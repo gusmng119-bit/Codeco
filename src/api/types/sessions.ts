@@ -1,37 +1,39 @@
-export type RetrieveSessionResponse = {
-    id: number;
-    class_id: number;
-    teacher_id: number;
-    start_time: string;
-    end_time: string;
-    status: string;
-    created_at: string;
-    updated_at: string;
+export type SessionItem = {
+  id: number;
+  class_id: number;
+  teacher_id: number;
+  start_time: string;
+  end_time: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
 };
 
+export type RetrieveSessionResponse = SessionItem[];
+
 export type UpdateSessionPayload = {
-    start_time?: string;
-    end_time?: string;
-    teacher_id?: number;
+  start_time?: string;
+  end_time?: string;
+  teacher_id?: number;
 };
 
 export type DeleteSessionResponse = {
-    message: string;
+  message: string;
 };
 
 export type GenerateSessionResponse = {
-    message: string;
-    class_id: number;
+  message: string;
+  class_id: number;
 };
 
 export type GenerateSessionFailureResponse = {
-    message: string;
+  error: string;
 };
 
 export type markSessionCompletedResponse = {
-    message: string;
+  message: string;
 };
 
 export type markSessionCompletedFailureResponse = {
-    message: string;
+  error: string;
 };

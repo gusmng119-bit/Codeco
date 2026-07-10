@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button, Form, Input, message } from "antd";
-import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../../store/authStore";
+import { UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import useAuthStore, { ROLE_REDIRECT } from "../../../store/authStore";
+import "./LoginForm.css";
 
 type LoginFormValues = {
   email: string;
@@ -20,8 +21,13 @@ const LoginForm = () => {
 
     try {
       await login(values);
-      message.success("Login successful! Welcome back.");
-      navigate("/dashboard");
+
+      // Ambil user dari store setelah login berhasil
+      const user = useAuthStore.getState().user;
+      const redirectTo = user ? ROLE_REDIRECT[user.role] : "/student";
+
+      message.success(`Login berhasil! Selamat datang, ${user?.name ?? "User"}.`);
+      navigate(redirectTo);
     } catch (error) {
       const errorMessage = axios.isAxiosError(error)
         ? error.response?.data?.message ?? "Invalid email or password."
@@ -35,10 +41,10 @@ const LoginForm = () => {
 
   return (
     <div className="login-form-container">
+
       <h1 className="login-title">Welcome!</h1>
 
       <Form
-        className="login-form"
         layout="vertical"
         onFinish={handleSubmit}
         autoComplete="off"
@@ -48,40 +54,50 @@ const LoginForm = () => {
           label="Email"
           name="email"
           rules={[
-            { required: true, message: "Please enter your email." },
-            { type: "email", message: "Please enter a valid email address." },
+            { required: true, message: "Email wajib diisi" },
+            { type: "email", message: "Format email tidak valid" },
           ]}
         >
           <Input
             size="large"
-            placeholder="example@mail.com"
-            className="custom-input"
+            placeholder="Samsoro12@gmail.com"
+            suffix={<UserOutlined className="input-icon-suffix" />}
           />
         </Form.Item>
 
         <Form.Item
           label="Password"
           name="password"
-          rules={[{ required: true, message: "Please enter your password." }]}
+          rules={[
+            { required: true, message: "Password wajib diisi" },
+          ]}
         >
-          <Input.Password placeholder="Enter your password" />
+          <Input.Password
+            size="large"
+            placeholder="• • • • • • • • • • • •"
+            iconRender={(visible) =>
+              visible ? (
+                <EyeTwoTone twoToneColor="#4a4a4a" />
+              ) : (
+                <EyeInvisibleOutlined style={{ color: "#4a4a4a" }} />
+              )
+            }
+          />
         </Form.Item>
 
-        <Form.Item style={{ marginTop: "20px" }}>
-          <Button
-            className="login-button"
-            htmlType="submit"
-            size="large"
-            block
-            loading={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </Button>
-        </Form.Item>
+        <Button
+          htmlType="submit"
+          type="primary"
+          size="large"
+          block
+          loading={loading}
+          className="login-submit-btn"
+        >
+          {loading ? "Logging in..." : "Login"}
+        </Button>
       </Form>
     </div>
   );
 };
 
 export default LoginForm;
-

@@ -1,0 +1,273 @@
+/* =========================================
+   DASHBOARD LAYOUT
+========================================= */
+
+.dashboard-wrapper{
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar{
+  width: 260px;
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background: #ffffff;
+
+  border-right: 1px solid #e5e7eb;
+
+  padding: 24px 18px;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 100;
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo-section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 35px;
+}
+
+.logo-section img{
+  width: 120px;
+  object-fit: contain;
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.nav-menu{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* NAV ITEM */
+
+.nav-item{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 14px 16px;
+
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  font-size: 0.97rem;
+  font-weight: 700;
+
+  color: #334155;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.15s ease;
+}
+
+/* ICON */
+
+.nav-item svg{
+  font-size: 1.2rem;
+}
+
+/* HOVER */
+
+.nav-item:hover{
+  background: rgba(86, 187, 196, 0.12);
+
+  color: #56bbc4;
+
+  transform: translateX(2px);
+}
+
+/* ACTIVE */
+
+.nav-item.active{
+  background: #56bbc4;
+
+  color: white;
+
+  box-shadow:
+    0 10px 20px rgba(86, 187, 196, 0.25);
+}
+
+.nav-item.active svg{
+  color: white;
+}
+
+/* =========================================
+   MAIN AREA
+========================================= */
+
+.main-area{
+  flex: 1;
+
+  margin-left: 260px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+
+  background: #f8fafc;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.dashboard-header{
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 24px;
+
+  background: rgba(255,255,255,0.95);
+
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+
+  box-shadow:
+    0 4px 10px rgba(15,23,42,0.03),
+    0 10px 25px rgba(15,23,42,0.04);
+
+  margin-bottom: 20px;
+}
+
+/* =========================================
+   HEADER LEFT
+========================================= */
+
+.header-left{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  cursor: pointer;
+}
+
+.header-avatar{
+  width: 52px;
+  height: 52px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  border: 3px solid rgba(86, 187, 196, 0.2);
+}
+
+.header-left h2{
+  margin: 0;
+
+  font-size: 1.05rem;
+  font-weight: 800;
+
+  color: #0f172a;
+}
+
+.header-left p{
+  margin-top: 4px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  color: #64748b;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.edit-profile-btn{
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 14px;
+
+  background: #56bbc4;
+
+  color: white;
+
+  font-size: 0.92rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.edit-profile-btn:hover{
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 24px rgba(86, 187, 196, 0.28);
+}
+
+.edit-profile-btn:active{
+  transform: scale(0.97);
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.content-container{
+  flex: 1;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width: 900px){
+
+  .sidebar{
+    width: 220px;
+  }
+
+  .main-area{
+    margin-left: 220px;
+  }
+
+}
+
+@media(max-width: 700px){
+
+  .dashboard-header{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .edit-profile-btn{
+    width: 100%;
+  }
+
+}

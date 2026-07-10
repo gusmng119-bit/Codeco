@@ -1,3 +1,12 @@
 export { authApi } from "./authApi";
 export { authEndpoints } from "./auth";
+export { userApi, userEndpoints } from "./userApi";
+export { classesApi, classesEndpoints } from "./classesApi";
+export { sessionsApi, sessionsEndpoints } from "./sessionsApi";
+export { feedbackApi, feedbackEndpoints } from "./feedbackApi";
+export { attendanceApi, attendanceEndpoints } from "./attendanceApi";
+export { teacherApi, teacherEndpoints } from "./teacherApi";
+export { certificateApi, certificateEndpoints } from "./certificateApi";
+export { materialApi, materialEndpoints } from "./materialApi";
+export { profileApi, profileEndpoints } from "./profileApi";
 export type { AuthResponse, LoginPayload } from "../types/auth";
